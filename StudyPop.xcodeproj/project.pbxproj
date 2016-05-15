@@ -1,0 +1,525 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26761CE8E1C400754A6D /* AppDelegate.swift */; };
+		AFCB26791CE8E1C400754A6D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26781CE8E1C400754A6D /* ViewController.swift */; };
+		AFCB267C1CE8E1C400754A6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFCB267A1CE8E1C400754A6D /* Main.storyboard */; };
+		AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFCB267D1CE8E1C400754A6D /* StudyPop.xcdatamodeld */; };
+		AFCB26811CE8E1C400754A6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFCB26801CE8E1C400754A6D /* Assets.xcassets */; };
+		AFCB26841CE8E1C400754A6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFCB26821CE8E1C400754A6D /* LaunchScreen.storyboard */; };
+		AFCB268F1CE8E1C400754A6D /* StudyPopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB268E1CE8E1C400754A6D /* StudyPopTests.swift */; };
+		AFCB269A1CE8E1C400754A6D /* StudyPopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26991CE8E1C400754A6D /* StudyPopUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AFCB268B1CE8E1C400754A6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFCB266B1CE8E1C300754A6D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFCB26721CE8E1C300754A6D;
+			remoteInfo = StudyPop;
+		};
+		AFCB26961CE8E1C400754A6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AFCB266B1CE8E1C300754A6D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AFCB26721CE8E1C300754A6D;
+			remoteInfo = StudyPop;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AFCB26731CE8E1C300754A6D /* StudyPop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyPop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFCB26761CE8E1C400754A6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AFCB26781CE8E1C400754A6D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AFCB267B1CE8E1C400754A6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AFCB267E1CE8E1C400754A6D /* StudyPop.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StudyPop.xcdatamodel; sourceTree = "<group>"; };
+		AFCB26801CE8E1C400754A6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AFCB26831CE8E1C400754A6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AFCB26851CE8E1C400754A6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFCB268A1CE8E1C400754A6D /* StudyPopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyPopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFCB268E1CE8E1C400754A6D /* StudyPopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyPopTests.swift; sourceTree = "<group>"; };
+		AFCB26901CE8E1C400754A6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFCB26951CE8E1C400754A6D /* StudyPopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyPopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFCB26991CE8E1C400754A6D /* StudyPopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyPopUITests.swift; sourceTree = "<group>"; };
+		AFCB269B1CE8E1C400754A6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AFCB26701CE8E1C300754A6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFCB26871CE8E1C400754A6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFCB26921CE8E1C400754A6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AFCB266A1CE8E1C300754A6D = {
+			isa = PBXGroup;
+			children = (
+				AFCB26751CE8E1C400754A6D /* StudyPop */,
+				AFCB268D1CE8E1C400754A6D /* StudyPopTests */,
+				AFCB26981CE8E1C400754A6D /* StudyPopUITests */,
+				AFCB26741CE8E1C300754A6D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AFCB26741CE8E1C300754A6D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AFCB26731CE8E1C300754A6D /* StudyPop.app */,
+				AFCB268A1CE8E1C400754A6D /* StudyPopTests.xctest */,
+				AFCB26951CE8E1C400754A6D /* StudyPopUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AFCB26751CE8E1C400754A6D /* StudyPop */ = {
+			isa = PBXGroup;
+			children = (
+				AFCB26761CE8E1C400754A6D /* AppDelegate.swift */,
+				AFCB26781CE8E1C400754A6D /* ViewController.swift */,
+				AFCB267A1CE8E1C400754A6D /* Main.storyboard */,
+				AFCB26801CE8E1C400754A6D /* Assets.xcassets */,
+				AFCB26821CE8E1C400754A6D /* LaunchScreen.storyboard */,
+				AFCB26851CE8E1C400754A6D /* Info.plist */,
+				AFCB267D1CE8E1C400754A6D /* StudyPop.xcdatamodeld */,
+			);
+			path = StudyPop;
+			sourceTree = "<group>";
+		};
+		AFCB268D1CE8E1C400754A6D /* StudyPopTests */ = {
+			isa = PBXGroup;
+			children = (
+				AFCB268E1CE8E1C400754A6D /* StudyPopTests.swift */,
+				AFCB26901CE8E1C400754A6D /* Info.plist */,
+			);
+			path = StudyPopTests;
+			sourceTree = "<group>";
+		};
+		AFCB26981CE8E1C400754A6D /* StudyPopUITests */ = {
+			isa = PBXGroup;
+			children = (
+				AFCB26991CE8E1C400754A6D /* StudyPopUITests.swift */,
+				AFCB269B1CE8E1C400754A6D /* Info.plist */,
+			);
+			path = StudyPopUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AFCB26721CE8E1C300754A6D /* StudyPop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFCB269E1CE8E1C400754A6D /* Build configuration list for PBXNativeTarget "StudyPop" */;
+			buildPhases = (
+				AFCB266F1CE8E1C300754A6D /* Sources */,
+				AFCB26701CE8E1C300754A6D /* Frameworks */,
+				AFCB26711CE8E1C300754A6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StudyPop;
+			productName = StudyPop;
+			productReference = AFCB26731CE8E1C300754A6D /* StudyPop.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AFCB26891CE8E1C400754A6D /* StudyPopTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFCB26A11CE8E1C400754A6D /* Build configuration list for PBXNativeTarget "StudyPopTests" */;
+			buildPhases = (
+				AFCB26861CE8E1C400754A6D /* Sources */,
+				AFCB26871CE8E1C400754A6D /* Frameworks */,
+				AFCB26881CE8E1C400754A6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFCB268C1CE8E1C400754A6D /* PBXTargetDependency */,
+			);
+			name = StudyPopTests;
+			productName = StudyPopTests;
+			productReference = AFCB268A1CE8E1C400754A6D /* StudyPopTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AFCB26941CE8E1C400754A6D /* StudyPopUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFCB26A41CE8E1C400754A6D /* Build configuration list for PBXNativeTarget "StudyPopUITests" */;
+			buildPhases = (
+				AFCB26911CE8E1C400754A6D /* Sources */,
+				AFCB26921CE8E1C400754A6D /* Frameworks */,
+				AFCB26931CE8E1C400754A6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AFCB26971CE8E1C400754A6D /* PBXTargetDependency */,
+			);
+			name = StudyPopUITests;
+			productName = StudyPopUITests;
+			productReference = AFCB26951CE8E1C400754A6D /* StudyPopUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AFCB266B1CE8E1C300754A6D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Nicholas Park";
+				TargetAttributes = {
+					AFCB26721CE8E1C300754A6D = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = L69X2WH35W;
+					};
+					AFCB26891CE8E1C400754A6D = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = L69X2WH35W;
+						TestTargetID = AFCB26721CE8E1C300754A6D;
+					};
+					AFCB26941CE8E1C400754A6D = {
+						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = L69X2WH35W;
+						TestTargetID = AFCB26721CE8E1C300754A6D;
+					};
+				};
+			};
+			buildConfigurationList = AFCB266E1CE8E1C300754A6D /* Build configuration list for PBXProject "StudyPop" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AFCB266A1CE8E1C300754A6D;
+			productRefGroup = AFCB26741CE8E1C300754A6D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AFCB26721CE8E1C300754A6D /* StudyPop */,
+				AFCB26891CE8E1C400754A6D /* StudyPopTests */,
+				AFCB26941CE8E1C400754A6D /* StudyPopUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AFCB26711CE8E1C300754A6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFCB26841CE8E1C400754A6D /* LaunchScreen.storyboard in Resources */,
+				AFCB26811CE8E1C400754A6D /* Assets.xcassets in Resources */,
+				AFCB267C1CE8E1C400754A6D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFCB26881CE8E1C400754A6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFCB26931CE8E1C400754A6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AFCB266F1CE8E1C300754A6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFCB26791CE8E1C400754A6D /* ViewController.swift in Sources */,
+				AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */,
+				AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFCB26861CE8E1C400754A6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFCB268F1CE8E1C400754A6D /* StudyPopTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AFCB26911CE8E1C400754A6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFCB269A1CE8E1C400754A6D /* StudyPopUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AFCB268C1CE8E1C400754A6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFCB26721CE8E1C300754A6D /* StudyPop */;
+			targetProxy = AFCB268B1CE8E1C400754A6D /* PBXContainerItemProxy */;
+		};
+		AFCB26971CE8E1C400754A6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AFCB26721CE8E1C300754A6D /* StudyPop */;
+			targetProxy = AFCB26961CE8E1C400754A6D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		AFCB267A1CE8E1C400754A6D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AFCB267B1CE8E1C400754A6D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AFCB26821CE8E1C400754A6D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AFCB26831CE8E1C400754A6D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AFCB269C1CE8E1C400754A6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AFCB269D1CE8E1C400754A6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AFCB269F1CE8E1C400754A6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = StudyPop/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wymm.StudyPop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AFCB26A01CE8E1C400754A6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = StudyPop/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wymm.StudyPop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		AFCB26A21CE8E1C400754A6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = StudyPopTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wymm.StudyPopTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StudyPop.app/StudyPop";
+			};
+			name = Debug;
+		};
+		AFCB26A31CE8E1C400754A6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = StudyPopTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wymm.StudyPopTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StudyPop.app/StudyPop";
+			};
+			name = Release;
+		};
+		AFCB26A51CE8E1C400754A6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = StudyPopUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wymm.StudyPopUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = StudyPop;
+			};
+			name = Debug;
+		};
+		AFCB26A61CE8E1C400754A6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = StudyPopUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.wymm.StudyPopUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = StudyPop;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AFCB266E1CE8E1C300754A6D /* Build configuration list for PBXProject "StudyPop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFCB269C1CE8E1C400754A6D /* Debug */,
+				AFCB269D1CE8E1C400754A6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AFCB269E1CE8E1C400754A6D /* Build configuration list for PBXNativeTarget "StudyPop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFCB269F1CE8E1C400754A6D /* Debug */,
+				AFCB26A01CE8E1C400754A6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AFCB26A11CE8E1C400754A6D /* Build configuration list for PBXNativeTarget "StudyPopTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFCB26A21CE8E1C400754A6D /* Debug */,
+				AFCB26A31CE8E1C400754A6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		AFCB26A41CE8E1C400754A6D /* Build configuration list for PBXNativeTarget "StudyPopUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AFCB26A51CE8E1C400754A6D /* Debug */,
+				AFCB26A61CE8E1C400754A6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AFCB267D1CE8E1C400754A6D /* StudyPop.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AFCB267E1CE8E1C400754A6D /* StudyPop.xcdatamodel */,
+			);
+			currentVersion = AFCB267E1CE8E1C400754A6D /* StudyPop.xcdatamodel */;
+			path = StudyPop.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = AFCB266B1CE8E1C300754A6D /* Project object */;
+}
