@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26761CE8E1C400754A6D /* AppDelegate.swift */; };
-		AFCB26791CE8E1C400754A6D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26781CE8E1C400754A6D /* ViewController.swift */; };
+		AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26781CE8E1C400754A6D /* LoginViewController.swift */; };
 		AFCB267C1CE8E1C400754A6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFCB267A1CE8E1C400754A6D /* Main.storyboard */; };
 		AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AFCB267D1CE8E1C400754A6D /* StudyPop.xcdatamodeld */; };
 		AFCB26811CE8E1C400754A6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AFCB26801CE8E1C400754A6D /* Assets.xcassets */; };
@@ -37,7 +37,7 @@
 /* Begin PBXFileReference section */
 		AFCB26731CE8E1C300754A6D /* StudyPop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyPop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFCB26761CE8E1C400754A6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AFCB26781CE8E1C400754A6D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AFCB26781CE8E1C400754A6D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AFCB267B1CE8E1C400754A6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AFCB267E1CE8E1C400754A6D /* StudyPop.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StudyPop.xcdatamodel; sourceTree = "<group>"; };
 		AFCB26801CE8E1C400754A6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -99,8 +99,9 @@
 		AFCB26751CE8E1C400754A6D /* StudyPop */ = {
 			isa = PBXGroup;
 			children = (
+				AFCB26A81CE8E1D000754A6D /* Models */,
+				AFCB26A71CE8E1CB00754A6D /* Controllers */,
 				AFCB26761CE8E1C400754A6D /* AppDelegate.swift */,
-				AFCB26781CE8E1C400754A6D /* ViewController.swift */,
 				AFCB267A1CE8E1C400754A6D /* Main.storyboard */,
 				AFCB26801CE8E1C400754A6D /* Assets.xcassets */,
 				AFCB26821CE8E1C400754A6D /* LaunchScreen.storyboard */,
@@ -126,6 +127,21 @@
 				AFCB269B1CE8E1C400754A6D /* Info.plist */,
 			);
 			path = StudyPopUITests;
+			sourceTree = "<group>";
+		};
+		AFCB26A71CE8E1CB00754A6D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				AFCB26781CE8E1C400754A6D /* LoginViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		AFCB26A81CE8E1D000754A6D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,7 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFCB26791CE8E1C400754A6D /* ViewController.swift in Sources */,
+				AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */,
 				AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */,
 				AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */,
 			);
