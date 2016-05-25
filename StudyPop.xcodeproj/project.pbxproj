@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF0077841CF52C810056904F /* StudyPopConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077831CF52C810056904F /* StudyPopConstants.swift */; };
+		AF0077871CF52CB70056904F /* StudyPopClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077861CF52CB70056904F /* StudyPopClient.swift */; };
+		AF0077891CF52E7A0056904F /* StudyPopServerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077881CF52E7A0056904F /* StudyPopServerHelper.swift */; };
+		AF00778B1CF530690056904F /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00778A1CF530690056904F /* CoreDataStackManager.swift */; };
+		AF0077901CF5321E0056904F /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00778F1CF5321E0056904F /* Helpers.swift */; };
+		AF0077941CF532DA0056904F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077921CF532DA0056904F /* User.swift */; };
+		AF0077961CF5393E0056904F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077951CF5393E0056904F /* RegisterViewController.swift */; };
 		AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26761CE8E1C400754A6D /* AppDelegate.swift */; };
 		AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26781CE8E1C400754A6D /* LoginViewController.swift */; };
 		AFCB267C1CE8E1C400754A6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFCB267A1CE8E1C400754A6D /* Main.storyboard */; };
@@ -35,6 +42,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AF0077831CF52C810056904F /* StudyPopConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPopConstants.swift; sourceTree = "<group>"; };
+		AF0077861CF52CB70056904F /* StudyPopClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPopClient.swift; sourceTree = "<group>"; };
+		AF0077881CF52E7A0056904F /* StudyPopServerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPopServerHelper.swift; sourceTree = "<group>"; };
+		AF00778A1CF530690056904F /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		AF00778F1CF5321E0056904F /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		AF0077921CF532DA0056904F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		AF0077951CF5393E0056904F /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		AFCB26731CE8E1C300754A6D /* StudyPop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyPop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFCB26761CE8E1C400754A6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFCB26781CE8E1C400754A6D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +90,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF0077851CF52CA80056904F /* StudyPopServer */ = {
+			isa = PBXGroup;
+			children = (
+				AF0077831CF52C810056904F /* StudyPopConstants.swift */,
+				AF0077861CF52CB70056904F /* StudyPopClient.swift */,
+				AF0077881CF52E7A0056904F /* StudyPopServerHelper.swift */,
+			);
+			name = StudyPopServer;
+			sourceTree = "<group>";
+		};
+		AF00778E1CF532160056904F /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				AF00778F1CF5321E0056904F /* Helpers.swift */,
+				AF0077921CF532DA0056904F /* User.swift */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
 		AFCB266A1CE8E1C300754A6D = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +132,7 @@
 		AFCB26751CE8E1C400754A6D /* StudyPop */ = {
 			isa = PBXGroup;
 			children = (
+				AF00778E1CF532160056904F /* Objects */,
 				AFCB26A81CE8E1D000754A6D /* Models */,
 				AFCB26A71CE8E1CB00754A6D /* Controllers */,
 				AFCB26761CE8E1C400754A6D /* AppDelegate.swift */,
@@ -133,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				AFCB26781CE8E1C400754A6D /* LoginViewController.swift */,
+				AF0077951CF5393E0056904F /* RegisterViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -140,6 +175,8 @@
 		AFCB26A81CE8E1D000754A6D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AF00778A1CF530690056904F /* CoreDataStackManager.swift */,
+				AF0077851CF52CA80056904F /* StudyPopServer */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -279,8 +316,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */,
+				AF0077961CF5393E0056904F /* RegisterViewController.swift in Sources */,
 				AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */,
+				AF0077891CF52E7A0056904F /* StudyPopServerHelper.swift in Sources */,
+				AF0077901CF5321E0056904F /* Helpers.swift in Sources */,
+				AF00778B1CF530690056904F /* CoreDataStackManager.swift in Sources */,
+				AF0077871CF52CB70056904F /* StudyPopClient.swift in Sources */,
 				AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */,
+				AF0077841CF52C810056904F /* StudyPopConstants.swift in Sources */,
+				AF0077941CF532DA0056904F /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +549,7 @@
 				AFCB26A01CE8E1C400754A6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AFCB26A11CE8E1C400754A6D /* Build configuration list for PBXNativeTarget "StudyPopTests" */ = {
 			isa = XCConfigurationList;
@@ -513,6 +558,7 @@
 				AFCB26A31CE8E1C400754A6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AFCB26A41CE8E1C400754A6D /* Build configuration list for PBXNativeTarget "StudyPopUITests" */ = {
 			isa = XCConfigurationList;
@@ -521,6 +567,7 @@
 				AFCB26A61CE8E1C400754A6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

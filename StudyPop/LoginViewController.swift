@@ -12,6 +12,7 @@ class LoginViewController: UIViewController {
     
     struct Constants{
         static let LoadingText = "Loading..."
+        static let RegisterSegue = "Register Segue"
     }
     
     @IBOutlet var emailTextField: UITextField!
@@ -39,6 +40,15 @@ class LoginViewController: UIViewController {
     func login(){
         errorLabel.text = Constants.LoadingText
         loginButton.enabled = false
+    }
+    
+    // MARK: SeguePrep
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == Constants.RegisterSegue{
+            if let rc = segue.destinationViewController as? RegisterViewController{
+                rc.email = emailTextField.text
+            }
+        }
     }
 }
 
