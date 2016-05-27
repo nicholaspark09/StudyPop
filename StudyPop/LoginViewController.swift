@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol LoginViewProtocol{
+    func hideKeyboard()
+}
+
 class LoginViewController: UIViewController {
     
     struct Constants{
@@ -23,7 +27,9 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(LoginViewProtocol.hideKeyboard))
+        view.addGestureRecognizer(tap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,6 +38,7 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginClicked(sender: UIButton) {
+        
         login()
         
         
@@ -40,6 +47,32 @@ class LoginViewController: UIViewController {
     func login(){
         errorLabel.text = Constants.LoadingText
         loginButton.enabled = false
+        errorLabel.text = "Logging in..."
+        var email = emailTextField.text!
+        StudyPopClient.sharedInstance.login(email){ (result,error) in
+            if let error = error{
+                performOnMain({ 
+                    self.errorLabel.text = error
+                    self.loginButton.enabled = true
+                })
+            }else if let safekey = result{
+                print("The resulting safekey is \(safekey)")
+                performOnMain({
+                    //Save the token in defaults
+                    let defaults = NSUserDefaults.standardUserDefaults()
+                    defaults.setValue(email, forKey: User.Keys.Email)
+                    defaults.setValue(safekey, forKey: User.Keys.Token)
+                    defaults.synchronize()
+                    self.errorLabel.textColor = UIColor.greenColor()
+                    self.errorLabel.text = "Please check your email for the login link"
+                })
+            }
+        }
+    }
+    
+    //Hide the keyboard
+    func hideKeyboard(){
+        view.endEditing(true)
     }
     
     // MARK: SeguePrep

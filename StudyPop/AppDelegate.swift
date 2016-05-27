@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let StoryboardName = "Main"
         static let UserEntity = "User"
         static let StoryboardLoginView = "LoginView"
+        static let StoryboardGroupsView = "GroupsView"
+        static let StoryboardHomeTab = "HomeTab"
     }
 
 
@@ -35,7 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 //A user was found!
                 //Send them to the tabcontroller
                 print("You found a user?")
+                let storyboard = UIStoryboard.init(name: Constants.StoryboardName, bundle: nil)
+                let hc = storyboard.instantiateViewControllerWithIdentifier(Constants.StoryboardHomeTab) as UIViewController
+                self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                self.window?.rootViewController = hc
+                self.window?.makeKeyAndVisible()
             }else{
+                print("The user wasn't logged in")
                 //No logged in user
                 let storyboard = UIStoryboard.init(name: Constants.StoryboardName, bundle: nil)
                 let lc = storyboard.instantiateViewControllerWithIdentifier(Constants.StoryboardLoginView) as UIViewController
@@ -51,27 +59,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        
+        let urlString = url.absoluteString
+        let data = urlString.componentsSeparatedByString("/")
+        if data.count > 0{
+            if data[2] == "login"{
+                
+                //Check the login safekey
+                let defaults = NSUserDefaults.standardUserDefaults()
+                let safekey = defaults.objectForKey(User.Keys.Token)
+                if safekey == nil{
+                    print("Error: Nothing was found")
+                }else{
+                    let userDetails = [User.Keys.Name:"",User.Keys.Email: defaults.objectForKey(User.Keys.Email)!,User.Keys.Logged:true,User.Keys.Token:safekey!,User.Keys.SafeKey: safekey!]
+                    let user = User.init(dictionary: userDetails, context: CoreDataStackManager.sharedInstance().managedObjectContext)
+                    print("You have a user with email: \(user.email)")
+                    CoreDataStackManager.sharedInstance().saveContext()
+                    //Close all windows and open to the groups
+                    let storyboard = UIStoryboard.init(name:Constants.StoryboardName, bundle: nil)
+                    let hc = storyboard.instantiateViewControllerWithIdentifier(Constants.StoryboardHomeTab)
+                    self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                    self.window?.rootViewController = hc
+                    self.window?.makeKeyWindow()
+                    print("you have gotten here")
+                }
+                /*
+                print("You observed it. Now broadcast it")
+                let center = NSNotificationCenter.defaultCenter()
+                let notification = NSNotification(name: StudyPopClient.Constants.LoginNotification, object: self, userInfo: [StudyPopClient.Constants.LoginKey:data[3]])
+                center.postNotification(notification)
+ */
+            }
+        }
+        return true
     }
-
-    func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
+    
+    //Get the locale
+    /*
+        On the StudyPop API (Which I unfortunately made...)
+            all locales are based on language_CountryCode
+            
+    */
+    func getLocale() -> String{
+        let locale = NSLocale.currentLocale()
+        let countryCode = locale.objectForKey(NSLocaleCountryCode) as! String
+        var language:String = "en-US"
+        language = locale.objectForKey(NSLocaleLanguageCode) as! String
+        language = "\(language)_\(countryCode)"
+        return language
     }
 
  

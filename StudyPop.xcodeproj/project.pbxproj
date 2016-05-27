@@ -14,6 +14,10 @@
 		AF0077901CF5321E0056904F /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00778F1CF5321E0056904F /* Helpers.swift */; };
 		AF0077941CF532DA0056904F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077921CF532DA0056904F /* User.swift */; };
 		AF0077961CF5393E0056904F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077951CF5393E0056904F /* RegisterViewController.swift */; };
+		AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */; };
+		AF2E2B7E1CF7D7A500820183 /* CityPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2B7D1CF7D7A500820183 /* CityPickerViewController.swift */; };
+		AF2E2B821CF7DF9A00820183 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2B801CF7DF9A00820183 /* City.swift */; };
+		AF3740A41CF75D1600216F64 /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3740A31CF75D1600216F64 /* GroupsViewController.swift */; };
 		AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26761CE8E1C400754A6D /* AppDelegate.swift */; };
 		AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26781CE8E1C400754A6D /* LoginViewController.swift */; };
 		AFCB267C1CE8E1C400754A6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFCB267A1CE8E1C400754A6D /* Main.storyboard */; };
@@ -49,6 +53,10 @@
 		AF00778F1CF5321E0056904F /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		AF0077921CF532DA0056904F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AF0077951CF5393E0056904F /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
+		AF2E2B7D1CF7D7A500820183 /* CityPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityPickerViewController.swift; sourceTree = "<group>"; };
+		AF2E2B801CF7DF9A00820183 /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		AF3740A31CF75D1600216F64 /* GroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
 		AFCB26731CE8E1C300754A6D /* StudyPop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyPop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFCB26761CE8E1C400754A6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFCB26781CE8E1C400754A6D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -105,6 +113,7 @@
 			children = (
 				AF00778F1CF5321E0056904F /* Helpers.swift */,
 				AF0077921CF532DA0056904F /* User.swift */,
+				AF2E2B801CF7DF9A00820183 /* City.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -168,6 +177,9 @@
 			children = (
 				AFCB26781CE8E1C400754A6D /* LoginViewController.swift */,
 				AF0077951CF5393E0056904F /* RegisterViewController.swift */,
+				AF3740A31CF75D1600216F64 /* GroupsViewController.swift */,
+				AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */,
+				AF2E2B7D1CF7D7A500820183 /* CityPickerViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -320,8 +332,12 @@
 				AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */,
 				AF0077891CF52E7A0056904F /* StudyPopServerHelper.swift in Sources */,
 				AF0077901CF5321E0056904F /* Helpers.swift in Sources */,
+				AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */,
+				AF2E2B7E1CF7D7A500820183 /* CityPickerViewController.swift in Sources */,
+				AF3740A41CF75D1600216F64 /* GroupsViewController.swift in Sources */,
 				AF00778B1CF530690056904F /* CoreDataStackManager.swift in Sources */,
 				AF0077871CF52CB70056904F /* StudyPopClient.swift in Sources */,
+				AF2E2B821CF7DF9A00820183 /* City.swift in Sources */,
 				AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */,
 				AF0077841CF52C810056904F /* StudyPopConstants.swift in Sources */,
 				AF0077941CF532DA0056904F /* User.swift in Sources */,

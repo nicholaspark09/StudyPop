@@ -18,6 +18,9 @@ class StudyPopClient: NSObject{
         let request = NSMutableURLRequest(URL: urlFromParameters(parameters, withPathExtension: method))
         //request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            
+            
+            
             func sendError(error: String){
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
@@ -25,7 +28,7 @@ class StudyPopClient: NSObject{
             }
             /* GUARD: Was there an error? */
             guard (error == nil) else{
-                sendError("There was an error with the request: \(error!.localizedDescription)")
+                sendError("Error: \(error!.localizedDescription)")
                 return
             }
             /* GUARD: did we get a successful 2XX response? */
@@ -39,6 +42,8 @@ class StudyPopClient: NSObject{
                 sendError("No data sent back by request")
                 return
             }
+            let string = NSString.init(data: data, encoding: NSUTF8StringEncoding)
+            print("The return was \(string)")
             self.convertDataWithCompletion(data, completionHandlerForConvertData: completionHandlerForGET)
         }
         task.resume()
@@ -54,6 +59,8 @@ class StudyPopClient: NSObject{
         //request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            
+           
             
             func sendError(error: String){
                 print(error)

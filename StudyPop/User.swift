@@ -56,6 +56,7 @@ class User: NSManagedObject {
         token = dictionary[Keys.Token] as? String
         accesstoken = dictionary[Keys.AccessToken] as? String
         group = dictionary[Keys.Group] as? NSNumber
+        logged = dictionary[Keys.Logged] as? NSNumber
     }
 
 }
