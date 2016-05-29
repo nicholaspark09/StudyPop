@@ -48,7 +48,7 @@ class LoginViewController: UIViewController {
         errorLabel.text = Constants.LoadingText
         loginButton.enabled = false
         errorLabel.text = "Logging in..."
-        var email = emailTextField.text!
+        let email = emailTextField.text!
         StudyPopClient.sharedInstance.login(email){ (result,error) in
             if let error = error{
                 performOnMain({ 

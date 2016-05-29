@@ -109,7 +109,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         language = "\(language)_\(countryCode)"
         return language
     }
+    
+    
+    // MARK: GetCity - Returns CityName, CityKey
+    func getCity() -> (String,String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        var cityName = "No city"
+        var cityKey = ""
+        let savedCityName = defaults.objectForKey(StudyPopClient.Constants.City)
+        let savedCityKey = defaults.objectForKey(StudyPopClient.Constants.CityKey)
+        if savedCityName != nil{
+            cityName = savedCityName as! String
+            cityKey = savedCityKey as! String
+        }
+        return (cityName,cityKey)
+    }
 
+    func getSubject() -> (String, String){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        var subjectName = "No Subject"
+        var subjectKey = ""
+        let savedSubjectName = defaults.objectForKey(StudyPopClient.Constants.Subject)
+        let savedSubjectKey = defaults.objectForKey(StudyPopClient.Constants.SubjectKey)
+        if savedSubjectName != nil{
+            subjectName = savedSubjectName as! String
+            subjectKey = savedSubjectKey as! String
+        }
+        return (subjectName,subjectKey)
+    }
  
 }
 

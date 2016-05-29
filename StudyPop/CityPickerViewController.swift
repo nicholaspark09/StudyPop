@@ -2,7 +2,7 @@
 //  CityPickerViewController.swift
 //  StudyPop
 //
-//  Created by Nicholas Park on 5/27/16.
+//  Created by Nicholas Park on 5/29/16.
 //  Copyright © 2016 Nicholas Park. All rights reserved.
 //
 
@@ -14,55 +14,57 @@ import CoreData
     func textFieldDidChange(textField: UITextField)
 }
 
-class CityPickerViewController: UIViewController, UITextFieldDelegate {
+class CityPickerViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UITextFieldDelegate {
+
     
+    //Keep local constants here so I can see them on the monitor
+    struct Constants{
+        static let CellReuseIdentifier = "CityCell"
+        static let UnwindSegue = "UnwindToGroups Segue"
+    }
+    
+    
+    @IBOutlet var theTable: UITableView!
     @IBOutlet var cityTextField: UITextField!{
         didSet{
-            cityTextField!.delegate = self
+            cityTextField.delegate = self
         }
     }
-
-    @IBOutlet var tableView: UITableView!
     
-    //For the city search
-    var running = false
-    var locale = "en_US"
+    var currentCityKey = ""
+    var cityName = ""
     var cities = [City]()
-    
-    var tempContext: NSManagedObjectContext = NSManagedObjectContext.init(concurrencyType: .PrivateQueueConcurrencyType)
+    var locale = "en_US"
+    var running = false
+    lazy var sharedContext: NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        locale = appDelegate.getLocale()
-        getCity()
+        (cityName,currentCityKey) = appDelegate.getCity()
         
+        if currentCityKey != ""{
+            cityTextField!.text = cityName
+        }
+        
+        
+        theTable.delegate = self
+        theTable.dataSource = self
+        theTable.allowsSelection = true
+        theTable.userInteractionEnabled = true
         cityTextField.addTarget(self, action: #selector(CityPickerProtocol.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         
-        //Tappy tapp tap 
-        /*
-                Poof! Gone goes the weekend
-         */
-        let tap = UITapGestureRecognizer(target: self, action: #selector(CityPickerProtocol.hideKeyboard))
-        view.addGestureRecognizer(tap)
+       
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        textField.text = ""
+        return true
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     func textFieldDidChange(textField: UITextField){
         let text = textField.text
@@ -71,20 +73,31 @@ class CityPickerViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func getCity() -> String{
-        
-        let defaults = NSUserDefaults.standardUserDefaults()
-        let cityName = defaults.objectForKey(StudyPopClient.Constants.City)
-        if cityName != nil{
-            cityTextField.text = cityName as? String
-        }
-        return ""
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        hideKeyboard()
+        return true
     }
     
-    // MARK: GetCities 
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cities.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! CityTableViewCell
+        let city = self.cities[indexPath.row]
+        cell.city = city
+        return cell
+    }
+    
     func getCities(){
         running = true
-        
+        cities.removeAll()
+        theTable.reloadData()
         let params = [
             StudyPopClient.ParameterKeys.Controller : StudyPopClient.ParameterValues.CitiesController,
             StudyPopClient.ParameterKeys.Method : StudyPopClient.ParameterValues.SearchMethod,
@@ -94,7 +107,7 @@ class CityPickerViewController: UIViewController, UITextFieldDelegate {
             StudyPopClient.ParameterKeys.Locale:locale
         ]
         StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
-            
+            self.running = false
             func sendError(error: String){
                 self.simpleError(error)
             }
@@ -109,14 +122,45 @@ class CityPickerViewController: UIViewController, UITextFieldDelegate {
                 return
             }
             
-
+            
             if let cityDictionary = results![StudyPopClient.JSONReponseKeys.Cities] as? [[String:AnyObject]]{
-                let _ = cityDictionary.map(){ (dictionary: [String:AnyObject]) -> City in
-                    let city = City(dictionary: dictionary, context: self.tempContext)
+                //First city should be blank in case the use doesn't want any city
+                let cityDict = [City.Keys.Name: "No City",City.Keys.User : ""]
+                let firstCity = City.init(dictionary: cityDict, context: self.sharedContext)
+                self.cities.append(firstCity)
+                for i in cityDictionary{
+                    let dict = i as Dictionary<String,AnyObject>
+                    let city = City.init(dictionary: dict, context: self.sharedContext)
                     self.cities.append(city)
-                    return city
                 }
+                self.updateUI()
+                /*
+                 let _ = cityDictionary.map(){ (dictionary: [String:AnyObject]) -> City in
+                 let city = City(dictionary: dictionary, context: self.tempContext)
+                 self.cities.append(city)
+                 return city
+                 }
+                 performOnMain(){
+                 self.tableView.reloadData()
+                 }
+                 */
             }
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let city = cities[indexPath.row]
+        currentCityKey = city.user!
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(city.name!, forKey: StudyPopClient.Constants.City)
+        defaults.setObject(city.user!, forKey: StudyPopClient.Constants.CityKey)
+        defaults.synchronize()
+        performSegueWithIdentifier(Constants.UnwindSegue, sender: nil)
+    }
+    
+    func updateUI(){
+        performOnMain(){
+            self.theTable.reloadData()
         }
     }
     
@@ -124,11 +168,12 @@ class CityPickerViewController: UIViewController, UITextFieldDelegate {
     func hideKeyboard(){
         view.endEditing(true)
     }
+    
 
-    override var preferredContentSize: CGSize {
-        get{
-            return super.preferredContentSize
-        }
-        set{super.preferredContentSize = newValue}
+    
+    // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
     }
+    
 }

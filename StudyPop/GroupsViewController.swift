@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class GroupsViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class GroupsViewController: UIViewController {
 
     struct Constants{
         static let LogoutAlertTitle = "Logout Confirmation"
@@ -17,12 +17,47 @@ class GroupsViewController: UIViewController, UIPopoverPresentationControllerDel
         static let LogoutCancel = "Cancel"
         static let LogoutTitle = "Logout"
         static let CityPickerSegue = "CityPicker Segue"
+        static let CityPickedButton = "CityBlue"
+        static let CityUnpickedButton = "CityWhite"
+        static let SubjectPickedButton = "SubjectBlue"
+        static let SubjectUnpickedButton = "SubjectWhite"
     }
+    
+    /**
+        Variables Section
+    */
+    // MARK: SharedContext
+    lazy var sharedContext: NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
+
+    var cityKey = ""
+    var subjectKey = ""
+    /**     
+        IBOutlets
+
+    **/
+    @IBOutlet var searchButton: UIButton!
+    @IBOutlet var cityButton: UIButton!
+    @IBOutlet var subjectButton: UIButton!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        //Grab the city first
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        (_,cityKey) = appDelegate.getCity()
+        if cityKey != ""{
+            cityButton!.setImage(UIImage(named:Constants.CityPickedButton), forState: .Normal)
+        }
+        (_,subjectKey) = appDelegate.getSubject()
+        if subjectKey != ""{
+            subjectButton.setImage(UIImage(named: Constants.SubjectPickedButton), forState: .Normal)
+        }else{
+            subjectButton.setImage(UIImage(named: Constants.SubjectUnpickedButton), forState: .Normal)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,13 +66,10 @@ class GroupsViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     
-    // MARK: SharedContext
-    var sharedContext: NSManagedObjectContext {
-        return CoreDataStackManager.sharedInstance().managedObjectContext
-    }
+    
     
     @IBAction func logoutClicked(sender: UIButton) {
-        var logoutAlert = UIAlertController(title: Constants.LogoutAlertTitle, message: Constants.LogoutAlertMessage, preferredStyle: .Alert)
+        let logoutAlert = UIAlertController(title: Constants.LogoutAlertTitle, message: Constants.LogoutAlertMessage, preferredStyle: .Alert)
         //Add a cancel button
         logoutAlert.addAction(UIAlertAction(title: Constants.LogoutCancel, style: .Cancel, handler: nil))
         //Logout is confirmed
@@ -61,17 +93,33 @@ class GroupsViewController: UIViewController, UIPopoverPresentationControllerDel
         
         presentViewController(logoutAlert, animated: true, completion: nil)
     }
+    
+    
+    // MARK: - Unwind From other Segues to Here
+    @IBAction func unwindToGroups(sender: UIStoryboardSegue){
+        if let sourceViewController = sender.sourceViewController as? CityPickerViewController{
+            cityKey = sourceViewController.currentCityKey
+            if cityKey != ""{
+                cityButton.setImage(UIImage(named: Constants.CityPickedButton), forState: .Normal)
+            }else{
+                cityButton.setImage(UIImage(named: Constants.CityUnpickedButton), forState: .Normal)
+            }
+            print("You got a citykey back of id: \(cityKey)")
+        }else if let svc = sender.sourceViewController as? StudyPickerViewController{
+            subjectKey = svc.subjectKey
+            if subjectKey != ""{
+                subjectButton.setImage(UIImage(named: Constants.SubjectPickedButton), forState: .Normal)
+            }else{
+                subjectButton.setImage(UIImage(named: Constants.SubjectUnpickedButton), forState: .Normal)
+            }
+        }
+    }
 
     
     // MARK: - Navigation
     //Prep time
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == Constants.CityPickerSegue{
-            if let cvc = segue.destinationViewController as? CityPickerViewController{
-                cvc.modalPresentationStyle = UIModalPresentationStyle.Popover
-                cvc.popoverPresentationController!.delegate = self
-            }
-        }
+        
     }
     
     //Ensure the Popover is just the right size
