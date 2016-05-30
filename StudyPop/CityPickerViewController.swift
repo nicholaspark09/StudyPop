@@ -21,6 +21,7 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
     struct Constants{
         static let CellReuseIdentifier = "CityCell"
         static let UnwindSegue = "UnwindToGroups Segue"
+        static let UnwindToAdd = "UnwindToAdd Segue"
     }
     
     
@@ -31,6 +32,7 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     
+    var previousController = ""
     var currentCityKey = ""
     var cityName = ""
     var cities = [City]()
@@ -151,11 +153,17 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let city = cities[indexPath.row]
         currentCityKey = city.user!
+        cityName = city.name!
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(city.name!, forKey: StudyPopClient.Constants.City)
         defaults.setObject(city.user!, forKey: StudyPopClient.Constants.CityKey)
         defaults.synchronize()
-        performSegueWithIdentifier(Constants.UnwindSegue, sender: nil)
+        if previousController == GroupsViewController.Constants.Controller{
+            performSegueWithIdentifier(Constants.UnwindSegue, sender: nil)
+        }else{
+            performSegueWithIdentifier(Constants.UnwindToAdd, sender: nil)
+        }
+        
     }
     
     func updateUI(){

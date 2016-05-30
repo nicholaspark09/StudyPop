@@ -21,7 +21,10 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         static let CityUnpickedButton = "CityWhite"
         static let SubjectPickedButton = "SubjectBlue"
         static let SubjectUnpickedButton = "SubjectWhite"
+        static let SubjectPickerSegue = "SubjectPicker Segue"
         static let CellReuseIdentifier = "Group Cell"
+        static let Controller = "GroupsViewController"
+        static let AddSegue = "AddGroup Segue"
     }
     
     /**
@@ -203,7 +206,19 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Navigation
     //Prep time
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
+        if segue.identifier == Constants.AddSegue{
+            if let agc = segue.destinationViewController.contentViewController as? AddGroupViewController{
+                agc.user = user
+            }
+        }else if segue.identifier == Constants.CityPickerSegue{
+            if let cityPicker = segue.destinationViewController as? CityPickerViewController{
+                cityPicker.previousController = Constants.Controller
+            }
+        }else if segue.identifier == Constants.SubjectPickerSegue{
+            if let subjectPicker = segue.destinationViewController as? StudyPickerViewController{
+                subjectPicker.previousController = Constants.Controller
+            }
+        }
     }
     
     // MARK: - TableView Delegates

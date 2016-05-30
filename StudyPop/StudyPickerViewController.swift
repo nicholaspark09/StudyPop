@@ -20,6 +20,7 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
     var subjectName = ""
     var subjectKey = ""
     var locale = "en_US"
+    var previousController = ""
     var subjects = [Subject]()
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -145,11 +146,18 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let subject = subjects[indexPath.row]
         let defaults = NSUserDefaults.standardUserDefaults()
+        
         defaults.setObject(StudyPopClient.Constants.Subject, forKey: subject.name!)
         defaults.setObject(StudyPopClient.Constants.SubjectKey, forKey: subject.user!)
         defaults.synchronize()
         subjectKey = subject.user!
-        performSegueWithIdentifier(Constants.UnwindToGroupsSegue, sender: nil)
+        subjectName = subject.name!
+        if previousController == GroupsViewController.Constants.Controller{
+            performSegueWithIdentifier(Constants.UnwindToGroupsSegue, sender: nil)
+        }else{
+            
+        }
+        
     }
     
     func updateUI(){
