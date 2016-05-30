@@ -72,6 +72,35 @@ extension StudyPopClient{
         }
     }
     
+    func findCity(token: String,safekey: String, completionHandlerForCity: (results: String?, error: String?) -> Void){
+        let params = [ParameterKeys.Controller : ParameterValues.CitiesController,
+                      ParameterKeys.Method : ParameterValues.QuickMethod,
+                      ParameterKeys.ApiKey : Constants.ApiKey,
+                      ParameterKeys.ApiSecret : Constants.ApiSecret,
+                      ParameterKeys.Token : token,
+                      ParameterKeys.SafeKey : safekey]
+        httpGet("",parameters: params){(results,error) in
+            func sendError(error: String){
+                completionHandlerForCity(results: nil, error: error)
+            }
+            
+            guard error == nil else{
+                sendError("Error: \(error!.localizedDescription)")
+                return
+            }
+            guard let stat = results[JSONReponseKeys.Result] as? String where stat == JSONResponseValues.Success else{
+                sendError("StudyPop Api Returned error: \(results[JSONReponseKeys.Error])")
+                return
+            }
+            
+            guard let name = results["Name"] as? String else{
+                sendError("Had a hard time finding the name")
+                return
+            }
+            completionHandlerForCity(results: name, error: nil)
+        }
+    }
+    
     func logout(){
         
     }

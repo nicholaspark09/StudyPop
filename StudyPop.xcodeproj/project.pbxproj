@@ -14,6 +14,9 @@
 		AF0077901CF5321E0056904F /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00778F1CF5321E0056904F /* Helpers.swift */; };
 		AF0077941CF532DA0056904F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077921CF532DA0056904F /* User.swift */; };
 		AF0077961CF5393E0056904F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077951CF5393E0056904F /* RegisterViewController.swift */; };
+		AF112A5A1CFBC3C700FE1DB9 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A581CFBC3C700FE1DB9 /* Group.swift */; };
+		AF112A5C1CFBD1D100FE1DB9 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */; };
+		AF112A5E1CFBDAFA00FE1DB9 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A5D1CFBDAFA00FE1DB9 /* GroupViewController.swift */; };
 		AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */; };
 		AF2E2B821CF7DF9A00820183 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2B801CF7DF9A00820183 /* City.swift */; };
 		AF3740A41CF75D1600216F64 /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3740A31CF75D1600216F64 /* GroupsViewController.swift */; };
@@ -57,6 +60,9 @@
 		AF00778F1CF5321E0056904F /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		AF0077921CF532DA0056904F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AF0077951CF5393E0056904F /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		AF112A581CFBC3C700FE1DB9 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
+		AF112A5D1CFBDAFA00FE1DB9 /* GroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
 		AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
 		AF2E2B801CF7DF9A00820183 /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		AF3740A31CF75D1600216F64 /* GroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +129,7 @@
 				AF0077921CF532DA0056904F /* User.swift */,
 				AF2E2B801CF7DF9A00820183 /* City.swift */,
 				AF9E70E81CFB249800E8B8F6 /* Subject.swift */,
+				AF112A581CFBC3C700FE1DB9 /* Group.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -132,6 +139,7 @@
 			children = (
 				AF9E70E11CFB0F4B00E8B8F6 /* CityTableViewCell.swift */,
 				AF9E70EB1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift */,
+				AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -200,6 +208,7 @@
 				AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */,
 				AF9E70E31CFB115900E8B8F6 /* CityPickerViewController.swift */,
 				AF9E70E51CFB1F6100E8B8F6 /* StudyPickerViewController.swift */,
+				AF112A5D1CFBDAFA00FE1DB9 /* GroupViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -350,8 +359,10 @@
 				AF9E70E61CFB1F6100E8B8F6 /* StudyPickerViewController.swift in Sources */,
 				AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */,
 				AF0077961CF5393E0056904F /* RegisterViewController.swift in Sources */,
+				AF112A5A1CFBC3C700FE1DB9 /* Group.swift in Sources */,
 				AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */,
 				AF0077891CF52E7A0056904F /* StudyPopServerHelper.swift in Sources */,
+				AF112A5E1CFBDAFA00FE1DB9 /* GroupViewController.swift in Sources */,
 				AF0077901CF5321E0056904F /* Helpers.swift in Sources */,
 				AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */,
 				AF3740A41CF75D1600216F64 /* GroupsViewController.swift in Sources */,
@@ -365,6 +376,7 @@
 				AF0077941CF532DA0056904F /* User.swift in Sources */,
 				AF9E70E41CFB115900E8B8F6 /* CityPickerViewController.swift in Sources */,
 				AF9E70EA1CFB249800E8B8F6 /* Subject.swift in Sources */,
+				AF112A5C1CFBD1D100FE1DB9 /* GroupTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

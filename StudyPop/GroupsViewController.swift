@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class GroupsViewController: UIViewController {
+class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     struct Constants{
         static let LogoutAlertTitle = "Logout Confirmation"
@@ -21,6 +21,7 @@ class GroupsViewController: UIViewController {
         static let CityUnpickedButton = "CityWhite"
         static let SubjectPickedButton = "SubjectBlue"
         static let SubjectUnpickedButton = "SubjectWhite"
+        static let CellReuseIdentifier = "Group Cell"
     }
     
     /**
@@ -30,9 +31,19 @@ class GroupsViewController: UIViewController {
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
+    lazy var scratchContext: NSManagedObjectContext = {
+        var context = NSManagedObjectContext()
+        context.persistentStoreCoordinator = CoreDataStackManager.sharedInstance().persistentStoreCoordinator
+        return context
+    }()
 
     var cityKey = ""
     var subjectKey = ""
+    var query = ""
+    var searching = false
+    var groups = [Group]()
+    var locale = "en_US"
+    var user:User?
     /**     
         IBOutlets
 
@@ -40,7 +51,8 @@ class GroupsViewController: UIViewController {
     @IBOutlet var searchButton: UIButton!
     @IBOutlet var cityButton: UIButton!
     @IBOutlet var subjectButton: UIButton!
-    
+    @IBOutlet var searchTextField: UITextField!
+    @IBOutlet var tableView: UITableView!
     
     
     override func viewDidLoad() {
@@ -57,6 +69,15 @@ class GroupsViewController: UIViewController {
             subjectButton.setImage(UIImage(named: Constants.SubjectPickedButton), forState: .Normal)
         }else{
             subjectButton.setImage(UIImage(named: Constants.SubjectUnpickedButton), forState: .Normal)
+        }
+        
+        getUser()
+        if user != nil{
+            if subjectKey != "" || cityKey != ""{
+                searchGroups()
+            }else{
+                indexGroups()
+            }
         }
     }
 
@@ -113,8 +134,71 @@ class GroupsViewController: UIViewController {
                 subjectButton.setImage(UIImage(named: Constants.SubjectUnpickedButton), forState: .Normal)
             }
         }
+        print("The subject is: \(subjectKey) and the city is: \(cityKey)")
+    }
+    
+    
+    @IBAction func seachClicked(sender: UIButton) {
+        var query = searchTextField.text!
+        if cityKey == "" && subjectKey == "" && query.characters.count < 1{
+            groups = []
+            searching = false
+            indexGroups()
+        }else{
+            searching = true
+        }
+    }
+    
+    
+    // MARK: - IndexGroups
+    func indexGroups(){
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupsController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.IndexMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.Offset: "\(groups.count)",
+                      StudyPopClient.ParameterKeys.Locale:locale,
+                      StudyPopClient.ParameterKeys.Token : user!.token!
+        ]
+        StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in
+            func sendError(error: String){
+                print("Error in transmission: \(error)")
+                self.simpleError(error)
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                return
+            }
+            
+            performOnMain(){
+                if let groupDictionary = results![StudyPopClient.JSONReponseKeys.Groups] as? [[String:AnyObject]]{
+                    for i in groupDictionary{
+                        let dict = i as Dictionary<String,AnyObject>
+                        let group = Group.init(dictionary: dict, context: self.scratchContext)
+                        self.groups.append(group)
+                    }
+                    self.updateUI()
+                }
+            }
+        }
+    }
+    
+    // MARK: - SearchGroups
+    func searchGroups(){
+        
     }
 
+    func updateUI(){
+        performOnMain(){
+            self.tableView.reloadData()
+        }
+    }
     
     // MARK: - Navigation
     //Prep time
@@ -122,9 +206,53 @@ class GroupsViewController: UIViewController {
         
     }
     
+    // MARK: - TableView Delegates
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return groups.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! GroupTableViewCell
+        let group = groups[indexPath.row]
+        cell.group = group
+        if group.hasCity == nil && group.city != nil{
+            StudyPopClient.sharedInstance.findCity(user!.token!, safekey: group.city!){ (results,error) in
+                if let error = error{
+                    self.simpleError(error)
+                }else if results != nil{
+                    let dict = [City.Keys.Name : results!, City.Keys.User : group.city!]
+                    performOnMain(){
+                        //Save the city in the
+                        let city = City.init(dictionary: dict, context: self.scratchContext)
+                        group.hasCity = city
+                        cell.cityLabel.text = city.name!
+                    }
+                }
+            }
+        }
+        return cell
+    }
+    
     //Ensure the Popover is just the right size
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.None
+    }
+    
+    func getUser(){
+        let request = NSFetchRequest(entityName: "User")
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "logged == %@", true)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0{
+                if let temp = results[0] as? User{
+                    user = temp
+                }
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The error was \(fetchError)")
+        }
     }
 
 }

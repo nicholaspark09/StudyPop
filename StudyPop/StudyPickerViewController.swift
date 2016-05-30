@@ -24,6 +24,11 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
+    lazy var scratchContext: NSManagedObjectContext = {
+        var context = NSManagedObjectContext()
+        context.persistentStoreCoordinator = CoreDataStackManager.sharedInstance().persistentStoreCoordinator
+        return context
+    }()
     
     @IBOutlet var subjectLabel: UILabel!
     @IBOutlet var tableView: UITableView!
@@ -45,11 +50,16 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
         tableView.delegate = self
         tableView.dataSource = self
         
-        subjects = indexSubjects()
-        if subjects.count < 1 {
+        let tempSubjects = indexSubjects()
+        let tempSubject = [Subject.Keys.Name : "No Subject", Subject.Keys.User: ""]
+        let subject = Subject.init(dictionary: tempSubject, context: self.scratchContext)
+        if tempSubjects.count < 1 {
             //There are no subjects, get them from the server
+            subjects.append(subject)
             getSubjects()
         }else{
+            subjects.append(subject)
+            subjects.appendContentsOf(tempSubjects)
             tableView.reloadData()
         }
     }

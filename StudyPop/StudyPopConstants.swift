@@ -30,16 +30,21 @@ extension StudyPopClient{
         static let ApiKey = "api_key"
         static let Name = "name"
         static let Locale = "locale"
+        static let Offset = "offset"
+        static let Token = "token"
+        static let SafeKey = "safekey"
     }
     
     struct ParameterValues{
         static let UserController = "users"
-        static let LoginMethod = "iphonelogin"
-        static let RegisterMethod = "iphoneregistration"
+        static let GroupsController = "groups"
         static let CitiesController = "cities"
         static let SubjectsController = "subjects"
+        static let LoginMethod = "iphonelogin"
+        static let RegisterMethod = "iphoneregistration"
         static let SearchMethod = "search"
         static let IndexMethod = "mobileindex"
+        static let QuickMethod = "quick"
     }
     
     struct JSONReponseKeys{
