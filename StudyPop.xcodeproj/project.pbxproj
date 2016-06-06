@@ -38,6 +38,7 @@
 		AF8043AF1CFE5CC400A2B7A4 /* WDImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8043A91CFE5CC400A2B7A4 /* WDImagePicker.swift */; };
 		AF8043B01CFE5CC400A2B7A4 /* WDResizableCropOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8043AA1CFE5CC400A2B7A4 /* WDResizableCropOverlayView.swift */; };
 		AF90352D1D01071500A67F9E /* GroupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF90352B1D01071500A67F9E /* GroupRequest.swift */; };
+		AF9582EB1D05DF1F00064C98 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9582EA1D05DF1F00064C98 /* ProfileTableViewCell.swift */; };
 		AF9E70E21CFB0F4B00E8B8F6 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9E70E11CFB0F4B00E8B8F6 /* CityTableViewCell.swift */; };
 		AF9E70E41CFB115900E8B8F6 /* CityPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9E70E31CFB115900E8B8F6 /* CityPickerViewController.swift */; };
 		AF9E70E61CFB1F6100E8B8F6 /* StudyPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9E70E51CFB1F6100E8B8F6 /* StudyPickerViewController.swift */; };
@@ -102,6 +103,7 @@
 		AF8043A91CFE5CC400A2B7A4 /* WDImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WDImagePicker.swift; sourceTree = "<group>"; };
 		AF8043AA1CFE5CC400A2B7A4 /* WDResizableCropOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WDResizableCropOverlayView.swift; sourceTree = "<group>"; };
 		AF90352B1D01071500A67F9E /* GroupRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRequest.swift; sourceTree = "<group>"; };
+		AF9582EA1D05DF1F00064C98 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		AF9E70E11CFB0F4B00E8B8F6 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		AF9E70E31CFB115900E8B8F6 /* CityPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityPickerViewController.swift; sourceTree = "<group>"; };
 		AF9E70E51CFB1F6100E8B8F6 /* StudyPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPickerViewController.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				AF9E70E11CFB0F4B00E8B8F6 /* CityTableViewCell.swift */,
 				AF9E70EB1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift */,
 				AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */,
+				AF9582EA1D05DF1F00064C98 /* ProfileTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				AF0077841CF52C810056904F /* StudyPopConstants.swift in Sources */,
 				AF0077941CF532DA0056904F /* User.swift in Sources */,
 				AF9E70E41CFB115900E8B8F6 /* CityPickerViewController.swift in Sources */,
+				AF9582EB1D05DF1F00064C98 /* ProfileTableViewCell.swift in Sources */,
 				AF8043A31CFE577B00A2B7A4 /* PickImageViewController.swift in Sources */,
 				AF8043AD1CFE5CC400A2B7A4 /* WDImageCropView.swift in Sources */,
 				AF9E70EA1CFB249800E8B8F6 /* Subject.swift in Sources */,

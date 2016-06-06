@@ -85,6 +85,7 @@ extension StudyPopClient{
         static let LocationKey = "LocationKey"
         static let Body = "Body"
         static let Profile = "Profile"
+        static let Profiles = "Profiles"
     }
     
     struct JSONResponseValues{

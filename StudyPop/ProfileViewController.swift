@@ -48,6 +48,7 @@ class ProfileViewController: UIViewController {
             getMyProfile()
         }else{
             //This is someone else's profile
+            self.updateUI()
         }
     }
 

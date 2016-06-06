@@ -291,7 +291,7 @@
                                     <action selector="backClicked:" destination="NHi-5M-2vN" eventType="touchUpInside" id="qL9-Qg-VWd"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ORE-ai-tPs">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ORE-ai-tPs">
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MxL-BZ-gG7">
@@ -1044,12 +1044,13 @@
                         <segue destination="6TD-80-HxI" kind="unwind" identifier="UnwindToAdd Segue" unwindAction="unwindToAdd:" id="rMe-KL-BHo"/>
                         <segue destination="6TD-80-HxI" kind="unwind" identifier="UnwindToEdit Segue" unwindAction="unwindToEdit:" id="hXK-TB-qX7"/>
                         <segue destination="6TD-80-HxI" kind="unwind" identifier="UnwindToProfile Segue" unwindAction="unwindToEditProfile:" id="4fJ-c8-Nfe"/>
+                        <segue destination="6TD-80-HxI" kind="unwind" identifier="UnwindToPeople Segue" unwindAction="unwindToPeople:" id="XCS-As-fj7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gdd-Ga-dPc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="6TD-80-HxI" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2074" y="2757"/>
+            <point key="canvasLocation" x="1586" y="2213"/>
         </scene>
         <!--Study Picker View Controller-->
         <scene sceneID="CTv-Pp-vrH">
@@ -1166,12 +1167,13 @@
                         <segue destination="Tqx-Tr-php" kind="unwind" identifier="UnwindToAdd Segue" unwindAction="unwindToAdd:" id="G9y-pL-SWN"/>
                         <segue destination="Tqx-Tr-php" kind="unwind" identifier="UnwindToEdit Segue" unwindAction="unwindToEdit:" id="0C2-Fw-KqL"/>
                         <segue destination="Tqx-Tr-php" kind="unwind" identifier="UnwindToProfile Segue" unwindAction="unwindToEditProfile:" id="VA8-iC-iLj"/>
+                        <segue destination="Tqx-Tr-php" kind="unwind" identifier="UnwindToPeople Segue" unwindAction="unwindToPeople:" id="GN9-0N-9eq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OsJ-iP-kbP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Tqx-Tr-php" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2487" y="3200"/>
+            <point key="canvasLocation" x="1863" y="2332"/>
         </scene>
         <!--Events-->
         <scene sceneID="SWz-86-WXV">
@@ -1228,10 +1230,6 @@
                                     <segue destination="NHi-5M-2vN" kind="presentation" identifier="MyProfile Segue" id="I1g-As-XUZ"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cFG-eE-POg">
-                                <rect key="frame" x="20" y="153" width="560" height="390"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="FyO-yW-9Nn">
                                 <rect key="frame" x="20" y="91" width="560" height="54"/>
                                 <subviews>
@@ -1245,22 +1243,101 @@
                                         <rect key="frame" x="140" y="0.0" width="140" height="54"/>
                                         <color key="backgroundColor" red="0.84313725490000002" green="0.8862745098" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="CityWhite"/>
+                                        <connections>
+                                            <segue destination="Skz-S9-Hkg" kind="show" identifier="PickCity Segue" id="ccH-QP-hsC"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cPq-iH-kKP">
                                         <rect key="frame" x="280" y="0.0" width="140" height="54"/>
                                         <color key="backgroundColor" red="0.84313725490000002" green="0.8862745098" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="SubjectWhite"/>
+                                        <connections>
+                                            <segue destination="vm6-VP-Y9I" kind="show" identifier="PickSubject Segue" id="zhP-Xa-X1a"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5r-cY-0Xh">
                                         <rect key="frame" x="420" y="0.0" width="140" height="54"/>
                                         <color key="backgroundColor" red="0.84313725490000002" green="0.8862745098" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Search"/>
+                                        <connections>
+                                            <action selector="searchClicked:" destination="Pzm-nj-dle" eventType="touchUpInside" id="09v-LH-7uQ"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="54" id="3Gs-zN-Eqq"/>
                                 </constraints>
                             </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="59" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cFG-eE-POg">
+                                <rect key="frame" x="20" y="153" width="560" height="390"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Profile Cell" rowHeight="59" id="qbd-92-UHb" customClass="ProfileTableViewCell" customModule="StudyPop" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="560" height="59"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qbd-92-UHb" id="H5e-Zi-l9f">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="58"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfileSmall" translatesAutoresizingMaskIntoConstraints="NO" id="yp5-cq-d1R">
+                                                    <rect key="frame" x="8" y="0.0" width="58" height="58"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="58" id="8gC-LG-NNJ"/>
+                                                        <constraint firstAttribute="height" constant="58" id="FKS-nS-57a"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xkn-fT-4X4">
+                                                    <rect key="frame" x="82" y="8" width="470" height="25"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Profile">
+                                                            <attributes>
+                                                                <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                <font key="NSFont" size="18" name="AvenirNext-Bold"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFB-1h-Egi">
+                                                    <rect key="frame" x="93" y="29" width="157" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="157" id="pfa-WH-5S6"/>
+                                                    </constraints>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Label">
+                                                            <attributes>
+                                                                <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                <font key="NSFont" size="15" name="AvenirNext-Regular"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="wFB-1h-Egi" firstAttribute="leading" secondItem="yp5-cq-d1R" secondAttribute="trailing" constant="27" id="16Y-A4-pi4"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="yp5-cq-d1R" secondAttribute="leading" id="5DH-aT-k63"/>
+                                                <constraint firstItem="wFB-1h-Egi" firstAttribute="top" secondItem="Xkn-fT-4X4" secondAttribute="bottom" constant="-4" id="LS6-dl-aml"/>
+                                                <constraint firstItem="Xkn-fT-4X4" firstAttribute="leading" secondItem="yp5-cq-d1R" secondAttribute="trailing" constant="16" id="MlS-sD-Fa8"/>
+                                                <constraint firstAttribute="topMargin" secondItem="Xkn-fT-4X4" secondAttribute="top" id="XoS-CA-6Yi"/>
+                                                <constraint firstItem="yp5-cq-d1R" firstAttribute="centerY" secondItem="H5e-Zi-l9f" secondAttribute="centerY" id="klq-ZE-umj"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Xkn-fT-4X4" secondAttribute="trailing" id="vdS-Bt-48X"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cityLabel" destination="wFB-1h-Egi" id="zg4-ES-kA8"/>
+                                            <outlet property="nameLabel" destination="Xkn-fT-4X4" id="QIM-4A-DYS"/>
+                                            <outlet property="profileImageView" destination="yp5-cq-d1R" id="d1T-1F-tA8"/>
+                                            <segue destination="NHi-5M-2vN" kind="show" identifier="ProfileView Segue" id="h1T-W2-NA3"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Pzm-nj-dle" id="XoH-7R-qOb"/>
+                                    <outlet property="delegate" destination="Pzm-nj-dle" id="boG-ih-G8w"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1279,10 +1356,17 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="People" image="ProfileSmall" id="xOM-eQ-JwC"/>
+                    <connections>
+                        <outlet property="cityButton" destination="9c1-HQ-3Tu" id="EO3-Yu-pjB"/>
+                        <outlet property="nameTextField" destination="tRg-q7-Vip" id="Fr6-n5-4jE"/>
+                        <outlet property="searchButton" destination="W5r-cY-0Xh" id="pGg-S5-z7V"/>
+                        <outlet property="subjectButton" destination="cPq-iH-kKP" id="zjz-Xi-cd9"/>
+                        <outlet property="tableView" destination="cFG-eE-POg" id="Xz4-cd-3YM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vaf-wS-Njw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="410" y="1959"/>
+            <point key="canvasLocation" x="632" y="1923"/>
         </scene>
         <!--Edit Profile View Controller-->
         <scene sceneID="nxz-qD-Ohj">
@@ -1839,8 +1923,9 @@
         <image name="SubjectWhite" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="zhP-Xa-X1a"/>
+        <segue reference="h1T-W2-NA3"/>
+        <segue reference="ccH-QP-hsC"/>
         <segue reference="aRw-Ns-ALB"/>
-        <segue reference="MT5-D7-H73"/>
-        <segue reference="y3g-aV-zEz"/>
     </inferredMetricsTieBreakers>
 </document>

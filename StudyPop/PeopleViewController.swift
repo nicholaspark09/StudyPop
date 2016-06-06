@@ -9,36 +9,86 @@
 import UIKit
 import CoreData
 
-class PeopleViewController: UIViewController {
+class PeopleViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     struct Constants{
         static let MyProfileSegue = "MyProfile Segue"
+        static let PickedCityImage = "CityBlue"
+        static let UnpickedCityImage = "CityWhite"
+        static let PickedSubjectImage = "SubjectBlue"
+        static let UnpickedSubjectImage = "SubjectWhite"
+        static let PickSubjectSegue = "PickSubject Segue"
+        static let PickCitySegue = "PickCity Segue"
+        static let Controller = "PeopleView"
+        static let SearchingLabel = "Searching..."
+        static let SearchLabel = "Search"
+        static let CellReuseIdentifier = "Profile Cell"
+        static let ProfileViewSegue = "ProfileView Segue"
     }
     
     
+    
+    //Keep IBOutlets in the same place
+    
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var cityButton: UIButton!
+    @IBOutlet var subjectButton: UIButton!
+    @IBOutlet var searchButton: UIButton!
+    @IBOutlet var nameTextField: UITextField!
+    
+    //All the variables should be here
     var user:User?
+    var profiles = [Profile]()
     var currentCityName = ""
-    var currentCityKey = ""
+    var currentCityKey = ""{
+        didSet{
+            if currentCityKey == ""{
+                performOnMain(){
+                    self.cityButton.setImage(UIImage(named:Constants.UnpickedCityImage), forState: .Normal)
+                }
+            }else{
+                performOnMain(){
+                    self.cityButton.setImage(UIImage(named:Constants.PickedCityImage), forState: .Normal)
+                }
+            }
+        }
+    }
     var currentSubjectName = ""
-    var currentSubjectKey = ""
-    
-    
+    var currentSubjectKey = ""{
+        didSet{
+            if currentSubjectKey == ""{
+                performOnMain(){
+                    self.subjectButton.setImage(UIImage(named:Constants.UnpickedSubjectImage), forState: .Normal)
+                }
+            }else{
+                performOnMain(){
+                    self.subjectButton.setImage(UIImage(named:Constants.PickedSubjectImage), forState: .Normal)
+                }
+            }
+        }
+    }
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         getUser()
-        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        (currentCityName,currentCityKey) = appDelegate.getCity()
+        (currentSubjectName,currentSubjectKey) = appDelegate.getSubject()
+        indexProfiles()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
+    @IBAction func searchClicked(sender: UIButton) {
+        
+            profiles = [Profile]()
+            indexProfiles()
+    }
 
 
     // MARK: - Navigation
@@ -48,10 +98,115 @@ class PeopleViewController: UIViewController {
             if let pvc = segue.destinationViewController as? ProfileViewController{
                 pvc.user = user!
             }
+        }else if segue.identifier == Constants.PickSubjectSegue{
+            if let svc = segue.destinationViewController as? StudyPickerViewController{
+                svc.previousController = Constants.Controller
+            }
+        }else if segue.identifier == Constants.PickCitySegue{
+            if let cvc = segue.destinationViewController as? CityPickerViewController{
+                cvc.previousController = Constants.Controller
+            }
+        }else if segue.identifier == Constants.ProfileViewSegue{
+            if let pvc = segue.destinationViewController as? ProfileViewController{
+                pvc.user = user!
+                pvc.profile = profiles[tableView.indexPathForSelectedRow!.row]
+            }
         }
     }
-
     
+    //Unwind from other Controllers to this ViewController
+    @IBAction func unwindToPeople(sender: UIStoryboardSegue){
+        if let svc = sender.sourceViewController as? StudyPickerViewController{
+            currentSubjectKey = svc.subjectKey
+        }else if let cvc = sender.sourceViewController as? CityPickerViewController{
+            currentCityKey = cvc.currentCityKey
+        }
+    }
+    
+    
+    //Search
+    func indexProfiles(){
+        let name = nameTextField.text!
+        searchButton.enabled = false
+        searchButton.setTitle(Constants.SearchingLabel, forState: .Normal)
+            let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.ProfilesController,
+                          StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.SearchMethod,
+                          StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                          StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                          StudyPopClient.ParameterKeys.Name : name,
+                          Profile.Keys.Subject : currentSubjectKey,
+                          Profile.Keys.City : currentCityKey,
+                          StudyPopClient.ParameterKeys.Offset : "\(profiles.count)",
+                          StudyPopClient.ParameterKeys.Token : user!.token!
+            ]
+            StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
+                
+                performOnMain(){
+                    self.searchButton.setTitle(Constants.SearchLabel, forState: .Normal)
+                    self.searchButton.enabled = true
+                }
+                func sendError(error: String){
+                    self.simpleError(error)
+                }
+                
+                guard error == nil else{
+                    sendError(error!.localizedDescription)
+                    return
+                }
+                
+                guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
+                    sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                    return
+                }
+                
+                performOnMain(){
+                    if let profileDictionary = results![StudyPopClient.JSONReponseKeys.Profiles] as? [[String:AnyObject]]{
+                        for i in profileDictionary{
+                            let dict = i as Dictionary<String,AnyObject>
+                            let profile = Profile.init(dictionary: dict, context: self.sharedContext)
+                            self.profiles.append(profile)
+                            print("Got another profile with name: \(profile.name!)")
+                        }
+                        self.updateUI()
+                    }
+                }
+            }
+    }
+    
+    
+    // MARK: - TableView Delegates
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return profiles.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! ProfileTableViewCell
+        let profile = profiles[indexPath.row]
+        cell.profile = profile
+        if profile.city != nil && profile.city != ""{
+            StudyPopClient.sharedInstance.findCity(user!.token!, safekey: profile.city!){ (results,error) in
+                if let error = error{
+                    self.simpleError(error)
+                }else if results != nil{
+                    let dict = [City.Keys.Name : results!, City.Keys.User :profile.city!]
+                    performOnMain(){
+                        //Save the city in the
+                        let city = City.init(dictionary: dict, context: self.sharedContext)
+                        cell.cityLabel.text = city.name!
+                    }
+                }
+            }
+        }
+        return cell
+    }
+    
+    
+
+    func updateUI(){
+        performOnMain(){
+            self.tableView.reloadData()
+        }
+    }
     func getUser(){
         let request = NSFetchRequest(entityName: "User")
         request.fetchLimit = 1
