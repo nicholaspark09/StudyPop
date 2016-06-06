@@ -24,6 +24,10 @@
 		AF3740A41CF75D1600216F64 /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3740A31CF75D1600216F64 /* GroupsViewController.swift */; };
 		AF3E5EA11D025C5300EE699F /* GroupMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3E5E9F1D025C5300EE699F /* GroupMember.swift */; };
 		AF3E5EA31D0268A900EE699F /* GroupEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3E5EA21D0268A900EE699F /* GroupEditViewController.swift */; };
+		AF5AA9D61D0561A80020D5BD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AA9D51D0561A80020D5BD /* ProfileViewController.swift */; };
+		AF5AA9D81D0567440020D5BD /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AA9D71D0567440020D5BD /* PeopleViewController.swift */; };
+		AF5AA9DC1D056B730020D5BD /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AA9DA1D056B730020D5BD /* Profile.swift */; };
+		AF5AA9DE1D0580730020D5BD /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5AA9DD1D0580730020D5BD /* EditProfileViewController.swift */; };
 		AF7C39261CFD438E0004BB83 /* LocationPickViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7C39251CFD438E0004BB83 /* LocationPickViewController.swift */; };
 		AF8043A11CFE4B3100A2B7A4 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF80439F1CFE4B3100A2B7A4 /* Location.swift */; };
 		AF8043A31CFE577B00A2B7A4 /* PickImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8043A21CFE577B00A2B7A4 /* PickImageViewController.swift */; };
@@ -84,6 +88,10 @@
 		AF3740A31CF75D1600216F64 /* GroupsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
 		AF3E5E9F1D025C5300EE699F /* GroupMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMember.swift; sourceTree = "<group>"; };
 		AF3E5EA21D0268A900EE699F /* GroupEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupEditViewController.swift; sourceTree = "<group>"; };
+		AF5AA9D51D0561A80020D5BD /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		AF5AA9D71D0567440020D5BD /* PeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
+		AF5AA9DA1D056B730020D5BD /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		AF5AA9DD1D0580730020D5BD /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		AF7C39251CFD438E0004BB83 /* LocationPickViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationPickViewController.swift; sourceTree = "<group>"; };
 		AF80439F1CFE4B3100A2B7A4 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		AF8043A21CFE577B00A2B7A4 /* PickImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickImageViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +170,7 @@
 				AF90352B1D01071500A67F9E /* GroupRequest.swift */,
 				AF3E5E9F1D025C5300EE699F /* GroupMember.swift */,
 				AF283DA31D05118D006D4AC1 /* Photo.swift */,
+				AF5AA9DA1D056B730020D5BD /* Profile.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -259,6 +268,9 @@
 				AF7C39251CFD438E0004BB83 /* LocationPickViewController.swift */,
 				AF8043A21CFE577B00A2B7A4 /* PickImageViewController.swift */,
 				AF3E5EA21D0268A900EE699F /* GroupEditViewController.swift */,
+				AF5AA9D51D0561A80020D5BD /* ProfileViewController.swift */,
+				AF5AA9D71D0567440020D5BD /* PeopleViewController.swift */,
+				AF5AA9DD1D0580730020D5BD /* EditProfileViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -412,6 +424,7 @@
 				AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */,
 				AF0077961CF5393E0056904F /* RegisterViewController.swift in Sources */,
 				AF8043AC1CFE5CC400A2B7A4 /* WDImageCropOverlayView.swift in Sources */,
+				AF5AA9D61D0561A80020D5BD /* ProfileViewController.swift in Sources */,
 				AF112A5A1CFBC3C700FE1DB9 /* Group.swift in Sources */,
 				AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */,
 				AF0077891CF52E7A0056904F /* StudyPopServerHelper.swift in Sources */,
@@ -421,6 +434,7 @@
 				AF283DA51D05118D006D4AC1 /* Photo.swift in Sources */,
 				AF112A5E1CFBDAFA00FE1DB9 /* GroupViewController.swift in Sources */,
 				AF8043AB1CFE5CC400A2B7A4 /* WDCropBorderView.swift in Sources */,
+				AF5AA9DC1D056B730020D5BD /* Profile.swift in Sources */,
 				AF0077901CF5321E0056904F /* Helpers.swift in Sources */,
 				AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */,
 				AF3740A41CF75D1600216F64 /* GroupsViewController.swift in Sources */,
@@ -430,6 +444,8 @@
 				AF2E2B821CF7DF9A00820183 /* City.swift in Sources */,
 				AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */,
 				AF8043AE1CFE5CC400A2B7A4 /* WDImageCropViewController.swift in Sources */,
+				AF5AA9DE1D0580730020D5BD /* EditProfileViewController.swift in Sources */,
+				AF5AA9D81D0567440020D5BD /* PeopleViewController.swift in Sources */,
 				AF7C39261CFD438E0004BB83 /* LocationPickViewController.swift in Sources */,
 				AF9E70E21CFB0F4B00E8B8F6 /* CityTableViewCell.swift in Sources */,
 				AF0077841CF52C810056904F /* StudyPopConstants.swift in Sources */,

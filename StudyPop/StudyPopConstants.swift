@@ -50,6 +50,7 @@ extension StudyPopClient{
         static let UserController = "users"
         static let GroupsController = "groups"
         static let GroupRequestsController = "grouprequests"
+        static let ProfilesController = "profiles"
         static let CitiesController = "cities"
         static let PicsController = "pics"
         static let SubjectsController = "subjects"
@@ -59,6 +60,8 @@ extension StudyPopClient{
         static let EditMethod = "mobileedit"
         static let IndexMethod = "mobileindex"
         static let ViewMethod = "mobileview"
+        static let MyProfileMethod = "myprofile"
+        static let ProfileMethod = "profile"
         static let QuickMethod = "quick"
         static let ProfileAdd = "profileadd"
         static let DeleteMethod = "delete"
@@ -81,6 +84,7 @@ extension StudyPopClient{
         static let Location = "Location"
         static let LocationKey = "LocationKey"
         static let Body = "Body"
+        static let Profile = "Profile"
     }
     
     struct JSONResponseValues{

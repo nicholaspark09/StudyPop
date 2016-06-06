@@ -17,6 +17,7 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
         static let UnwindToGroupsSegue = "UnwindSubject Segue"
         static let UnwindToAddSegue = "UnwindToAdd Segue"
         static let UnwindToEditSegue = "UnwindToEdit Segue"
+        static let UnwindToProfile = "UnwindToProfile Segue"
     }
     
     var subjectName = ""
@@ -53,18 +54,13 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
         tableView.delegate = self
         tableView.dataSource = self
         
-        let tempSubjects = indexSubjects()
+        //let tempSubjects = indexSubjects()
         let tempSubject = [Subject.Keys.Name : "No Subject", Subject.Keys.User: ""]
         let subject = Subject.init(dictionary: tempSubject, context: self.scratchContext)
-        if tempSubjects.count < 1 {
-            //There are no subjects, get them from the server
-            subjects.append(subject)
-            getSubjects()
-        }else{
-            subjects.append(subject)
-            subjects.appendContentsOf(tempSubjects)
-            tableView.reloadData()
-        }
+        
+        subjects.append(subject)
+        tableView.reloadData()
+        getSubjects()
     }
 
     override func didReceiveMemoryWarning() {
@@ -160,6 +156,8 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
             performSegueWithIdentifier(Constants.UnwindToAddSegue, sender: nil)
         }else if previousController == GroupEditViewController.Constants.Controller{
             performSegueWithIdentifier(Constants.UnwindToEditSegue, sender: nil)
+        }else if previousController == EditProfileViewController.Constants.Controller{
+            performSegueWithIdentifier(Constants.UnwindToProfile, sender: nil)
         }
         
     }

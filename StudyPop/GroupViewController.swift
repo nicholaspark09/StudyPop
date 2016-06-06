@@ -153,7 +153,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                     //Check to make sure the City is up to date
                     if let cityDict = results[StudyPopClient.JSONReponseKeys.City] as? [String:AnyObject]{
                         if let cityKey = cityDict[City.Keys.User] as? String{
-                            var tempCity = self.findCityInDB(cityKey)
+                            var tempCity = StudyPopClient.sharedInstance.findCityInDB(cityKey, sharedContext:self.sharedContext)
                             if tempCity == nil{
                                 tempCity = City.init(dictionary: cityDict, context: self.sharedContext)
                             }
@@ -163,7 +163,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                     //Check to make sure the Subject is up to date
                     if let subjectDict = results[StudyPopClient.JSONReponseKeys.Subject] as? [String:AnyObject]{
                         if let subjectKey = subjectDict[Subject.Keys.User] as? String{
-                            var tempSubject = self.findSubjectInDB(subjectKey)
+                            var tempSubject = StudyPopClient.sharedInstance.findSubjectInDB(subjectKey, sharedContext: self.sharedContext)
                             if tempSubject == nil{
                                 tempSubject = Subject.init(dictionary: subjectDict, context: self.sharedContext)
                             }
