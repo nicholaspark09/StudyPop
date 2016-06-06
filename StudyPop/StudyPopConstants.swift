@@ -21,6 +21,7 @@ extension StudyPopClient{
         static let CityKey = "citykey"
         static let Subject = "subject"
         static let SubjectKey = "subjectkey"
+        static let UserNotification = "StudyPopUser Notification"
     }
     
     struct ParameterKeys{
@@ -33,18 +34,36 @@ extension StudyPopClient{
         static let Offset = "offset"
         static let Token = "token"
         static let SafeKey = "safekey"
+        static let BigImage = "bigImage"
+        static let SmallImage = "smallImage"
+        static let IsPublic = "isPublic"
+        static let People = "people"
+        static let Group = "group"
+        static let Lat = "lat"
+        static let Lng = "lng"
+        static let Body = "body"
+        static let Thumb = "thumb"
+        static let Pic = "pic"
     }
     
     struct ParameterValues{
         static let UserController = "users"
         static let GroupsController = "groups"
+        static let GroupRequestsController = "grouprequests"
         static let CitiesController = "cities"
+        static let PicsController = "pics"
         static let SubjectsController = "subjects"
         static let LoginMethod = "iphonelogin"
         static let RegisterMethod = "iphoneregistration"
         static let SearchMethod = "search"
+        static let EditMethod = "mobileedit"
         static let IndexMethod = "mobileindex"
+        static let ViewMethod = "mobileview"
         static let QuickMethod = "quick"
+        static let ProfileAdd = "profileadd"
+        static let DeleteMethod = "delete"
+        static let AddMethod = "add"
+        
     }
     
     struct JSONReponseKeys{
@@ -55,6 +74,13 @@ extension StudyPopClient{
         static let SafeKey = "SafeKey"
         static let Cities = "Cities"
         static let Subjects = "Subjects"
+        static let MemberKey = "MemberKey"
+        static let GroupMember = "Member"
+        static let City = "City"
+        static let Subject = "Subject"
+        static let Location = "Location"
+        static let LocationKey = "LocationKey"
+        static let Body = "Body"
     }
     
     struct JSONResponseValues{

@@ -15,6 +15,8 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
     struct Constants{
         static let CellReuseIdentifier = "SubjectCell"
         static let UnwindToGroupsSegue = "UnwindSubject Segue"
+        static let UnwindToAddSegue = "UnwindToAdd Segue"
+        static let UnwindToEditSegue = "UnwindToEdit Segue"
     }
     
     var subjectName = ""
@@ -154,8 +156,10 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
         subjectName = subject.name!
         if previousController == GroupsViewController.Constants.Controller{
             performSegueWithIdentifier(Constants.UnwindToGroupsSegue, sender: nil)
-        }else{
-            
+        }else if previousController == AddGroupViewController.Constants.Controller{
+            performSegueWithIdentifier(Constants.UnwindToAddSegue, sender: nil)
+        }else if previousController == GroupEditViewController.Constants.Controller{
+            performSegueWithIdentifier(Constants.UnwindToEditSegue, sender: nil)
         }
         
     }
@@ -164,6 +168,31 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
         performOnMain(){
             self.tableView.reloadData()
         }
+    }
+    
+    @IBAction func cancelClicked(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
+    // Obviously...Finding it
+    func findSubjectInDB(subject:Subject) -> Bool{
+        let request = NSFetchRequest(entityName: "Subject")
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "user == %@", subject.user!)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0 {
+                return true
+            }else{
+                return false
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The Error was \(fetchError)")
+            return false
+        }
+        return false
     }
     
 

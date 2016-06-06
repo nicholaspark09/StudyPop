@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+import UIKit
 
 class Group: NSManagedObject {
 
@@ -23,6 +23,11 @@ class Group: NSManagedObject {
     @NSManaged var city: String?
     @NSManaged var ispublic: NSNumber?
     @NSManaged var hasCity: City?
+    @NSManaged var hasSubject:Subject?
+    @NSManaged var hasLocation: Location?
+    @NSManaged var hasProfilePhoto: Photo?
+    
+    var photoImage: UIImage?
     
     struct Keys{
         static let Name = "name"
@@ -35,6 +40,8 @@ class Group: NSManagedObject {
         static let Image = "image"
         static let City = "city"
         static let IsPublic = "ispublic"
+        static let HasSubject = "hassubject"
+        static let HasLocation = "haslocation"
     }
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -58,6 +65,7 @@ class Group: NSManagedObject {
         image = dictionary[Keys.Image] as? String
         city = dictionary[Keys.City] as? String
         ispublic = dictionary[Keys.IsPublic] as? NSNumber
+        
     }
 
 }

@@ -21,6 +21,9 @@ class StudyPopClient: NSObject{
             
             
             
+            let string = NSString.init(data: data!, encoding: NSUTF8StringEncoding)
+            print("The return was \(string)")
+            
             func sendError(error: String){
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
@@ -42,8 +45,7 @@ class StudyPopClient: NSObject{
                 sendError("No data sent back by request")
                 return
             }
-            let string = NSString.init(data: data, encoding: NSUTF8StringEncoding)
-            print("The return was \(string)")
+            
             self.convertDataWithCompletion(data, completionHandlerForConvertData: completionHandlerForGET)
         }
         task.resume()
@@ -56,11 +58,55 @@ class StudyPopClient: NSObject{
         request.HTTPMethod = "POST"
         request.addValue("application/json",forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("\(jsonBody.lengthOfBytesUsingEncoding(NSUTF8StringEncoding))", forHTTPHeaderField: "Content-Length")
         //request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
-           
+            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("The results were: \(string)")
+            
+            func sendError(error: String){
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForPOST(result:nil,error: NSError(domain:"httpPost", code: 1, userInfo:userInfo))
+            }
+            
+            /* GUARD: Was there an error? */
+            guard (error == nil) else{
+                sendError("There was an error with the request: \(error)")
+                return
+            }
+            /* GUARD: did we get a successful 2XX response? */
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else{
+                sendError("Your request sent back a non 2xx response")
+                return
+            }
+            
+            /* GUARD: Was there any data? */
+            guard let data = data else{
+                sendError("No data sent back by request")
+                return
+            }
+            self.convertDataWithCompletion(data, completionHandlerForConvertData: completionHandlerForPOST)
+        }
+        task.resume()
+        return task
+    }
+    
+    // MARK: PostWithJSONDict
+    func POST(method: String, parameters: [String : AnyObject], jsonBody: [String:AnyObject],completionHandlerForPOST:(result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask{
+        let request = NSMutableURLRequest(URL: urlFromParameters(parameters, withPathExtension: method))
+        request.HTTPMethod = "POST"
+        request.addValue("application/json",forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("\(100))", forHTTPHeaderField: "Content-Length")
+        //request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(jsonBody, options: NSJSONWritingOptions.PrettyPrinted)
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            
+            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("The results were: \(string)")
             
             func sendError(error: String){
                 print(error)
@@ -120,7 +166,7 @@ class StudyPopClient: NSObject{
     private func convertDataWithCompletion(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void){
         var parsedResult: AnyObject!
         do{
-            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: [])
         } catch {
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse as json: '\(data)'"]
             completionHandlerForConvertData(result: nil, error: NSError(domain:"convertDataWithCompletionHandler",code: 1, userInfo: userInfo))

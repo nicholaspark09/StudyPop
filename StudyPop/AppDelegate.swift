@@ -42,6 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
                 self.window?.rootViewController = hc
                 self.window?.makeKeyAndVisible()
+                
             }else{
                 print("The user wasn't logged in")
                 //No logged in user
@@ -55,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let fetchError = error as NSError
             print("The error was \(fetchError)")
         }
+        
         
         return true
     }
@@ -76,13 +78,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     let user = User.init(dictionary: userDetails, context: CoreDataStackManager.sharedInstance().managedObjectContext)
                     print("You have a user with email: \(user.email)")
                     CoreDataStackManager.sharedInstance().saveContext()
-                    //Close all windows and open to the groups
-                    let storyboard = UIStoryboard.init(name:Constants.StoryboardName, bundle: nil)
-                    let hc = storyboard.instantiateViewControllerWithIdentifier(Constants.StoryboardHomeTab)
-                    self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-                    self.window?.rootViewController = hc
-                    self.window?.makeKeyWindow()
-                    print("you have gotten here")
+                    let center = NSNotificationCenter.defaultCenter()
+                    let notification = NSNotification(name: StudyPopClient.Constants.UserNotification, object: self, userInfo: [User.Keys.Token: safekey!])
+                    center.postNotification(notification)
                 }
                 /*
                 print("You observed it. Now broadcast it")

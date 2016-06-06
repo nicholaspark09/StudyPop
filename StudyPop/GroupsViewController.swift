@@ -25,6 +25,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         static let CellReuseIdentifier = "Group Cell"
         static let Controller = "GroupsViewController"
         static let AddSegue = "AddGroup Segue"
+        static let GroupViewSegue = "GroupView Segue"
     }
     
     /**
@@ -47,6 +48,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var groups = [Group]()
     var locale = "en_US"
     var user:User?
+    var group: Group?
     /**     
         IBOutlets
 
@@ -136,19 +138,25 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }else{
                 subjectButton.setImage(UIImage(named: Constants.SubjectUnpickedButton), forState: .Normal)
             }
+        }else if let avc = sender.sourceViewController as? AddGroupViewController{
+            group = avc.group
+            groups.insert(group!, atIndex: 0)
+            updateUI()
         }
-        print("The subject is: \(subjectKey) and the city is: \(cityKey)")
     }
     
     
     @IBAction func seachClicked(sender: UIButton) {
-        var query = searchTextField.text!
+        let query = searchTextField.text!
         if cityKey == "" && subjectKey == "" && query.characters.count < 1{
             groups = []
             searching = false
             indexGroups()
         }else{
             searching = true
+            groups = []
+            updateUI()
+            searchGroups()
         }
     }
     
@@ -183,7 +191,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if let groupDictionary = results![StudyPopClient.JSONReponseKeys.Groups] as? [[String:AnyObject]]{
                     for i in groupDictionary{
                         let dict = i as Dictionary<String,AnyObject>
-                        let group = Group.init(dictionary: dict, context: self.scratchContext)
+                        let group = Group.init(dictionary: dict, context: self.sharedContext)
                         self.groups.append(group)
                     }
                     self.updateUI()
@@ -194,7 +202,45 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - SearchGroups
     func searchGroups(){
-        
+        let query = searchTextField.text!
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupsController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.SearchMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.Offset: "\(groups.count)",
+                      StudyPopClient.ParameterKeys.Locale:locale,
+                      StudyPopClient.ParameterKeys.Token : user!.token!,
+                      Group.Keys.City: cityKey,
+                      Group.Keys.Subject: subjectKey,
+                      Group.Keys.Name : query
+        ]
+        StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in
+            func sendError(error: String){
+                print("Error in transmission: \(error)")
+                self.simpleError(error)
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                return
+            }
+            
+            performOnMain(){
+                if let groupDictionary = results![StudyPopClient.JSONReponseKeys.Groups] as? [[String:AnyObject]]{
+                    for i in groupDictionary{
+                        let dict = i as Dictionary<String,AnyObject>
+                        let group = Group.init(dictionary: dict, context: self.sharedContext)
+                        self.groups.append(group)
+                    }
+                    self.updateUI()
+                }
+            }
+        }
     }
 
     func updateUI(){
@@ -218,6 +264,10 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if let subjectPicker = segue.destinationViewController as? StudyPickerViewController{
                 subjectPicker.previousController = Constants.Controller
             }
+        }else if segue.identifier == Constants.GroupViewSegue{
+            if let groupView = segue.destinationViewController.contentViewController as? GroupViewController{
+                groupView.group = sender as? Group
+            }
         }
     }
     
@@ -238,7 +288,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     let dict = [City.Keys.Name : results!, City.Keys.User : group.city!]
                     performOnMain(){
                         //Save the city in the
-                        let city = City.init(dictionary: dict, context: self.scratchContext)
+                        let city = City.init(dictionary: dict, context: self.sharedContext)
                         group.hasCity = city
                         cell.cityLabel.text = city.name!
                     }
@@ -246,6 +296,11 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        group = groups[indexPath.row]
+        performSegueWithIdentifier(Constants.GroupViewSegue, sender: group)
     }
     
     //Ensure the Popover is just the right size

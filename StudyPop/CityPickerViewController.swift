@@ -22,6 +22,7 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
         static let CellReuseIdentifier = "CityCell"
         static let UnwindSegue = "UnwindToGroups Segue"
         static let UnwindToAdd = "UnwindToAdd Segue"
+        static let UnwindToEdit = "UnwindToEdit Segue"
     }
     
     
@@ -150,6 +151,11 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
         }
     }
     
+    @IBAction func cancelClicked(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let city = cities[indexPath.row]
         currentCityKey = city.user!
@@ -160,8 +166,10 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
         defaults.synchronize()
         if previousController == GroupsViewController.Constants.Controller{
             performSegueWithIdentifier(Constants.UnwindSegue, sender: nil)
-        }else{
+        }else if previousController == AddGroupViewController.Constants.Controller{
             performSegueWithIdentifier(Constants.UnwindToAdd, sender: nil)
+        }else if previousController == GroupEditViewController.Constants.Controller{
+            performSegueWithIdentifier(Constants.UnwindToEdit, sender: nil)
         }
         
     }
