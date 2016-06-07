@@ -23,6 +23,16 @@ class ProfileTableViewCell: UITableViewCell {
     @IBOutlet var cityLabel: UILabel!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var profileImageView: UIImageView!
+    var thumbData:NSData?{
+        didSet{
+            let decodedimage = UIImage(data:thumbData!)
+            self.profileImageView.translatesAutoresizingMaskIntoConstraints = true
+            self.profileImageView.image = decodedimage
+            self.profileImageView.layer.masksToBounds = false
+            self.profileImageView.layer.cornerRadius = self.profileImageView.frame.height/2
+            self.profileImageView.clipsToBounds = true
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

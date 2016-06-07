@@ -231,8 +231,7 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
          self.photo = Photo.init(dictionary: dict, context: self.sharedContext)
          self.groupImageView.image = pickedImage
          let bigImage = bigData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
-         let data = bigData!.base64EncodedDataWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
-         uploadImage(bigImage)
+         self.uploadImage(bigImage)
      }
     
     // MARK: UploadGroupImage

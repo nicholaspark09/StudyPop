@@ -226,6 +226,42 @@ extension StudyPopClient{
         return nil
     }
     
+    func findUserPicture(safekey: String, completionHandlerForPicture: (results: NSData?, error: String?) -> Void){
+        let params = [ParameterKeys.Controller : ParameterValues.PicsController,
+                      ParameterKeys.Method : ParameterValues.UserThumbMethod,
+                      ParameterKeys.ApiKey : Constants.ApiKey,
+                      ParameterKeys.ApiSecret : Constants.ApiSecret,
+                      ParameterKeys.User : safekey]
+        httpGet("",parameters: params){(results,error) in
+            func sendError(error: String){
+                completionHandlerForPicture(results: nil, error: error)
+            }
+            
+            guard error == nil else{
+                sendError("Error: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard let stat = results[JSONReponseKeys.Result] as? String where stat == JSONResponseValues.Success else{
+                sendError("StudyPop Api Returned error: \(results[JSONReponseKeys.Error])")
+                return
+            }
+            
+            guard let body = results[JSONReponseKeys.Body] as? String else{
+                sendError("Couldn't find the Picture")
+                return
+            }
+            //print("The body was \(body)")
+            let newString = body.stringByRemovingPercentEncoding
+            print("The new string is \(newString!)")
+            if let data = NSData(base64EncodedString: newString!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters){
+                completionHandlerForPicture(results: data, error: nil)
+            }else{
+                sendError("Couldn't decode the picture")
+            }
+        }
+    }
+    
     // Obviously...Finding the City
     func findCityInDB(safekey: String, sharedContext: NSManagedObjectContext) -> City?{
         let request = NSFetchRequest(entityName: "City")

@@ -22,6 +22,8 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         static let GroupEditSegue = "GroupEdit Segue"
         static let PinReuseIdentifier = "Pin"
         static let DeleteTitle = "Delete"
+        static let ViewMembersSegue = "ViewMembers Segue"
+        static let EventsViewSegue = "EventsView Segue"
     }
     
     
@@ -495,6 +497,16 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
             if let gec = segue.destinationViewController as? GroupEditViewController{
                 gec.user = user!
                 gec.group = group!
+            }
+        }else if segue.identifier == Constants.ViewMembersSegue{
+            if let mvc = segue.destinationViewController as? MembersViewController{
+                mvc.group = group!
+                mvc.user = user!
+            }
+        }else if segue.identifier == Constants.EventsViewSegue{
+            if let evc = segue.destinationViewController as? GroupEventsTableViewController{
+                evc.user = user!
+                evc.group = group!
             }
         }
     }

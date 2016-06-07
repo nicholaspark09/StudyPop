@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+import UIKit
 
 class GroupMember: NSManagedObject {
 
@@ -18,6 +18,9 @@ class GroupMember: NSManagedObject {
     @NSManaged var role: NSNumber?
     @NSManaged var safekey: String?
     @NSManaged var fromGroup: Group?
+    @NSManaged var photoblob: NSData?
+    var photoImage: UIImage?
+    var checked = false
     
     struct Keys{
         static let Name = "name"
@@ -26,6 +29,8 @@ class GroupMember: NSManagedObject {
         static let Role = "role"
         static let SafeKey = "safekey"
         static let FromGroup = "FromGroup"
+        static let PhotoBlob = "photoblob"
+        static let PhotoImage = "photoimage"
     }
     
     
@@ -45,6 +50,10 @@ class GroupMember: NSManagedObject {
         safekey = dictionary[Keys.SafeKey] as? String
         info = dictionary[Keys.Info] as? String
         role = dictionary[Keys.Role] as? NSNumber
+        photoblob = dictionary[Keys.PhotoBlob] as? NSData
+        if photoblob != nil{
+            photoImage = UIImage(data: photoblob!)
+        }
     }
 
 }

@@ -27,6 +27,7 @@ class Profile: NSManagedObject {
     @NSManaged var safekey: String?
     @NSManaged var hasPhoto: Photo?
     var photoImage: UIImage?
+    var checked = false
     
     struct Keys{
         static let Name = "name"

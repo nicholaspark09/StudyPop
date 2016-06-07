@@ -34,6 +34,7 @@ class ProfileViewController: UIViewController {
     var profile:Profile?
     var city:City?
     var subject:Subject?
+    var profileUser = ""
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
@@ -41,14 +42,56 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if user != nil && profile == nil{
+        if user != nil && profileUser == "" && profile == nil{
             print("You should be grabbing it")
             //This is your profile
             editButton.hidden = false
             getMyProfile()
         }else{
             //This is someone else's profile
-            self.updateUI()
+            if profile != nil{
+                self.updateUI()
+            }else if profileUser != ""{
+                loadingView.startAnimating()
+                let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.ProfilesController,
+                              StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.UserViewMethod,
+                              StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                              StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                              StudyPopClient.ParameterKeys.Token : user!.token!,
+                              StudyPopClient.ParameterKeys.SafeKey : profileUser
+                ]
+                StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
+                    func sendError(error: String){
+                        self.simpleError(error)
+                        self.loadingView.stopAnimating()
+                    }
+                    
+                    guard error == nil else{
+                        sendError(error!.localizedDescription)
+                        return
+                    }
+                    
+                    guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
+                        sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                        return
+                    }
+                    performOnMain(){
+                        self.loadingView.stopAnimating()
+                    }
+                    if let profileDict = results[StudyPopClient.JSONReponseKeys.Profile] as? [String:AnyObject]{
+                        
+                        self.profile = Profile.init(dictionary: profileDict, context: self.sharedContext)
+                        if let safekey = results[StudyPopClient.JSONReponseKeys.SafeKey] as? String{
+                            self.profile!.safekey = safekey
+                            print("YOu found a safekey with \(safekey) as the value")
+                        }
+                        self.profile!.user = self.profileUser
+                        self.updateUI()
+                    }else{
+                        print("You ended up here...")
+                    }
+                }
+            }
         }
     }
 
@@ -114,7 +157,7 @@ class ProfileViewController: UIViewController {
                 if let oldProfile = self.findProfileInDB(){
                     if oldProfile.image != nil && oldProfile.image! == self.profile!.image! {
                         if oldProfile.hasPhoto != nil{
-                            self.profileImageView.image = oldProfile.hasPhoto!.photoImage!
+                            self.profileImageView.image = UIImage(data: oldProfile.hasPhoto!.blob!)
                             self.profileImageView.contentMode = UIViewContentMode.ScaleAspectFit
                             found = true
                         }

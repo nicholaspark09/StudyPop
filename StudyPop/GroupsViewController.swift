@@ -35,11 +35,13 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
+    /*
     lazy var scratchContext: NSManagedObjectContext = {
         var context = NSManagedObjectContext()
         context.persistentStoreCoordinator = CoreDataStackManager.sharedInstance().persistentStoreCoordinator
         return context
     }()
+ */
 
     var cityKey = ""
     var subjectKey = ""
@@ -49,6 +51,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var locale = "en_US"
     var user:User?
     var group: Group?
+    var isLoading = false
+    var canLoadMore = true
+    let threshold = 100.0
     /**     
         IBOutlets
 
@@ -86,11 +91,16 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    // MARK: -ScrollView Delegate
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let contentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+        
+        if !isLoading && canLoadMore && (Double(maximumOffset) - Double(contentOffset) <= threshold) {
+            // Get more data - API call
+            indexGroups()
+        }
     }
-    
     
     
     
@@ -147,6 +157,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     @IBAction func seachClicked(sender: UIButton) {
+        self.canLoadMore = true
         let query = searchTextField.text!
         if cityKey == "" && subjectKey == "" && query.characters.count < 1{
             groups = []
@@ -163,6 +174,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - IndexGroups
     func indexGroups(){
+        isLoading = true
         let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupsController,
                       StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.IndexMethod,
                       StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
@@ -173,8 +185,10 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         ]
         StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in
             func sendError(error: String){
-                print("Error in transmission: \(error)")
                 self.simpleError(error)
+                self.isLoading = false
+                self.canLoadMore = false
+                print("You have hit an error")
             }
             
             guard error == nil else{
@@ -189,19 +203,31 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             performOnMain(){
                 if let groupDictionary = results![StudyPopClient.JSONReponseKeys.Groups] as? [[String:AnyObject]]{
+                    var x = 0
                     for i in groupDictionary{
                         let dict = i as Dictionary<String,AnyObject>
                         let group = Group.init(dictionary: dict, context: self.sharedContext)
                         self.groups.append(group)
+                        x+=1
+                    }
+                    print("There are \(x) number or groups in this batch")
+                    if x < 10{
+                        print("can't Keep going")
+                        self.canLoadMore = false
+                    }else{
+                        print("Keep going")
+                        self.canLoadMore = true
                     }
                     self.updateUI()
                 }
+                self.isLoading = false
             }
         }
     }
     
     // MARK: - SearchGroups
     func searchGroups(){
+        self.isLoading = true
         let query = searchTextField.text!
         let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupsController,
                       StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.SearchMethod,
@@ -216,8 +242,9 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         ]
         StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in
             func sendError(error: String){
-                print("Error in transmission: \(error)")
                 self.simpleError(error)
+                self.isLoading = false
+                self.canLoadMore = false
             }
             
             guard error == nil else{
@@ -232,13 +259,24 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             performOnMain(){
                 if let groupDictionary = results![StudyPopClient.JSONReponseKeys.Groups] as? [[String:AnyObject]]{
+                    var x = 0
                     for i in groupDictionary{
                         let dict = i as Dictionary<String,AnyObject>
                         let group = Group.init(dictionary: dict, context: self.sharedContext)
                         self.groups.append(group)
+                        x+=1
+                    }
+                    print("There are \(x) number or groups in this batch")
+                    if x < 10{
+                        print("can't Keep going")
+                        self.canLoadMore = false
+                    }else{
+                        print("Keep going")
+                        self.canLoadMore = true
                     }
                     self.updateUI()
                 }
+                self.isLoading = false
             }
         }
     }
@@ -280,7 +318,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! GroupTableViewCell
         let group = groups[indexPath.row]
         cell.group = group
-        if group.hasCity == nil && group.city != nil{
+        if group.hasCity == nil && group.city != nil && group.city != ""{
             StudyPopClient.sharedInstance.findCity(user!.token!, safekey: group.city!){ (results,error) in
                 if let error = error{
                     self.simpleError(error)

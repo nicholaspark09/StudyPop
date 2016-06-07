@@ -197,6 +197,22 @@ class PeopleViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
             }
         }
+        if profile.thumbblob != nil{
+            cell.thumbData = profile.thumbblob!
+        }
+        if profile.checked == false{
+            StudyPopClient.sharedInstance.findUserPicture(profile.user!){(results,error) in
+                if let error = error{
+                    self.profiles[indexPath.row].checked = true
+                    print("Couldn't find a picture: \(error)")
+                }else if results != nil{
+                    print("Found a pic!")
+                    performOnMain(){
+                        cell.thumbData = results!
+                    }
+                }
+            }
+        }
         return cell
     }
     

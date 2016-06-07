@@ -14,6 +14,7 @@
 		AF0077901CF5321E0056904F /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF00778F1CF5321E0056904F /* Helpers.swift */; };
 		AF0077941CF532DA0056904F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077921CF532DA0056904F /* User.swift */; };
 		AF0077961CF5393E0056904F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0077951CF5393E0056904F /* RegisterViewController.swift */; };
+		AF070A911D072F8B002515AD /* GroupEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF070A901D072F8B002515AD /* GroupEventsTableViewController.swift */; };
 		AF112A5A1CFBC3C700FE1DB9 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A581CFBC3C700FE1DB9 /* Group.swift */; };
 		AF112A5C1CFBD1D100FE1DB9 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */; };
 		AF112A5E1CFBDAFA00FE1DB9 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A5D1CFBDAFA00FE1DB9 /* GroupViewController.swift */; };
@@ -44,6 +45,8 @@
 		AF9E70E61CFB1F6100E8B8F6 /* StudyPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9E70E51CFB1F6100E8B8F6 /* StudyPickerViewController.swift */; };
 		AF9E70EA1CFB249800E8B8F6 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9E70E81CFB249800E8B8F6 /* Subject.swift */; };
 		AF9E70EC1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9E70EB1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift */; };
+		AFA1403E1D064C31004C3DB0 /* MembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA1403D1D064C31004C3DB0 /* MembersViewController.swift */; };
+		AFA140401D065432004C3DB0 /* GroupMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA1403F1D065432004C3DB0 /* GroupMemberTableViewCell.swift */; };
 		AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26761CE8E1C400754A6D /* AppDelegate.swift */; };
 		AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26781CE8E1C400754A6D /* LoginViewController.swift */; };
 		AFCB267C1CE8E1C400754A6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFCB267A1CE8E1C400754A6D /* Main.storyboard */; };
@@ -79,6 +82,7 @@
 		AF00778F1CF5321E0056904F /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		AF0077921CF532DA0056904F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AF0077951CF5393E0056904F /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		AF070A901D072F8B002515AD /* GroupEventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupEventsTableViewController.swift; sourceTree = "<group>"; };
 		AF112A581CFBC3C700FE1DB9 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		AF112A5D1CFBDAFA00FE1DB9 /* GroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +113,8 @@
 		AF9E70E51CFB1F6100E8B8F6 /* StudyPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPickerViewController.swift; sourceTree = "<group>"; };
 		AF9E70E81CFB249800E8B8F6 /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
 		AF9E70EB1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectTableViewCell.swift; sourceTree = "<group>"; };
+		AFA1403D1D064C31004C3DB0 /* MembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersViewController.swift; sourceTree = "<group>"; };
+		AFA1403F1D065432004C3DB0 /* GroupMemberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberTableViewCell.swift; sourceTree = "<group>"; };
 		AFCB26731CE8E1C300754A6D /* StudyPop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyPop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFCB26761CE8E1C400754A6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFCB26781CE8E1C400754A6D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +203,7 @@
 				AF9E70EB1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift */,
 				AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */,
 				AF9582EA1D05DF1F00064C98 /* ProfileTableViewCell.swift */,
+				AFA1403F1D065432004C3DB0 /* GroupMemberTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -274,6 +281,8 @@
 				AF5AA9D51D0561A80020D5BD /* ProfileViewController.swift */,
 				AF5AA9D71D0567440020D5BD /* PeopleViewController.swift */,
 				AF5AA9DD1D0580730020D5BD /* EditProfileViewController.swift */,
+				AFA1403D1D064C31004C3DB0 /* MembersViewController.swift */,
+				AF070A901D072F8B002515AD /* GroupEventsTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -428,6 +437,8 @@
 				AF0077961CF5393E0056904F /* RegisterViewController.swift in Sources */,
 				AF8043AC1CFE5CC400A2B7A4 /* WDImageCropOverlayView.swift in Sources */,
 				AF5AA9D61D0561A80020D5BD /* ProfileViewController.swift in Sources */,
+				AFA140401D065432004C3DB0 /* GroupMemberTableViewCell.swift in Sources */,
+				AFA1403E1D064C31004C3DB0 /* MembersViewController.swift in Sources */,
 				AF112A5A1CFBC3C700FE1DB9 /* Group.swift in Sources */,
 				AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */,
 				AF0077891CF52E7A0056904F /* StudyPopServerHelper.swift in Sources */,
@@ -448,6 +459,7 @@
 				AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */,
 				AF8043AE1CFE5CC400A2B7A4 /* WDImageCropViewController.swift in Sources */,
 				AF5AA9DE1D0580730020D5BD /* EditProfileViewController.swift in Sources */,
+				AF070A911D072F8B002515AD /* GroupEventsTableViewController.swift in Sources */,
 				AF5AA9D81D0567440020D5BD /* PeopleViewController.swift in Sources */,
 				AF7C39261CFD438E0004BB83 /* LocationPickViewController.swift in Sources */,
 				AF9E70E21CFB0F4B00E8B8F6 /* CityTableViewCell.swift in Sources */,
