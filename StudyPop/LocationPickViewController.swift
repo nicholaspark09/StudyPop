@@ -20,6 +20,7 @@ class LocationPickViewController: UIViewController, MKMapViewDelegate {
         static let PinReuseIdentifier = "Pin"
         static let UnwindToAddSegue = "UnwindToAdd Segue"
         static let UnwindToEditSegue = "UnwindToEdit Segue"
+        static let UnwindToAddGroupEventSegue = "UnwindToAddGroupEvent Segue"
     }
     
     /**
@@ -134,6 +135,8 @@ class LocationPickViewController: UIViewController, MKMapViewDelegate {
                 performSegueWithIdentifier(Constants.UnwindToAddSegue, sender: nil)
             }else if controller == GroupEditViewController.Constants.Controller{
                 performSegueWithIdentifier(Constants.UnwindToEditSegue, sender: nil)
+            }else if controller == AddEventViewController.Constants.Controller{
+                performSegueWithIdentifier(Constants.UnwindToAddGroupEventSegue, sender: nil)
             }
         }
     }

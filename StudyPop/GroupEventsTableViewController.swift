@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 @objc protocol GroupEventsProtocol{
     func addClicked()
@@ -17,10 +18,21 @@ class GroupEventsTableViewController: UITableViewController {
     struct Constants{
         static let Title = "Events"
         static let AddTitle = "Add"
+        static let AddEventSegue = "AddEvent Segue"
     }
     
+    /**
+     Variables Section
+     */
+    // MARK: SharedContext
+    lazy var sharedContext: NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
     var group: Group?
     var user: User?
+    var events = [Event]()
+    var loading = false
+    var canLoadMore = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,23 +43,78 @@ class GroupEventsTableViewController: UITableViewController {
         
         let addButton = UIBarButtonItem.init(title: Constants.AddTitle, style: .Plain, target: self, action: #selector(GroupEventsProtocol.addClicked))
         self.navigationItem.rightBarButtonItem = addButton
+        
+        indexEvents()
     }
 
     func addClicked(){
+       performSegueWithIdentifier(Constants.AddEventSegue, sender: nil)
+    }
+    
+    func updateUI(){
         
     }
+    
+    // MARK: - Get Group Events
+    func indexEvents(){
+        loading = true
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventsController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.GroupEventsMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.Offset: "\(events.count)",
+                      StudyPopClient.ParameterKeys.Token : user!.token!,
+                      StudyPopClient.ParameterKeys.Group : group!.user!
+        ]
+        StudyPopClient.sharedInstance.httpGet("", parameters: params){(results,error) in
+            func sendError(error: String){
+                self.simpleError(error)
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                return
+            }
+            if let eventDictionary = results![StudyPopClient.JSONReponseKeys.Events] as? [[String:AnyObject]]{
+                var x = 0
+                for i in eventDictionary{
+                    let dict = i as Dictionary<String,AnyObject>
+                    let event = Event.init(dictionary: dict, context: self.sharedContext)
+                    self.events.append(event)
+                    x+=1
+                }
+                if x < 10{
+                    self.canLoadMore = false
+                    if x == 0{
+                        self.simpleError("No events")
+                    }
+                }else{
+                    self.canLoadMore = true
+                }
+                self.updateUI()
+            }
+            self.loading = false
+            
+        }
+    }
+
     
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return events.count
     }
 
     /*
@@ -95,14 +162,18 @@ class GroupEventsTableViewController: UITableViewController {
     }
     */
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == Constants.AddEventSegue{
+            if let avc = segue.destinationViewController as? AddEventViewController{
+                avc.user = user!
+                avc.group = group!
+            }
+        }
     }
-    */
+
 
 }

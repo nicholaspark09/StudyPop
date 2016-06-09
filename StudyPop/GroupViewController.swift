@@ -43,6 +43,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
     var oldGroup: Group?
     var safekey = ""
     var user:User?
+
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
@@ -143,7 +144,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                     
                     if let dict = results[StudyPopClient.JSONReponseKeys.GroupMember] as? [String:AnyObject]{
                         let member = GroupMember.init(dictionary: dict, context: self.sharedContext)
-                        
+                        member.safekey = memberKey!
                         if member.role! == 1{
                             //This is an admin
                             //Create an edit Button

@@ -19,6 +19,7 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
         static let UnwindToEditSegue = "UnwindToEdit Segue"
         static let UnwindToProfile = "UnwindToProfile Segue"
         static let UnwindToPeopleSegue = "UnwindToPeople Segue"
+        static let UnwindToAddGroupEvent = "UnwindAddGroupEvent Segue"
     }
     
     var subjectName = ""
@@ -161,6 +162,8 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
             performSegueWithIdentifier(Constants.UnwindToProfile, sender: nil)
         }else if previousController == PeopleViewController.Constants.Controller{
             performSegueWithIdentifier(Constants.UnwindToPeopleSegue, sender: nil)
+        }else if previousController == AddEventViewController.Constants.Controller{
+            performSegueWithIdentifier(Constants.UnwindToAddGroupEvent, sender: nil)
         }
         
     }

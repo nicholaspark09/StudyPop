@@ -327,11 +327,13 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     performOnMain(){
                         //Save the city in the
                         let city = City.init(dictionary: dict, context: self.sharedContext)
-                        group.hasCity = city
+                        self.groups[indexPath.row].hasCity = city
                         cell.cityLabel.text = city.name!
                     }
                 }
             }
+        }else if group.hasCity != nil{
+            cell.cityLabel.text = group.hasCity!.name!
         }
         return cell
     }

@@ -53,6 +53,7 @@ extension StudyPopClient{
         static let GroupRequestsController = "grouprequests"
         static let GroupMembersController = "groupmembers"
         static let ProfilesController = "profiles"
+        static let EventsController = "events"
         static let CitiesController = "cities"
         static let PicsController = "pics"
         static let SubjectsController = "subjects"
@@ -70,6 +71,7 @@ extension StudyPopClient{
         static let AddMethod = "add"
         static let UserThumbMethod = "userthumb"
         static let UserViewMethod = "userview"
+        static let GroupEventsMethod = "groupindex"
     }
     
     struct JSONReponseKeys{
@@ -90,6 +92,7 @@ extension StudyPopClient{
         static let Body = "Body"
         static let Profile = "Profile"
         static let Profiles = "Profiles"
+        static let Events = "Events"
 
     }
     
