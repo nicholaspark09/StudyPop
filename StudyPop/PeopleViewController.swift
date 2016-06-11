@@ -183,20 +183,6 @@ class PeopleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! ProfileTableViewCell
         let profile = profiles[indexPath.row]
         cell.profile = profile
-        if profile.city != nil && profile.city != ""{
-            StudyPopClient.sharedInstance.findCity(user!.token!, safekey: profile.city!){ (results,error) in
-                if let error = error{
-                    self.simpleError(error)
-                }else if results != nil{
-                    let dict = [City.Keys.Name : results!, City.Keys.User :profile.city!]
-                    performOnMain(){
-                        //Save the city in the
-                        let city = City.init(dictionary: dict, context: self.sharedContext)
-                        cell.cityLabel.text = city.name!
-                    }
-                }
-            }
-        }
         if profile.thumbblob != nil{
             cell.thumbData = profile.thumbblob!
         }

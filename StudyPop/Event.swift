@@ -14,9 +14,6 @@ class Event: NSManagedObject {
 
     @NSManaged var name: String?
     @NSManaged var info: String?
-    @NSManaged var subject: String?
-    @NSManaged var city: String?
-    @NSManaged var location: String?
     @NSManaged var maxpeople: NSNumber?
     @NSManaged var currentpeople: NSNumber?
     @NSManaged var image: String?
@@ -27,10 +24,12 @@ class Event: NSManagedObject {
     @NSManaged var end: NSDate?
     @NSManaged var dayof: String?
     @NSManaged var photoblob: NSData?
-    @NSManaged var hasCity: City?
-    @NSManaged var hasSubject: Subject?
+    @NSManaged var safekey: String?
+    @NSManaged var city: City?
+    @NSManaged var subject: Subject?
     @NSManaged var hasPhoto: Photo?
-    @NSManaged var hasLocation: Location?
+    @NSManaged var location: Location?
+    @NSManaged var hasMembers: [EventMember]?
     
     
     struct Keys{
@@ -49,6 +48,8 @@ class Event: NSManagedObject {
         static let End = "end"
         static let DayOf = "dayof"
         static let PhotoBlob = "photoblob"
+        static let HasMembers = "hasmembers"
+        static let SafeKey = "safekey"
     }
     
     
@@ -65,16 +66,14 @@ class Event: NSManagedObject {
         // Dictionary
         name = dictionary[Keys.Name] as? String
         info = dictionary[Keys.Info] as? String
-        city = dictionary[Keys.City] as? String
-        subject = dictionary[Keys.Subject] as? String
-        location = dictionary[Keys.Location] as? String
         maxpeople = dictionary[Keys.MaxPeople] as? NSNumber
         currentpeople = dictionary[Keys.CurrentPeople] as? NSNumber
         image = dictionary[Keys.Image] as? String
         user = dictionary[Keys.User] as? String
         ispublic = dictionary[Keys.IsPublic] as? NSNumber
         price = dictionary[Keys.Price] as? NSNumber
-        
+        dayof = dictionary[Keys.DayOf] as? String
+        safekey = dictionary[Keys.SafeKey] as? String
         if let startString = dictionary[Keys.Start] as? String{
             if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString){
                 start = startDate
@@ -84,6 +83,15 @@ class Event: NSManagedObject {
             if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString){
                 end = endDate
             }
+        }
+        if let cityDict = dictionary[Keys.City] as? [String:AnyObject]{
+            city = City.init(dictionary: cityDict, context: context)
+        }
+        if let subjectDict = dictionary[Keys.Subject] as? [String:AnyObject]{
+            subject = Subject.init(dictionary: subjectDict, context: context)
+        }
+        if let locationDict = dictionary[Keys.Location] as? [String:AnyObject]{
+            location = Location.init(dictionary: locationDict, context: context)
         }
         dayof = dictionary[Keys.DayOf] as? String
         photoblob = dictionary[Keys.PhotoBlob] as? NSData

@@ -3,47 +3,55 @@
     <entity name="City" representedClassName=".City" syncable="YES">
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="hasGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="hasCity" inverseEntity="Group" syncable="YES"/>
+        <relationship name="hasEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="city" inverseEntity="Event" syncable="YES"/>
+        <relationship name="hasGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="city" inverseEntity="Group" syncable="YES"/>
+        <relationship name="hasProfiles" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="city" inverseEntity="Profile" syncable="YES"/>
     </entity>
     <entity name="Event" representedClassName=".Event" syncable="YES">
-        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currentpeople" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="dayof" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="end" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ispublic" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxpeople" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photoblob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="hasCity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" syncable="YES"/>
-        <relationship name="hasLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" syncable="YES"/>
-        <relationship name="hasPhoto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" syncable="YES"/>
-        <relationship name="hasSubject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subject" syncable="YES"/>
+        <relationship name="city" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" inverseName="hasEvents" inverseEntity="City" syncable="YES"/>
+        <relationship name="hasMembers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EventMember" inverseName="fromEvent" inverseEntity="EventMember" syncable="YES"/>
+        <relationship name="hasPhoto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" inverseName="fromEvent" inverseEntity="Photo" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="hasEvent" inverseEntity="Location" syncable="YES"/>
+        <relationship name="subject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subject" inverseName="hasEvents" inverseEntity="Subject" syncable="YES"/>
+    </entity>
+    <entity name="EventMember" representedClassName=".EventMember" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="role" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbblob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fromEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="hasMembers" inverseEntity="Event" syncable="YES"/>
     </entity>
     <entity name="Group" representedClassName=".Group" syncable="YES">
-        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="currentpeople" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ispublic" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxpeople" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="hasCity" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" inverseName="hasGroups" inverseEntity="City" syncable="YES"/>
-        <relationship name="hasLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="hasGroup" inverseEntity="Location" syncable="YES"/>
+        <relationship name="city" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" inverseName="hasGroups" inverseEntity="City" syncable="YES"/>
         <relationship name="hasMember" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GroupMember" inverseName="fromGroup" inverseEntity="GroupMember" syncable="YES"/>
         <relationship name="hasProfilePhoto" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Photo" inverseName="fromGroupProfile" inverseEntity="Photo" syncable="YES"/>
-        <relationship name="hasSubject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subject" inverseName="hasGroups" inverseEntity="Subject" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="hasGroup" inverseEntity="Location" syncable="YES"/>
+        <relationship name="subject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subject" inverseName="hasGroups" inverseEntity="Subject" syncable="YES"/>
     </entity>
     <entity name="GroupMember" representedClassName=".GroupMember" syncable="YES">
         <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
@@ -86,7 +94,8 @@
         <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="hasGroup" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="hasLocation" inverseEntity="Group" syncable="YES"/>
+        <relationship name="hasEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="location" inverseEntity="Event" syncable="YES"/>
+        <relationship name="hasGroup" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="location" inverseEntity="Group" syncable="YES"/>
     </entity>
     <entity name="Photo" representedClassName=".Photo" syncable="YES">
         <attribute name="blob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
@@ -96,11 +105,11 @@
         <attribute name="pretty" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="fromEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="hasPhoto" inverseEntity="Event" syncable="YES"/>
         <relationship name="fromGroupProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="hasProfilePhoto" inverseEntity="Group" syncable="YES"/>
         <relationship name="fromProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="hasPhoto" inverseEntity="Profile" syncable="YES"/>
     </entity>
     <entity name="Profile" representedClassName=".Profile" syncable="YES">
-        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -109,17 +118,21 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbblob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="city" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="City" inverseName="hasProfiles" inverseEntity="City" syncable="YES"/>
         <relationship name="fromUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="profile" inverseEntity="User" syncable="YES"/>
         <relationship name="hasPhoto" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" inverseName="fromProfile" inverseEntity="Photo" syncable="YES"/>
+        <relationship name="subject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Subject" inverseName="hasProfiles" inverseEntity="Subject" syncable="YES"/>
     </entity>
     <entity name="Subject" representedClassName=".Subject" syncable="YES">
         <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="hasGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="hasSubject" inverseEntity="Group" syncable="YES"/>
+        <relationship name="hasEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Event" inverseName="subject" inverseEntity="Event" syncable="YES"/>
+        <relationship name="hasGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="subject" inverseEntity="Group" syncable="YES"/>
+        <relationship name="hasProfiles" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="subject" inverseEntity="Profile" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="accesstoken" optional="YES" attributeType="String" syncable="YES"/>
@@ -134,16 +147,17 @@
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Profile" inverseName="fromUser" inverseEntity="Profile" syncable="YES"/>
     </entity>
     <elements>
-        <element name="City" positionX="-45" positionY="108" width="128" height="120"/>
-        <element name="Event" positionX="-45" positionY="144" width="128" height="330"/>
-        <element name="Group" positionX="-63" positionY="90" width="128" height="270"/>
+        <element name="City" positionX="-45" positionY="108" width="128" height="165"/>
+        <element name="Event" positionX="-45" positionY="144" width="128" height="315"/>
+        <element name="EventMember" positionX="-45" positionY="135" width="128" height="135"/>
+        <element name="Group" positionX="-63" positionY="90" width="128" height="240"/>
         <element name="GroupMember" positionX="-54" positionY="135" width="128" height="150"/>
         <element name="GroupPost" positionX="-54" positionY="135" width="128" height="195"/>
         <element name="GroupRequest" positionX="-54" positionY="135" width="128" height="135"/>
-        <element name="Location" positionX="-54" positionY="126" width="128" height="225"/>
-        <element name="Photo" positionX="-54" positionY="135" width="128" height="180"/>
+        <element name="Location" positionX="-54" positionY="126" width="128" height="240"/>
+        <element name="Photo" positionX="-54" positionY="135" width="128" height="195"/>
         <element name="Profile" positionX="-54" positionY="36" width="128" height="255"/>
-        <element name="Subject" positionX="-63" positionY="90" width="128" height="105"/>
+        <element name="Subject" positionX="-63" positionY="90" width="128" height="150"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="195"/>
     </elements>
 </model>

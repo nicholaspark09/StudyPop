@@ -12,7 +12,6 @@ import UIKit
 
 class Profile: NSManagedObject {
 
-    @NSManaged var city: String?
     @NSManaged var email: String?
     @NSManaged var firstName: String?
     @NSManaged var image: String?
@@ -21,10 +20,11 @@ class Profile: NSManagedObject {
     @NSManaged var name: String?
     @NSManaged var phone: String?
     @NSManaged var user: String?
-    @NSManaged var subject: String?
     @NSManaged var fromUser: User?
     @NSManaged var thumbblob: NSData?
     @NSManaged var safekey: String?
+    @NSManaged var city:City?
+    @NSManaged var subject:Subject?
     @NSManaged var hasPhoto: Photo?
     var photoImage: UIImage?
     var checked = false
@@ -57,8 +57,12 @@ class Profile: NSManagedObject {
         // Dictionary
         name = dictionary[Keys.Name] as? String
         user = dictionary[Keys.User] as? String
-        city = dictionary[Keys.City] as? String
-        subject = dictionary[Keys.Subject] as? String
+        if let cityDict = dictionary[Keys.City] as? [String:AnyObject]{
+            city = City.init(dictionary: cityDict, context: context)
+        }
+        if let subjectDict = dictionary[Keys.Subject] as? [String:AnyObject]{
+            subject = Subject.init(dictionary: subjectDict, context: context)
+        }
         email = dictionary[Keys.Email] as? String
         phone = dictionary[Keys.Phone] as? String
         image = dictionary[Keys.Image] as? String

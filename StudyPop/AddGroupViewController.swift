@@ -90,8 +90,8 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
     @IBAction func unwindToAdd(sender: UIStoryboardSegue){
         if let sourceViewController = sender.sourceViewController as? CityPickerViewController{
             if sourceViewController.currentCityKey != ""{
-                let cityDict = [City.Keys.Name : sourceViewController.cityName, City.Keys.User : sourceViewController.currentCityKey]
-                if let foundCity = self.findCityInDB(cityDict[City.Keys.User]!){
+                let cityDict = [City.Keys.Name : sourceViewController.cityName, City.Keys.SafeKey : sourceViewController.currentCityKey]
+                if let foundCity = self.findCityInDB(cityDict[City.Keys.SafeKey]!){
                     //City was found 
                     self.city = foundCity
                 }else{
@@ -104,8 +104,8 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
             }
         }else if let svc = sender.sourceViewController as? StudyPickerViewController{
             if svc.subjectKey != ""{
-                let subjectDict = [Subject.Keys.Name : svc.subjectName, Subject.Keys.User : svc.subjectKey]
-                if let foundSubject = self.findSubjectInDB(subjectDict[Subject.Keys.User]!){
+                let subjectDict = [Subject.Keys.Name : svc.subjectName, Subject.Keys.SafeKey : svc.subjectKey]
+                if let foundSubject = self.findSubjectInDB(subjectDict[Subject.Keys.SafeKey]!){
                     self.subject = foundSubject
                 }else{
                     self.subject = Subject.init(dictionary: subjectDict, context: self.sharedContext)
@@ -200,10 +200,10 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
             var cityKey = ""
             var subjectKey = ""
             if city != nil{
-                cityKey = city!.user!
+                cityKey = city!.safekey!
             }
             if subject != nil{
-                subjectKey = subject!.user!
+                subjectKey = subject!.safekey!
             }
             var lat = 0.0
             var lng = 0.0
@@ -248,18 +248,18 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
                 
                 self.safekey = results[StudyPopClient.JSONReponseKeys.SafeKey] as! String
                 
-                let groupDict = [Group.Keys.Name: name, Group.Keys.Info: info, Group.Keys.City: cityKey, Group.Keys.Subject: subjectKey, Group.Keys.User: self.safekey]
+                let groupDict = [Group.Keys.Name: name, Group.Keys.Info: info, Group.Keys.City: cityKey, Group.Keys.Subject: subjectKey, Group.Keys.SafeKey: self.safekey]
                 
                 self.group = Group.init(dictionary: groupDict, context: self.sharedContext)
                 performOnMain(){
                     if self.subject != nil{
-                        self.group!.hasSubject = self.subject!
+                        self.group!.subject = self.subject!
                     }
                     if self.city != nil{
-                        self.group!.hasCity = self.city!
+                        self.group!.city = self.city!
                     }
                     if self.location != nil{
-                        self.group!.hasLocation = self.location!
+                        self.group!.location = self.location!
                     }
                     CoreDataStackManager.sharedInstance().saveContext()
                     self.performSegueWithIdentifier(Constants.UnwindSegue, sender: nil)
@@ -273,7 +273,7 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
     func findSubjectInDB(safekey: String) -> Subject?{
             let request = NSFetchRequest(entityName: "Subject")
             request.fetchLimit = 1
-            request.predicate = NSPredicate(format: "user == %@", safekey)
+            request.predicate = NSPredicate(format: "safekey == %@", safekey)
             do{
                 let results = try sharedContext.executeFetchRequest(request)
                 if results.count > 0 {
@@ -292,7 +292,7 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
     func findCityInDB(safekey: String) -> City?{
         let request = NSFetchRequest(entityName: "City")
         request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "user == %@", safekey)
+        request.predicate = NSPredicate(format: "safekey == %@", safekey)
         do{
             let results = try self.sharedContext.executeFetchRequest(request)
             if results.count > 0 {
@@ -318,6 +318,9 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
         return privateOptions.count
     }
 
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return privateOptions[row]
+    }
     
 
     // MARK: - Navigation

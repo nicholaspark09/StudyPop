@@ -17,6 +17,9 @@ class ProfileTableViewCell: UITableViewCell {
             }else{
                 nameLabel?.text = "No name"
             }
+            if profile!.city != nil{
+                cityLabel.text = self.profile!.city!.name!
+            }
         }
     }
     

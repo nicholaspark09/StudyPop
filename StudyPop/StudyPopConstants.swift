@@ -45,6 +45,7 @@ extension StudyPopClient{
         static let Thumb = "thumb"
         static let Pic = "pic"
         static let User = "user"
+        static let Query = "query"
     }
     
     struct ParameterValues{
@@ -93,7 +94,8 @@ extension StudyPopClient{
         static let Profile = "Profile"
         static let Profiles = "Profiles"
         static let Events = "Events"
-
+        static let Event = "Event"
+        static let EventMember = "EventMember"
     }
     
     struct JSONResponseValues{

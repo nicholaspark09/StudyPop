@@ -80,7 +80,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
     func findGroupInDB() -> Group?{
         let request = NSFetchRequest(entityName: "Group")
         request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "user == %@", group!.user!)
+        request.predicate = NSPredicate(format: "safekey == %@", group!.safekey!)
         do{
             let results = try sharedContext.executeFetchRequest(request)
             if results.count > 0{
@@ -104,7 +104,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                       StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.ViewMethod,
                       StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
                       StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
-                      StudyPopClient.ParameterKeys.SafeKey: group!.user!,
+                      StudyPopClient.ParameterKeys.SafeKey: group!.safekey!,
                       StudyPopClient.ParameterKeys.Token : user!.token!
         ]
         StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
@@ -151,37 +151,6 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                             let editButton = UIBarButtonItem(title: Constants.EditTitle, style: .Plain, target: self, action: #selector(GroupViewProtocol.editClicked))
                             let deleteButton = UIBarButtonItem(title: Constants.DeleteTitle, style: .Plain, target: self, action: #selector(GroupViewProtocol.deleteClicked))
                             self.navigationItem.setRightBarButtonItems([editButton,deleteButton], animated: true)
-                        }
-                    }
-                    //Check to make sure the City is up to date
-                    if let cityDict = results[StudyPopClient.JSONReponseKeys.City] as? [String:AnyObject]{
-                        if let cityKey = cityDict[City.Keys.User] as? String{
-                            var tempCity = StudyPopClient.sharedInstance.findCityInDB(cityKey, sharedContext:self.sharedContext)
-                            if tempCity == nil{
-                                tempCity = City.init(dictionary: cityDict, context: self.sharedContext)
-                            }
-                            self.group!.hasCity = tempCity
-                        }
-                    }
-                    //Check to make sure the Subject is up to date
-                    if let subjectDict = results[StudyPopClient.JSONReponseKeys.Subject] as? [String:AnyObject]{
-                        if let subjectKey = subjectDict[Subject.Keys.User] as? String{
-                            var tempSubject = StudyPopClient.sharedInstance.findSubjectInDB(subjectKey, sharedContext: self.sharedContext)
-                            if tempSubject == nil{
-                                tempSubject = Subject.init(dictionary: subjectDict, context: self.sharedContext)
-                            }
-                            self.group!.hasSubject = tempSubject
-                        }
-                    }
-                    
-                    //Check to make sure the location is up to date
-                    if let dayDict = results[StudyPopClient.JSONReponseKeys.Location] as? [String:AnyObject]{
-                        if let locationKey = dayDict[Location.Keys.SafeKey] as? String{
-                            var tempLocation = self.findLocationInDB(locationKey)
-                            if tempLocation == nil{
-                                tempLocation = Location.init(dictionary: dayDict, context: self.sharedContext)
-                            }
-                            self.group!.hasLocation = tempLocation
                         }
                     }
                     CoreDataStackManager.sharedInstance().saveContext()
@@ -244,7 +213,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                 StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.DeleteMethod,
                 StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
                 StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
-                StudyPopClient.ParameterKeys.SafeKey: self.group!.user!,
+                StudyPopClient.ParameterKeys.SafeKey: self.group!.safekey!,
                 StudyPopClient.ParameterKeys.Token : self.user!.token!
             ]
             StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
@@ -332,17 +301,17 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
     // Update UI with Group Info
     func updateUI(){
         performOnMain(){
-            if self.group!.hasCity != nil{
-                self.cityLabel.text = self.group!.hasCity!.name!
+            if self.group!.city != nil{
+                self.cityLabel.text = self.group!.city!.name!
             }
-            if self.group!.hasSubject != nil{
-                self.subjectLabel.text = self.group!.hasSubject!.name!
+            if self.group!.subject != nil{
+                self.subjectLabel.text = self.group!.subject!.name!
             }
             self.infoTextView.text = self.group!.info!
             //Set the map
-            if self.group!.hasLocation != nil && self.group!.hasLocation!.lat != 0{
-                let lat = self.group!.hasLocation!.lat!.doubleValue
-                let lng = self.group!.hasLocation!.lng!.doubleValue
+            if self.group!.location != nil && self.group!.location!.lat != 0{
+                let lat = self.group!.location!.lat!.doubleValue
+                let lng = self.group!.location!.lng!.doubleValue
                 let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lng)
                 let currentAnnotation = MKPointAnnotation()
                 currentAnnotation.coordinate = coordinate
@@ -399,7 +368,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                             let image = UIImage(data: imageData)
                             self.groupImageView.image = image
                             self.groupImageView.contentMode = UIViewContentMode.ScaleAspectFit
-                            let photoDict = [Photo.Keys.Blob : imageData, Photo.Keys.Controller : "groups", Photo.Keys.TheType : "\(1)", Photo.Keys.SafeKey : self.group!.image!, Photo.Keys.ParentKey : self.group!.user!]
+                            let photoDict = [Photo.Keys.Blob : imageData, Photo.Keys.Controller : "groups", Photo.Keys.TheType : "\(1)", Photo.Keys.SafeKey : self.group!.image!, Photo.Keys.ParentKey : self.group!.safekey!]
                             let photo = Photo.init(dictionary: photoDict, context: self.sharedContext)
                             self.group!.hasProfilePhoto = photo
                             CoreDataStackManager.sharedInstance().saveContext()
@@ -411,64 +380,8 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         
     }
     
-    // Obviously...Finding the Subject
-    func findSubjectInDB(safekey: String) -> Subject?{
-        let request = NSFetchRequest(entityName: "Subject")
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "user == %@", safekey)
-        do{
-            let results = try sharedContext.executeFetchRequest(request)
-            if results.count > 0 {
-                let subject = results[0] as? Subject
-                return subject
-            }
-        } catch {
-            let fetchError = error as NSError
-            print("The Error was \(fetchError)")
-            return nil
-        }
-        return nil
-    }
-    
-    // Obviously...Finding the City
-    func findCityInDB(safekey: String) -> City?{
-        let request = NSFetchRequest(entityName: "City")
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "user == %@", safekey)
-        do{
-            let results = try self.sharedContext.executeFetchRequest(request)
-            if results.count > 0 {
-                let city = results[0] as? City
-                return city
-            }
-        } catch {
-            let fetchError = error as NSError
-            print("The Error was \(fetchError)")
-            return nil
-        }
-        return nil
-    }
-    
-    // Obviously...Finding the Location
-    func findLocationInDB(safekey: String) -> Location?{
-        let request = NSFetchRequest(entityName: "Location")
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "safekey == %@", safekey)
-        do{
-            let results = try self.sharedContext.executeFetchRequest(request)
-            if results.count > 0 {
-                let city = results[0] as? Location
-                return city
-            }
-        } catch {
-            let fetchError = error as NSError
-            print("The Error was \(fetchError)")
-            return nil
-        }
-        return nil
-    }
-    
-    
+
+
     
     // MARK: MapViewDelegates
     // MARK: - MKMapViewDelegate Add Pin to MapView

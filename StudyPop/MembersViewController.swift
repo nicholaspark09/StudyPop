@@ -77,10 +77,8 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
                     }
                     print("There are \(x) number or groups in this batch")
                     if x < 10{
-                        print("can't Keep going")
                         self.canLoadMore = false
                     }else{
-                        print("Keep going")
                         self.canLoadMore = true
                     }
                     self.updateUI()

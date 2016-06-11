@@ -318,22 +318,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! GroupTableViewCell
         let group = groups[indexPath.row]
         cell.group = group
-        if group.hasCity == nil && group.city != nil && group.city != ""{
-            StudyPopClient.sharedInstance.findCity(user!.token!, safekey: group.city!){ (results,error) in
-                if let error = error{
-                    self.simpleError(error)
-                }else if results != nil{
-                    let dict = [City.Keys.Name : results!, City.Keys.User : group.city!]
-                    performOnMain(){
-                        //Save the city in the
-                        let city = City.init(dictionary: dict, context: self.sharedContext)
-                        self.groups[indexPath.row].hasCity = city
-                        cell.cityLabel.text = city.name!
-                    }
-                }
-            }
-        }else if group.hasCity != nil{
-            cell.cityLabel.text = group.hasCity!.name!
+        if group.city != nil{
+            cell.cityLabel.text = group.city!.name!
         }
         return cell
     }

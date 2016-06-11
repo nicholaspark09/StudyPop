@@ -32,8 +32,6 @@ class ProfileViewController: UIViewController {
         }
     }
     var profile:Profile?
-    var city:City?
-    var subject:Subject?
     var profileUser = ""
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -198,63 +196,16 @@ class ProfileViewController: UIViewController {
             }
         
             
-            if self.profile!.city != nil && self.profile!.city! != ""{
+            if self.profile!.city != nil{
                 
-                self.city = StudyPopClient.sharedInstance.findCityInDB(self.profile!.city!, sharedContext: self.sharedContext)
-                if self.city == nil{
-                    //City wasn't in DB, so look on the server!
-                    StudyPopClient.sharedInstance.findCity(self.user!.token!, safekey: self.profile!.city!){ (results,error) in
-                        func sendError(error: String){
-                            print("The error was: \(error)")
-                        }
-                        
-                        guard error == nil else{
-                            sendError(error!)
-                            return
-                        }
-                        
-                        let cityDict = [City.Keys.Name : results!, City.Keys.User : self.profile!.city!]
-                        self.city = City.init(dictionary: cityDict, context: self.sharedContext)
-                        performOnMain(){
-                            self.cityLabel.text = self.city!.name!
-                            CoreDataStackManager.sharedInstance().saveContext()
-                        }
-                    }
-                }else{
-                    self.cityLabel.text = self.city!.name!
-                }
+                    self.cityLabel.text = self.profile!.city!.name!
+    
             }else{
                 self.cityLabel.text = "No City"
             }
-            if self.profile!.subject != nil && self.profile!.subject != ""{
-                print("1")
-                self.subject  = StudyPopClient.sharedInstance.findSubjectInDB(self.profile!.subject!, sharedContext: self.sharedContext)
-                if self.subject == nil{
-                    //Subject wasn't in DB, so look on the server!
-                    StudyPopClient.sharedInstance.findSubject(self.user!.token!, safekey: self.profile!.subject!){ (results,error) in
-                        func sendError(error: String){
-                            print("The error was: \(error)")
-                        }
-                        
-                        guard error == nil else{
-                            sendError(error!)
-                            return
-                        }
-                        
-                        guard let results = results else{
-                            sendError("Didn't find a subject")
-                            return
-                        }
-                        
-                        self.subject = Subject.init(dictionary: results, context: self.sharedContext)
-                        performOnMain(){
-                            self.subjectLabel.text = self.subject!.name!
-                            CoreDataStackManager.sharedInstance().saveContext()
-                        }
-                    }
-                }else{
-                    self.subjectLabel.text = self.subject!.name!
-                }
+            if self.profile!.subject != nil{
+                
+                    self.subjectLabel.text = self.profile!.subject!.name!
             }else{
                 self.subjectLabel.text = "No Subject"
             }
@@ -287,8 +238,8 @@ class ProfileViewController: UIViewController {
             if let epc = segue.destinationViewController.contentViewController as? EditProfileViewController{
                 epc.user = user!
                 epc.profile = profile!
-                epc.city = self.city
-                epc.subject = self.subject
+                epc.city = self.profile!.city
+                epc.subject = self.profile!.subject
             }
         }
     }

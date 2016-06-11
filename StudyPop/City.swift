@@ -16,12 +16,14 @@ class City: NSManagedObject {
     @NSManaged var name: String?
     @NSManaged var state: String?
     @NSManaged var user: String?
+    @NSManaged var safekey: String?
     
     struct Keys{
         static let Name = "name"
         static let Country = "country"
         static let State = "state"
         static let User = "user"
+        static let SafeKey = "safekey"
     }
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -37,6 +39,7 @@ class City: NSManagedObject {
         // Dictionary
         name = dictionary[Keys.Name] as? String
         user = dictionary[Keys.User] as? String
+        safekey = dictionary[Keys.SafeKey] as? String
     }
     
     

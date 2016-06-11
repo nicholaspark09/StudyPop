@@ -14,17 +14,15 @@ class Group: NSManagedObject {
 
     @NSManaged var name: String?
     @NSManaged var info: String?
-    @NSManaged var subject: String?
     @NSManaged var maxpeople: NSNumber?
     @NSManaged var currentpeople: NSNumber?
-    @NSManaged var location: String?
     @NSManaged var user: String?
     @NSManaged var image: String?
-    @NSManaged var city: String?
     @NSManaged var ispublic: NSNumber?
-    @NSManaged var hasCity: City?
-    @NSManaged var hasSubject:Subject?
-    @NSManaged var hasLocation: Location?
+    @NSManaged var safekey: String?
+    @NSManaged var city: City?
+    @NSManaged var subject:Subject?
+    @NSManaged var location: Location?
     @NSManaged var hasProfilePhoto: Photo?
     
     var photoImage: UIImage?
@@ -40,8 +38,7 @@ class Group: NSManagedObject {
         static let Image = "image"
         static let City = "city"
         static let IsPublic = "ispublic"
-        static let HasSubject = "hassubject"
-        static let HasLocation = "haslocation"
+        static let SafeKey = "safekey"
     }
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -58,14 +55,20 @@ class Group: NSManagedObject {
         name = dictionary[Keys.Name] as? String
         user = dictionary[Keys.User] as? String
         info = dictionary[Keys.Info] as? String
-        subject = dictionary[Keys.Subject] as? String
         maxpeople = dictionary[Keys.MaxPeople] as? NSNumber
         currentpeople = dictionary[Keys.CurrentPeople] as? NSNumber
-        location = dictionary[Keys.Location] as? String
         image = dictionary[Keys.Image] as? String
-        city = dictionary[Keys.City] as? String
         ispublic = dictionary[Keys.IsPublic] as? NSNumber
-        
+        safekey = dictionary[Keys.SafeKey] as? String
+        if let cityDict = dictionary[Keys.City] as? [String:AnyObject]{
+            city = City.init(dictionary: cityDict, context: context)
+        }
+        if let subjectDict = dictionary[Keys.Subject] as? [String:AnyObject]{
+            subject = Subject.init(dictionary: subjectDict, context: context)
+        }
+        if let locationDict = dictionary[Keys.Location] as? [String:AnyObject]{
+            location = Location.init(dictionary: locationDict, context: context)
+        }
     }
 
 }

@@ -109,7 +109,7 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
             StudyPopClient.ParameterKeys.Method : StudyPopClient.ParameterValues.SearchMethod,
             StudyPopClient.ParameterKeys.ApiKey : StudyPopClient.Constants.ApiKey,
             StudyPopClient.ParameterKeys.ApiSecret : StudyPopClient.Constants.ApiSecret,
-            StudyPopClient.ParameterKeys.Name: cityTextField.text!,
+            StudyPopClient.ParameterKeys.Query: cityTextField.text!,
             StudyPopClient.ParameterKeys.Locale:locale
         ]
         StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
@@ -131,7 +131,7 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
             
             if let cityDictionary = results![StudyPopClient.JSONReponseKeys.Cities] as? [[String:AnyObject]]{
                 //First city should be blank in case the use doesn't want any city
-                let cityDict = [City.Keys.Name: "No City",City.Keys.User : ""]
+                let cityDict = [City.Keys.Name: "No City",City.Keys.SafeKey : ""]
                 let firstCity = City.init(dictionary: cityDict, context: self.sharedContext)
                 self.cities.append(firstCity)
                 for i in cityDictionary{
@@ -161,11 +161,11 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let city = cities[indexPath.row]
-        currentCityKey = city.user!
+        currentCityKey = city.safekey!
         cityName = city.name!
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(city.name!, forKey: StudyPopClient.Constants.City)
-        defaults.setObject(city.user!, forKey: StudyPopClient.Constants.CityKey)
+        defaults.setObject(city.safekey!, forKey: StudyPopClient.Constants.CityKey)
         defaults.synchronize()
         if previousController == GroupsViewController.Constants.Controller{
             performSegueWithIdentifier(Constants.UnwindSegue, sender: nil)

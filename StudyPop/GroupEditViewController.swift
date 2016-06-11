@@ -63,16 +63,16 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
         infoTextView.text = group!.info!
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: Constants.SaveTitle, style: .Plain, target: self, action: #selector(GroupEditProtocol.saveClicked(_:)))
         
-        if group!.hasCity != nil{
-            self.cityLabel.text = group!.hasCity!.name!
+        if group!.city != nil{
+            self.cityLabel.text = group!.city!.name!
         }
         
-        if group!.hasSubject != nil{
-            self.subjectLabel.text = group!.hasSubject!.name!
+        if group!.subject != nil{
+            self.subjectLabel.text = group!.subject!.name!
         }
         
-        if group!.hasLocation != nil{
-            self.locationLabel.text = "Map Lat: \(group!.hasLocation!.lat!)"
+        if group!.location != nil{
+            self.locationLabel.text = "Map Lat: \(group!.location!.lat!)"
         }
         
         if group!.hasProfilePhoto != nil{
@@ -95,18 +95,18 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
                 print("The user token is \(user!.token!)")
                 var cityKey = ""
                 var subjectKey = ""
-                if group!.hasCity != nil{
-                    cityKey = group!.hasCity!.user!
+                if group!.city != nil{
+                    cityKey = group!.city!.safekey!
                 }
-                if group!.hasSubject != nil{
-                    subjectKey = group!.hasSubject!.user!
+                if group!.subject != nil{
+                    subjectKey = group!.subject!.safekey!
                 }
                 let privateOption = pickerView.selectedRowInComponent(0)+1
                 var lat = ""
                 var lng = ""
-                if group!.hasLocation != nil{
-                    lat = "\(group!.hasLocation!.lat!)"
-                    lng = "\(group!.hasLocation!.lng!)"
+                if group!.location != nil{
+                    lat = "\(group!.location!.lat!)"
+                    lng = "\(group!.location!.lng!)"
                 }
                 let params = [
                     StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupsController,
@@ -114,7 +114,7 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
                     StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
                     StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
                     StudyPopClient.ParameterKeys.Token : user!.token!,
-                    StudyPopClient.ParameterKeys.SafeKey : group!.user!,
+                    StudyPopClient.ParameterKeys.SafeKey : group!.safekey!,
                     Group.Keys.Name: name,
                     Group.Keys.Info: info,
                     Group.Keys.City: cityKey,
@@ -150,10 +150,10 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
                 
                         performOnMain(){
                             self.loadingView.stopAnimating()
-                            if self.group!.hasLocation != nil && locationKey != ""{
-                                self.group!.hasLocation!.safekey = locationKey
+                            if self.group!.location != nil && locationKey != ""{
+                                self.group!.location!.safekey = locationKey
                             }
-                            self.group!.user = safekey
+                            self.group!.safekey = safekey
                             CoreDataStackManager.sharedInstance().saveContext()
                             self.performSegueWithIdentifier(Constants.UnwindToView, sender: nil)
                         }
@@ -172,37 +172,37 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
         if let sourceViewController = sender.sourceViewController as? CityPickerViewController{
             if sourceViewController.currentCityKey != ""{
                 print("The city name is \(sourceViewController.cityName)")
-                let cityDict = [City.Keys.Name : sourceViewController.cityName, City.Keys.User : sourceViewController.currentCityKey]
-                if let foundCity = self.findCityInDB(cityDict[City.Keys.User]!){
+                let cityDict = [City.Keys.Name : sourceViewController.cityName, City.Keys.SafeKey : sourceViewController.currentCityKey]
+                if let foundCity = self.findCityInDB(cityDict[City.Keys.SafeKey]!){
                     //City was found
-                    self.group!.hasCity = foundCity
+                    self.group!.city = foundCity
                 }else{
                     self.city = City.init(dictionary: cityDict, context: self.sharedContext)
-                    self.group!.hasCity = self.city!
+                    self.group!.city = self.city!
                 }
                 
             }
-            if self.group!.hasCity != nil{
-                cityLabel.text = self.group!.hasCity!.name!
+            if self.group!.city != nil{
+                cityLabel.text = self.group!.city!.name!
             }
         }else if let svc = sender.sourceViewController as? StudyPickerViewController{
             
             if svc.subjectKey != ""{
-                let subjectDict = [Subject.Keys.Name : svc.subjectName, Subject.Keys.User : svc.subjectKey]
-                if let foundSubject = self.findSubjectInDB(subjectDict[Subject.Keys.User]!){
-                    self.group!.hasSubject = foundSubject
+                let subjectDict = [Subject.Keys.Name : svc.subjectName, Subject.Keys.SafeKey : svc.subjectKey]
+                if let foundSubject = self.findSubjectInDB(subjectDict[Subject.Keys.SafeKey]!){
+                    self.group!.subject = foundSubject
                 }else{
                     let subject = Subject.init(dictionary: subjectDict, context: self.sharedContext)
-                    self.group!.hasSubject = subject
+                    self.group!.subject = subject
                 }
             }
-            if self.group!.hasSubject != nil{
-                subjectLabel.text = self.group!.hasSubject!.name!
+            if self.group!.subject != nil{
+                subjectLabel.text = self.group!.subject!.name!
             }
         }else if let lvc = sender.sourceViewController as? LocationPickViewController{
             if lvc.location != nil{
-                group!.hasLocation = lvc.location
-                locationLabel.text = "Map Set: \(group!.hasLocation!.lat!)"
+                group!.location = lvc.location
+                locationLabel.text = "Map Set: \(group!.location!.lat!)"
             }
         }
         CoreDataStackManager.sharedInstance().saveContext()
@@ -227,7 +227,7 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
          let compressionQuailty = 0.7
          let scaledBig = resizeImage(pickedImage, newWidth: 250)
          let bigData = UIImageJPEGRepresentation(scaledBig, CGFloat(compressionQuailty))
-         let dict = [Photo.Keys.Name : "Group Pic", Photo.Keys.TheType: "\(1)", Photo.Keys.Controller : "groups", Photo.Keys.ParentKey : self.group!.user!, Photo.Keys.Blob : bigData!]
+         let dict = [Photo.Keys.Name : "Group Pic", Photo.Keys.TheType: "\(1)", Photo.Keys.Controller : "groups", Photo.Keys.ParentKey : self.group!.safekey!, Photo.Keys.Blob : bigData!]
          self.photo = Photo.init(dictionary: dict, context: self.sharedContext)
          self.groupImageView.image = pickedImage
          let bigImage = bigData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
@@ -243,7 +243,7 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
             StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
             StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
             StudyPopClient.ParameterKeys.Token : user!.token!,
-            StudyPopClient.ParameterKeys.SafeKey : group!.user!
+            StudyPopClient.ParameterKeys.SafeKey : group!.safekey!
         ]
         let tempDict = [StudyPopClient.ParameterKeys.Body:bigImage]
         self.loadingView.startAnimating()
@@ -365,6 +365,10 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
         return privateOptions.count
     }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return privateOptions[row]
+    }
 
  
     // MARK: - Navigation
@@ -376,8 +380,8 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
         }else if segue.identifier == Constants.LocationPickSegue{
             if let lvc = segue.destinationViewController.contentViewController as? LocationPickViewController{
                 lvc.controller = Constants.Controller
-                if group!.hasLocation != nil{
-                    lvc.location = group!.hasLocation
+                if group!.location != nil{
+                    lvc.location = group!.location
                 }
             }
         }else if segue.identifier == Constants.SubjectPickSegue{

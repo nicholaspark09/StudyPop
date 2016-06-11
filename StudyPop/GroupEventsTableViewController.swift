@@ -19,6 +19,8 @@ class GroupEventsTableViewController: UITableViewController {
         static let Title = "Events"
         static let AddTitle = "Add"
         static let AddEventSegue = "AddEvent Segue"
+        static let CellReuseIdentifier = "Event Cell"
+        static let EventViewSegue = "EventView Segue"
     }
     
     /**
@@ -52,7 +54,14 @@ class GroupEventsTableViewController: UITableViewController {
     }
     
     func updateUI(){
-        
+        performOnMain(){
+            if self.events.count < 1{
+                let eventDict = [Event.Keys.User : "", Event.Keys.Name : "No events"]
+                let event = Event.init(dictionary: eventDict, context: self.sharedContext)
+                self.events.append(event)
+            }
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: - Get Group Events
@@ -90,9 +99,6 @@ class GroupEventsTableViewController: UITableViewController {
                 }
                 if x < 10{
                     self.canLoadMore = false
-                    if x == 0{
-                        self.simpleError("No events")
-                    }
                 }else{
                     self.canLoadMore = true
                 }
@@ -104,7 +110,16 @@ class GroupEventsTableViewController: UITableViewController {
     }
 
     
-
+    @IBAction func unwindToGroupEvents(sender: UIStoryboardSegue){
+        if let aec = sender.sourceViewController as? AddEventViewController{
+            let safekey = aec.safekey
+            if safekey != nil{
+                performSegueWithIdentifier(Constants.EventViewSegue, sender: safekey!)
+            }
+        }
+    }
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -117,15 +132,19 @@ class GroupEventsTableViewController: UITableViewController {
         return events.count
     }
 
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! EventTableViewCell
+            cell.event = events[indexPath.row]
         return cell
     }
-    */
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let event = events[indexPath.row]
+        if event.user! != ""{
+            performSegueWithIdentifier(Constants.EventViewSegue, sender: event.user!)
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -163,6 +182,7 @@ class GroupEventsTableViewController: UITableViewController {
     */
 
 
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -171,6 +191,13 @@ class GroupEventsTableViewController: UITableViewController {
             if let avc = segue.destinationViewController as? AddEventViewController{
                 avc.user = user!
                 avc.group = group!
+            }
+        }else if segue.identifier == Constants.EventViewSegue{
+            if let safekey = sender as? String{
+                if let evc = segue.destinationViewController as? EventViewController{
+                    evc.safekey = safekey
+                    evc.user = user!
+                }
             }
         }
     }

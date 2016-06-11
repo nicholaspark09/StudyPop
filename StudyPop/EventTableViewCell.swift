@@ -10,9 +10,20 @@ import UIKit
 
 class EventTableViewCell: UITableViewCell {
 
-    var event: Event?
+    var event: Event?{
+        didSet{
+            titleLabel.text = event!.name!
+            print("The date is \(event!.start)")
+            if event!.start != nil{
+                dateLabel.text = "Date: \(event!.start!)"
+            }else{
+                dateLabel.text = ""
+            }
+        }
+    }
     
-    
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

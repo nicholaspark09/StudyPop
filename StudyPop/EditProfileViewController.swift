@@ -159,8 +159,8 @@ class EditProfileViewController: UIViewController, WDImagePickerDelegate, UIImag
     @IBAction func unwindToEditProfile(sender: UIStoryboardSegue){
         if let sourceViewController = sender.sourceViewController as? CityPickerViewController{
             if sourceViewController.currentCityKey != ""{
-                let cityDict = [City.Keys.Name : sourceViewController.cityName, City.Keys.User : sourceViewController.currentCityKey]
-                if let foundCity = StudyPopClient.sharedInstance.findCityInDB(cityDict[City.Keys.User]!, sharedContext: self.sharedContext){
+                let cityDict = [City.Keys.Name : sourceViewController.cityName, City.Keys.SafeKey : sourceViewController.currentCityKey]
+                if let foundCity = StudyPopClient.sharedInstance.findCityInDB(cityDict[City.Keys.SafeKey]!, sharedContext: self.sharedContext){
                     //City was found
                     self.city = foundCity
                 }else{
@@ -174,9 +174,9 @@ class EditProfileViewController: UIViewController, WDImagePickerDelegate, UIImag
         }else if let svc = sender.sourceViewController as? StudyPickerViewController{
             if svc.subjectKey != ""{
                 print("You are in this method")
-                let subjectDict = [Subject.Keys.Name : svc.subjectName, Subject.Keys.User : svc.subjectKey]
+                let subjectDict = [Subject.Keys.Name : svc.subjectName, Subject.Keys.SafeKey : svc.subjectKey]
                 
-                if let foundSubject = StudyPopClient.sharedInstance.findSubjectInDB(subjectDict[Subject.Keys.User]!, sharedContext: self.sharedContext){
+                if let foundSubject = StudyPopClient.sharedInstance.findSubjectInDB(subjectDict[Subject.Keys.SafeKey]!, sharedContext: self.sharedContext){
                     self.subject = foundSubject
                 }else{
                     self.subject = Subject.init(dictionary: subjectDict, context: self.sharedContext)
@@ -202,10 +202,10 @@ class EditProfileViewController: UIViewController, WDImagePickerDelegate, UIImag
             var cityKey = ""
             var subjectKey = ""
             if self.city != nil{
-                cityKey = self.city!.user!
+                cityKey = self.city!.safekey!
             }
             if self.subject != nil{
-                subjectKey = self.subject!.user!
+                subjectKey = self.subject!.safekey!
             }
             let params = [
                 StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.ProfilesController,

@@ -57,7 +57,7 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
         tableView.dataSource = self
         
         //let tempSubjects = indexSubjects()
-        let tempSubject = [Subject.Keys.Name : "No Subject", Subject.Keys.User: ""]
+        let tempSubject = [Subject.Keys.Name : "No Subject", Subject.Keys.SafeKey: ""]
         let subject = Subject.init(dictionary: tempSubject, context: self.scratchContext)
         
         subjects.append(subject)
@@ -148,9 +148,9 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
         let defaults = NSUserDefaults.standardUserDefaults()
         
         defaults.setObject(StudyPopClient.Constants.Subject, forKey: subject.name!)
-        defaults.setObject(StudyPopClient.Constants.SubjectKey, forKey: subject.user!)
+        defaults.setObject(StudyPopClient.Constants.SubjectKey, forKey: subject.safekey!)
         defaults.synchronize()
-        subjectKey = subject.user!
+        subjectKey = subject.safekey!
         subjectName = subject.name!
         if previousController == GroupsViewController.Constants.Controller{
             performSegueWithIdentifier(Constants.UnwindToGroupsSegue, sender: nil)
@@ -183,7 +183,7 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
     func findSubjectInDB(subject:Subject) -> Bool{
         let request = NSFetchRequest(entityName: "Subject")
         request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "user == %@", subject.user!)
+        request.predicate = NSPredicate(format: "safekey == %@", subject.safekey!)
         do{
             let results = try sharedContext.executeFetchRequest(request)
             if results.count > 0 {
