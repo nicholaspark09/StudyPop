@@ -16,7 +16,17 @@ import CoreData
 
 class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    
+    struct Constants{
+        static let Controller = "EventEdit"
+        static let StartAction = "Start"
+        static let EndAction = "End"
+        static let StartDateSegue = "StartDate Segue"
+        static let EndDateSegue = "EndDate Segue"
+        static let PickSubjectSegue = "PickSubject Segue"
+        static let PickCitySegue = "PickCity Segue"
+        static let PickLocationSegue = "PickLocation Segue"
+        static let UnwindToEventViewSegue = "UnwindToEventView Segue"
+    }
     
     
     /**
@@ -28,9 +38,12 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
     }()
     var user:User?
     var event:Event?
+    var location:Location?
     var privateOptions = ["Public","Private (Searchable)","Private (Dark)"]
     var imagePicker: WDImagePicker!
     var photo:Photo?
+    var startDate = ""
+    var endDate = ""
     
     
     @IBOutlet var titleTextField: UITextField!
@@ -53,7 +66,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
         let saveButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: #selector(EventEditProtocol.saveClicked(_:)))
         self.navigationItem.setRightBarButtonItem(saveButton, animated: true)
         title = event!.name!
-        
+        location = event!.location!
         updateUI()
     }
     
@@ -74,7 +87,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
                     self.startButton.setTitle(self.event!.start!.description, forState: .Normal)
                 }
                 if self.event!.end != nil{
-                    self.startButton.setTitle(self.event!.end!.description, forState: .Normal)
+                    self.endButton.setTitle(self.event!.end!.description, forState: .Normal)
                 }
                 if self.event!.city != nil{
                     self.cityButton.setTitle(self.event!.city!.name!, forState: .Normal)
@@ -129,7 +142,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
                                 let image = UIImage(data: imageData)
                                 self.eventImageView.image = image
                                 self.eventImageView.contentMode = UIViewContentMode.ScaleAspectFit
-                                let photoDict = [Photo.Keys.Blob : imageData, Photo.Keys.Controller : "events", Photo.Keys.TheType : "\(1)", Photo.Keys.SafeKey : self.event!.image!, Photo.Keys.ParentKey : self.event!.user!]
+                                let photoDict = [Photo.Keys.Blob : imageData, Photo.Keys.Controller : "events", Photo.Keys.TheType : "\(1)", Photo.Keys.SafeKey : self.event!.image!, Photo.Keys.ParentKey : self.event!.safekey!]
                                 let photo = Photo.init(dictionary: photoDict, context: self.sharedContext)
                                 self.event!.hasPhoto = photo
                                 CoreDataStackManager.sharedInstance().saveContext()
@@ -160,7 +173,154 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
     
     
     func saveClicked(sender: UIBarButtonItem){
-        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        if startDate == "" && event!.start != nil{
+            startDate = dateFormatter.stringFromDate(event!.start!)
+        }
+        if endDate == "" && event!.end != nil{
+            endDate = dateFormatter.stringFromDate(event!.end!)
+        }
+        let title = titleTextField.text!
+        let info = infoTextView.text!
+        let maxPeople = maxPeopleTextField.text!
+        let isPublic = "\(isPublicPickerView.selectedRowInComponent(0))"
+        let price = priceTextField.text!
+        if title.characters.count < 1{
+            self.simpleError("Please put in a title")
+            titleTextField.becomeFirstResponder()
+        }else if startDate == ""{
+            self.simpleError("Please put in a start date")
+        }else{
+            sender.enabled = false
+            var lat = ""
+            var lng = ""
+            var cityKey = ""
+            var subjectKey = ""
+            var latInfo = ""
+            var locationKey = ""
+            if location != nil{
+                lat = "\(location!.lat!)"
+                lng = "\(location!.lng!)"
+                if location!.info != nil{
+                    latInfo = location!.info!
+                }
+                if location!.safekey != nil{
+                    locationKey = location!.safekey!
+                }
+            }
+            if event!.city != nil && event!.city!.safekey != nil{
+                cityKey = event!.city!.safekey!
+            }
+            if event!.subject != nil && event!.subject!.safekey != nil{
+                subjectKey = event!.subject!.safekey!
+            }
+            print("The event has a start of \(startDate) and an end date of \(endDate)")
+            let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventsController,
+                          StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.EditMethod,
+                          StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                          StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                          StudyPopClient.ParameterKeys.Token : user!.token!,
+                          StudyPopClient.ParameterKeys.SafeKey : event!.safekey!,
+                          Event.Keys.Name: title,
+                          Event.Keys.Info : info,
+                          Event.Keys.MaxPeople : maxPeople,
+                          Event.Keys.City : cityKey,
+                          Event.Keys.Subject : subjectKey,
+                          Event.Keys.IsPublic : isPublic,
+                          Event.Keys.Price : price,
+                          Location.Keys.Lat : lat,
+                          Location.Keys.Lng : lng,
+                          StudyPopClient.ParameterKeys.LocationSafeKey : locationKey,
+                          StudyPopClient.ParameterKeys.LatInfo : latInfo,
+                          Event.Keys.Start : startDate,
+                          Event.Keys.End : endDate
+            ]
+            print("You are saving it with a title \(title)")
+            StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
+                func sendError(error: String){
+                    print("Error in transmission: \(error)")
+                    self.simpleError(error)
+                    performOnMain(){
+                        sender.enabled = true
+                    }
+                }
+                
+                guard error == nil else{
+                    sendError(error!.localizedDescription)
+                    return
+                }
+                
+                guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                    sendError("Weird formatting came back. Try again")
+                    return
+                }
+                
+                guard stat == StudyPopClient.JSONResponseValues.Success else{
+                    sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                    return
+                }
+
+                    performOnMain(){
+                        sender.enabled = true
+                        self.performSegueWithIdentifier(Constants.UnwindToEventViewSegue, sender: nil)
+                    }
+            }
+        }
+    }
+    
+    // MARK: - Unwind To This Controller
+    /*
+     All the select options that lead to other controllers should come back here
+     */
+    @IBAction func unwindToAddEventEdit(sender: UIStoryboardSegue){
+        if let sourceViewController = sender.sourceViewController as? CityPickerViewController{
+            if sourceViewController.currentCityKey != ""{
+                let cityDict = [City.Keys.Name : sourceViewController.cityName, City.Keys.SafeKey : sourceViewController.currentCityKey]
+                if let foundCity = self.findCityInDB(cityDict[City.Keys.SafeKey]!){
+                    //City was found
+                    event!.city = foundCity
+                }else{
+                    event!.city = City.init(dictionary: cityDict, context: self.sharedContext)
+                    CoreDataStackManager.sharedInstance().saveContext()
+                }
+                cityButton.setTitle(event!.city!.name!, forState: .Normal)
+            }else{
+                cityButton.setTitle("No City", forState: .Normal)
+            }
+        }else if let svc = sender.sourceViewController as? StudyPickerViewController{
+            if svc.subjectKey != ""{
+                let subjectDict = [Subject.Keys.Name : svc.subjectName, Subject.Keys.SafeKey : svc.subjectKey]
+                if let foundSubject = self.findSubjectInDB(subjectDict[Subject.Keys.SafeKey]!){
+                    event!.subject = foundSubject
+                }else{
+                    event!.subject = Subject.init(dictionary: subjectDict, context: self.sharedContext)
+                    CoreDataStackManager.sharedInstance().saveContext()
+                }
+                subjectButton.setTitle(event!.subject!.name!, forState: .Normal)
+            }else{
+                subjectButton.setTitle("No Subject", forState: .Normal)
+            }
+        }else if let lvc = sender.sourceViewController as? LocationPickViewController{
+            if lvc.location != nil{
+                location = lvc.location
+                let mapText = "Map Set: \(location!.lat!)"
+                locationButton.setTitle(mapText, forState: .Normal)
+                
+            }else{
+                locationButton.setTitle("Location", forState: .Normal)
+            }
+        }else if let dvc = sender.sourceViewController as? PickDateViewController{
+            print("You are here")
+            print("The previous action is \(dvc.previousAction)")
+            if dvc.previousAction == Constants.StartAction{
+                startDate = dvc.currentDate!
+                startButton.setTitle("Start: \(dvc.currentDate!)", forState: .Normal)
+            }else{
+                endDate = dvc.currentDate!
+                endButton.setTitle("End: \(endDate)", forState: .Normal)
+            }
+        }
     }
     
     //Image Picker
@@ -176,13 +336,15 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
     
     
     
+    
+    
     // Got the image back
     func imagePicker(imagePicker: WDImagePicker, pickedImage: UIImage) {
         self.hideImagePicker()
         let compressionQuailty = 0.7
         let scaledBig = resizeImage(pickedImage, newWidth: 250)
         let bigData = UIImageJPEGRepresentation(scaledBig, CGFloat(compressionQuailty))
-        let dict = [Photo.Keys.Name : "Event Pic", Photo.Keys.TheType: "\(1)", Photo.Keys.Controller : "events", Photo.Keys.ParentKey : self.event!.user!, Photo.Keys.Blob : bigData!]
+        let dict = [Photo.Keys.Name : "Event Pic", Photo.Keys.TheType: "\(1)", Photo.Keys.Controller : "events", Photo.Keys.ParentKey : self.event!.safekey!, Photo.Keys.Blob : bigData!]
         self.photo = Photo.init(dictionary: dict, context: self.sharedContext)
         self.eventImageView.image = pickedImage
         let bigImage = bigData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
@@ -198,7 +360,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
             StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
             StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
             StudyPopClient.ParameterKeys.Token : user!.token!,
-            StudyPopClient.ParameterKeys.SafeKey : event!.user!
+            StudyPopClient.ParameterKeys.SafeKey : event!.safekey!
         ]
         let tempDict = [StudyPopClient.ParameterKeys.Body:bigImage]
         self.loadingView.startAnimating()
@@ -261,7 +423,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
     func findEventInDB() -> Event?{
         let request = NSFetchRequest(entityName: "Event")
         request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "user == %@", event!.user!)
+        request.predicate = NSPredicate(format: "safekey == %@", event!.safekey!)
         do{
             let results = try sharedContext.executeFetchRequest(request)
             if results.count > 0{
@@ -278,19 +440,75 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
         return nil
     }
     
-    @IBAction func imageButtonClicked(sender: UIButton) {
-        
-        
-    }
 
-    /*
+
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == Constants.StartDateSegue{
+            if let pvc = segue.destinationViewController as? PickDateViewController{
+                pvc.previousController = Constants.Controller
+                pvc.previousAction = Constants.StartAction
+            }
+        }else if segue.identifier == Constants.EndDateSegue{
+            if let pvc = segue.destinationViewController as? PickDateViewController{
+                pvc.previousController = Constants.Controller
+                pvc.previousAction = Constants.EndAction
+            }
+        }else if segue.identifier == Constants.PickSubjectSegue{
+            if let svc = segue.destinationViewController as? StudyPickerViewController{
+                svc.previousController = Constants.Controller
+            }
+        }else if segue.identifier == Constants.PickCitySegue{
+            if let pvc = segue.destinationViewController as? CityPickerViewController{
+                pvc.previousController = Constants.Controller
+            }
+        }else if segue.identifier == Constants.PickLocationSegue{
+            if let plc = segue.destinationViewController.contentViewController as? LocationPickViewController{
+                plc.controller = Constants.Controller
+                if location != nil{
+                    plc.location = location
+                }
+            }
+        }
     }
-    */
+    
+    
+    // Obviously...Finding the Subject
+    func findSubjectInDB(safekey: String) -> Subject?{
+        let request = NSFetchRequest(entityName: "Subject")
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "safekey == %@", safekey)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0 {
+                let subject = results[0] as? Subject
+                return subject
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The Error was \(fetchError)")
+            return nil
+        }
+        return nil
+    }
+    
+    // Obviously...Finding the City
+    func findCityInDB(safekey: String) -> City?{
+        let request = NSFetchRequest(entityName: "City")
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "safekey == %@", safekey)
+        do{
+            let results = try self.sharedContext.executeFetchRequest(request)
+            if results.count > 0 {
+                let city = results[0] as? City
+                return city
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The Error was \(fetchError)")
+            return nil
+        }
+        return nil
+    }
 
 }

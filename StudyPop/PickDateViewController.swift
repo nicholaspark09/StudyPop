@@ -12,6 +12,7 @@ class PickDateViewController: UIViewController {
 
     struct Constants{
         static let UnwindToAddGroupEventSegue = "UnwindToAddGroupEvent Segue"
+        static let UnwindToEventEditSegue = "UnwindToEventEdit Segue"
     }
     
     
@@ -39,7 +40,11 @@ class PickDateViewController: UIViewController {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         currentDate = dateFormatter.stringFromDate(datePicker.date)
-        performSegueWithIdentifier(Constants.UnwindToAddGroupEventSegue, sender: nil)
+        if previousController == AddEventViewController.Constants.Controller{
+            performSegueWithIdentifier(Constants.UnwindToAddGroupEventSegue, sender: nil)
+        }else if previousController == EventEditViewController.Constants.Controller{
+            performSegueWithIdentifier(Constants.UnwindToEventEditSegue, sender: nil)
+        }
     }
     
 

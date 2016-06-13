@@ -44,6 +44,8 @@ class EventViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var loadingView: UIActivityIndicatorView!
     @IBOutlet var infoTextView: UITextView!
     @IBOutlet var mapView: MKMapView!
+    @IBOutlet var eventImageView: UIImageView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +90,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
             
             if let eventDict = results[StudyPopClient.JSONReponseKeys.Event] as? [String:AnyObject]{
                 self.event = Event.init(dictionary: eventDict, context: self.sharedContext)
-                self.event!.user = self.safekey
+                self.event!.safekey = self.safekey
 
             
                 // THE Api always returns a value for Member
@@ -151,6 +153,55 @@ class EventViewController: UIViewController, MKMapViewDelegate {
                     //Not a member, create a join button
                     let joinButton = UIBarButtonItem(title: "Join", style: .Plain, target: self, action: #selector(EventViewProtocol.joinClicked(_:)))
                     self.navigationItem.rightBarButtonItem = joinButton
+                }
+                //Check to see if there's an image on db first
+                if self.event!.hasPhoto != nil && self.event!.hasPhoto!.safekey != nil{
+                    self.eventImageView.image = self.event!.hasPhoto!.photoImage
+                    self.eventImageView.contentMode = UIViewContentMode.ScaleAspectFit
+                }else if self.event!.image != nil && self.event!.image != ""{
+                    var found = false
+                    // First check the local db, you never know!
+                    if let oldEvent = self.findEventInDB(){
+                        if oldEvent.hasPhoto != nil && oldEvent.hasPhoto!.blob != nil{
+                            //Load old image first so the user isn't bored
+                            let image = UIImage(data: oldEvent.hasPhoto!.blob!)
+                            self.eventImageView.image = image
+                            self.eventImageView.contentMode = UIViewContentMode.ScaleAspectFit
+                            //Check to see if it's the same image
+                            if oldEvent.hasPhoto!.safekey == self.event!.image!{
+                                found = true
+                            }
+                        }
+                    }
+                    if !found{
+                        print("loading it up!")
+                        //Find the image
+                        StudyPopClient.sharedInstance.findPicture(self.user!.token!, safekey: self.event!.image!){ (imageData,error) in
+                            func sendError(error: String){
+                                self.simpleError(error)
+                            }
+                            
+                            guard error == nil else{
+                                sendError(error!)
+                                return
+                            }
+                            
+                            guard let imageData = imageData else{
+                                sendError("No image")
+                                return
+                            }
+                            
+                            performOnMain(){
+                                let image = UIImage(data: imageData)
+                                self.eventImageView.image = image
+                                self.eventImageView.contentMode = UIViewContentMode.ScaleAspectFit
+                                let photoDict = [Photo.Keys.Blob : imageData, Photo.Keys.Controller : "events", Photo.Keys.TheType : "\(1)", Photo.Keys.SafeKey : self.event!.image!, Photo.Keys.ParentKey : self.event!.safekey!]
+                                let photo = Photo.init(dictionary: photoDict, context: self.sharedContext)
+                                self.event!.hasPhoto = photo
+                                CoreDataStackManager.sharedInstance().saveContext()
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -271,6 +322,37 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         }
         
         return pinView
+    }
+    
+    /**
+     Only use this if there is no connection
+     
+     Want to insure data integrity
+     All users should have up to date versions as admins can change data at will
+     and there may be more than one admin
+     **/
+    func findEventInDB() -> Event?{
+        let request = NSFetchRequest(entityName: "Event")
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "safekey == %@", event!.safekey!)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0{
+                if let temp = results[0] as? Event{
+                    let tempgroup = temp
+                    return tempgroup
+                }
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The error was \(fetchError)")
+            return nil
+        }
+        return nil
+    }
+    
+    @IBAction func unwindToEventView(sender: UIStoryboardSegue){
+       
     }
 
     

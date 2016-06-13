@@ -321,6 +321,20 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if group.city != nil{
             cell.cityLabel.text = group.city!.name!
         }
+        if group.thumbblob == nil && group.image != nil && group.image != "" && group.checked == false{
+            StudyPopClient.sharedInstance.findThumb(self.user!.token!, safekey: group.image!){(results,error) in
+                self.groups[indexPath.row].checked = true
+                if let error = error{
+                    print("Couldn't find a picture: \(error)")
+                }else if results != nil{
+                    performOnMain(){
+                        print("got back in image")
+                        self.groups[indexPath.row].thumbblob = results!
+                        cell.group = self.groups[indexPath.row]
+                    }
+                }
+            }
+        }
         return cell
     }
     

@@ -161,7 +161,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                 performOnMain(){
                     let request = NSFetchRequest(entityName: "GroupRequest")
                     request.fetchLimit = 1
-                    let predicate = NSPredicate(format: "groupkey == %@", self.group!.user!)
+                    let predicate = NSPredicate(format: "groupkey == %@", self.group!.safekey!)
                     let secondPredicate = NSPredicate(format: "user == %@", self.user!.token!)
                     request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate,secondPredicate])
                     do{
@@ -288,7 +288,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                     self.loadingView.stopAnimating()
                     self.joinButton.setTitle("Requested. Waiting for Approval", forState: .Normal)
                         //A Safekey was found, so save the GroupRequest
-                    let dict = [GroupRequest.Keys.Name: "Request to \(self.group!.name!)",GroupRequest.Keys.GroupKey: self.group!.user!, GroupRequest.Keys.User : self.user!.token!, GroupRequest.Keys.SafeKey : safekey, GroupRequest.Keys.Seen: "\(0)", GroupRequest.Keys.Accepted: "\(-1)"]
+                    let dict = [GroupRequest.Keys.Name: "Request to \(self.group!.name!)",GroupRequest.Keys.GroupKey: self.group!.safekey!, GroupRequest.Keys.User : self.user!.token!, GroupRequest.Keys.SafeKey : safekey, GroupRequest.Keys.Seen: "\(0)", GroupRequest.Keys.Accepted: "\(-1)"]
                     let groupRequest = GroupRequest.init(dictionary: dict, context: self.sharedContext)
                     print("You are saving a request with \(groupRequest.name)")
                     CoreDataStackManager.sharedInstance().saveContext()

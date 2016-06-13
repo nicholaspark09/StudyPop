@@ -46,6 +46,8 @@ extension StudyPopClient{
         static let Pic = "pic"
         static let User = "user"
         static let Query = "query"
+        static let LatInfo = "latinfo"
+        static let LocationSafeKey = "locationsafekey"
     }
     
     struct ParameterValues{

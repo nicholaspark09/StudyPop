@@ -21,12 +21,14 @@ class LocationPickViewController: UIViewController, MKMapViewDelegate {
         static let UnwindToAddSegue = "UnwindToAdd Segue"
         static let UnwindToEditSegue = "UnwindToEdit Segue"
         static let UnwindToAddGroupEventSegue = "UnwindToAddGroupEvent Segue"
+        static let UnwindToEventEditSegue = "UnwindToEventEdit Segue"
     }
     
     /**
         Local Variables
     **/
     var controller = ""
+    var info = ""
     var location: Location?
     var annotation: MKAnnotation?
     lazy var sharedContext: NSManagedObjectContext = {
@@ -37,6 +39,9 @@ class LocationPickViewController: UIViewController, MKMapViewDelegate {
             mapView!.delegate = self
         }
     }
+    
+    @IBOutlet var saveButton: UIBarButtonItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +94,20 @@ class LocationPickViewController: UIViewController, MKMapViewDelegate {
             }
             annotation = currentAnnotation
             mapView.addAnnotation(annotation!)
+            let tempLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            self.saveButton.enabled = false
+            CLGeocoder().reverseGeocodeLocation(tempLocation){ (placemarks,error) in
+                performOnMain(){
+                    self.saveButton.enabled = true
+                }
+                if error != nil{
+                    self.simpleError("No location found")
+                }else{
+                    if placemarks!.count > 0{
+                            self.info = "\(placemarks![0].locality),\(placemarks![0].country!)"
+                    }
+                }
+            }
         }
     }
     
@@ -128,15 +147,18 @@ class LocationPickViewController: UIViewController, MKMapViewDelegate {
         if annotation != nil{
             let temp = [
                 Location.Keys.Lat: annotation!.coordinate.latitude,
-                Location.Keys.Lng: annotation!.coordinate.longitude
+                Location.Keys.Lng: annotation!.coordinate.longitude,
             ]
             location = Location.init(dictionary: temp, context: sharedContext)
+            location!.info = self.info
             if controller == AddGroupViewController.Constants.Controller{
                 performSegueWithIdentifier(Constants.UnwindToAddSegue, sender: nil)
             }else if controller == GroupEditViewController.Constants.Controller{
                 performSegueWithIdentifier(Constants.UnwindToEditSegue, sender: nil)
             }else if controller == AddEventViewController.Constants.Controller{
                 performSegueWithIdentifier(Constants.UnwindToAddGroupEventSegue, sender: nil)
+            }else if controller == EventEditViewController.Constants.Controller{
+                performSegueWithIdentifier(Constants.UnwindToEventEditSegue, sender: nil)
             }
         }
     }

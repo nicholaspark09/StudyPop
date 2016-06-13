@@ -56,7 +56,7 @@ class GroupEventsTableViewController: UITableViewController {
     func updateUI(){
         performOnMain(){
             if self.events.count < 1{
-                let eventDict = [Event.Keys.User : "", Event.Keys.Name : "No events"]
+                let eventDict = [Event.Keys.SafeKey : "", Event.Keys.Name : "No events"]
                 let event = Event.init(dictionary: eventDict, context: self.sharedContext)
                 self.events.append(event)
             }
@@ -73,7 +73,7 @@ class GroupEventsTableViewController: UITableViewController {
                       StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
                       StudyPopClient.ParameterKeys.Offset: "\(events.count)",
                       StudyPopClient.ParameterKeys.Token : user!.token!,
-                      StudyPopClient.ParameterKeys.Group : group!.user!
+                      StudyPopClient.ParameterKeys.Group : group!.safekey!
         ]
         StudyPopClient.sharedInstance.httpGet("", parameters: params){(results,error) in
             func sendError(error: String){
@@ -141,8 +141,8 @@ class GroupEventsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let event = events[indexPath.row]
-        if event.user! != ""{
-            performSegueWithIdentifier(Constants.EventViewSegue, sender: event.user!)
+        if event.safekey! != ""{
+            performSegueWithIdentifier(Constants.EventViewSegue, sender: event.safekey!)
         }
     }
 

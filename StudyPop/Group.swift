@@ -20,10 +20,12 @@ class Group: NSManagedObject {
     @NSManaged var image: String?
     @NSManaged var ispublic: NSNumber?
     @NSManaged var safekey: String?
+    @NSManaged var thumbblob: NSData?
     @NSManaged var city: City?
     @NSManaged var subject:Subject?
     @NSManaged var location: Location?
     @NSManaged var hasProfilePhoto: Photo?
+    var checked: Bool?
     
     var photoImage: UIImage?
     
@@ -39,6 +41,7 @@ class Group: NSManagedObject {
         static let City = "city"
         static let IsPublic = "ispublic"
         static let SafeKey = "safekey"
+        static let ThumbBlob = "thumbblob"
     }
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -50,7 +53,7 @@ class Group: NSManagedObject {
         // Core Data
         let entity =  NSEntityDescription.entityForName("Group", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
-        
+        checked = false
         // Dictionary
         name = dictionary[Keys.Name] as? String
         user = dictionary[Keys.User] as? String

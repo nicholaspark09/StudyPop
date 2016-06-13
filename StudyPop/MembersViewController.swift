@@ -46,7 +46,7 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
                       StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
                       StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
                       StudyPopClient.ParameterKeys.Offset: "\(members.count)",
-                      StudyPopClient.ParameterKeys.Group : group!.user!,
+                      StudyPopClient.ParameterKeys.Group : group!.safekey!,
                       StudyPopClient.ParameterKeys.Token : user!.token!
         ]
         StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in

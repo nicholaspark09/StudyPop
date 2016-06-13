@@ -145,8 +145,8 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
     @IBAction func unwindToAddGroupEvent(sender: UIStoryboardSegue){
         if let sourceViewController = sender.sourceViewController as? CityPickerViewController{
             if sourceViewController.currentCityKey != ""{
-                let cityDict = [City.Keys.Name : sourceViewController.cityName, City.Keys.User : sourceViewController.currentCityKey]
-                if let foundCity = self.findCityInDB(cityDict[City.Keys.User]!){
+                let cityDict = [City.Keys.Name : sourceViewController.cityName, City.Keys.SafeKey : sourceViewController.currentCityKey]
+                if let foundCity = self.findCityInDB(cityDict[City.Keys.SafeKey]!){
                     //City was found
                     self.city = foundCity
                 }else{
@@ -159,8 +159,8 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
             }
         }else if let svc = sender.sourceViewController as? StudyPickerViewController{
             if svc.subjectKey != ""{
-                let subjectDict = [Subject.Keys.Name : svc.subjectName, Subject.Keys.User : svc.subjectKey]
-                if let foundSubject = self.findSubjectInDB(subjectDict[Subject.Keys.User]!){
+                let subjectDict = [Subject.Keys.Name : svc.subjectName, Subject.Keys.SafeKey : svc.subjectKey]
+                if let foundSubject = self.findSubjectInDB(subjectDict[Subject.Keys.SafeKey]!){
                     self.subject = foundSubject
                 }else{
                     self.subject = Subject.init(dictionary: subjectDict, context: self.sharedContext)
@@ -264,23 +264,26 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
              var lng = ""
              var cityKey = ""
              var subjectKey = ""
+            var latInfo = ""
             if location != nil{
                 lat = "\(location!.lat!)"
                 lng = "\(location!.lng!)"
+                if location!.info != nil{
+                    latInfo = location!.info!
+                }
             }
             if city != nil{
-                cityKey = city!.user!
+                cityKey = city!.safekey!
             }
             if subject != nil{
-                subjectKey = subject!.user!
+                subjectKey = subject!.safekey!
             }
-            print("The event has a start of \(startDate) and an end date of \(endDate)")
             let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventsController,
                           StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.AddMethod,
                           StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
                           StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
                           StudyPopClient.ParameterKeys.Token : user!.token!,
-                          StudyPopClient.ParameterKeys.Group : group!.user!,
+                          StudyPopClient.ParameterKeys.Group : group!.safekey!,
                           Event.Keys.Name: title,
                           Event.Keys.Info : info,
                           Event.Keys.MaxPeople : maxPeople,
@@ -290,6 +293,7 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
                           Event.Keys.Price : price,
                           Location.Keys.Lat : lat,
                           Location.Keys.Lng : lng,
+                          StudyPopClient.ParameterKeys.LatInfo : latInfo,
                           Event.Keys.Start : startDate,
                           Event.Keys.End : endDate
             ]
@@ -332,7 +336,7 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
     func findSubjectInDB(safekey: String) -> Subject?{
         let request = NSFetchRequest(entityName: "Subject")
         request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "user == %@", safekey)
+        request.predicate = NSPredicate(format: "safekey == %@", safekey)
         do{
             let results = try sharedContext.executeFetchRequest(request)
             if results.count > 0 {
@@ -351,7 +355,7 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
     func findCityInDB(safekey: String) -> City?{
         let request = NSFetchRequest(entityName: "City")
         request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "user == %@", safekey)
+        request.predicate = NSPredicate(format: "safekey == %@", safekey)
         do{
             let results = try self.sharedContext.executeFetchRequest(request)
             if results.count > 0 {

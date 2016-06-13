@@ -18,11 +18,7 @@ class StudyPopClient: NSObject{
         let request = NSMutableURLRequest(URL: urlFromParameters(parameters, withPathExtension: method))
         //request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            
-            
-            
-            let string = NSString.init(data: data!, encoding: NSUTF8StringEncoding)
-            print("The return was \(string)")
+
             
             func sendError(error: String){
                 print(error)
@@ -62,9 +58,7 @@ class StudyPopClient: NSObject{
         //request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.HTTPBody = jsonBody.dataUsingEncoding(NSUTF8StringEncoding)
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
-            
-            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("The results were: \(string)")
+
             
             func sendError(error: String){
                 print(error)
@@ -183,7 +177,7 @@ class StudyPopClient: NSObject{
             
             static func generateDateFormatter() -> NSDateFormatter {
                 let formatter = NSDateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ssz"
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssz"
                 
                 return formatter
             }
