@@ -24,6 +24,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         static let PinReuseIdentifier = "Pin"
         static let EventEditSegue = "EventEdit Segue"
         static let DeleteTitle = "Delete Event"
+        static let EventMembersSegue = "EventMembers Segue"
     }
     
     
@@ -354,6 +355,24 @@ class EventViewController: UIViewController, MKMapViewDelegate {
     @IBAction func unwindToEventView(sender: UIStoryboardSegue){
        
     }
+    
+    // Allows users to view members of this event
+    @IBAction func membersClicked(sender: UIButton) {
+        
+        if event!.ispublic!.intValue < 3{
+            //This is a viewable event, so we can see the people attending
+            performSegueWithIdentifier(Constants.EventMembersSegue, sender: nil)
+        }else{
+            //Private event
+            if eventMember != nil{
+                // This user is a member, so they can view the members
+                performSegueWithIdentifier(Constants.EventMembersSegue, sender: nil)
+            }else{
+                self.simpleError("Sorry, but members are only visible to members of this event")
+            }
+        }
+        
+    }
 
     
     // MARK: - Navigation
@@ -362,6 +381,11 @@ class EventViewController: UIViewController, MKMapViewDelegate {
             if let evc = segue.destinationViewController as? EventEditViewController{
                 evc.event = event!
                 evc.user = user!
+            }
+        }else if segue.identifier == Constants.EventMembersSegue{
+            if let emc = segue.destinationViewController as? EventMembersTableViewController{
+                emc.event = event!
+                emc.user = user!
             }
         }
     }

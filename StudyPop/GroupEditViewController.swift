@@ -104,9 +104,13 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
                 let privateOption = pickerView.selectedRowInComponent(0)+1
                 var lat = ""
                 var lng = ""
+                var locInfo = ""
                 if group!.location != nil{
                     lat = "\(group!.location!.lat!)"
                     lng = "\(group!.location!.lng!)"
+                    if group!.location!.info != nil{
+                        locInfo = group!.location!.info!
+                    }
                 }
                 let params = [
                     StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupsController,
@@ -122,7 +126,8 @@ class GroupEditViewController: UIViewController, WDImagePickerDelegate,UIImagePi
                     StudyPopClient.ParameterKeys.IsPublic: "\(privateOption)",
                     StudyPopClient.ParameterKeys.People : "\(100000)",
                     StudyPopClient.ParameterKeys.Lat :lat,
-                    StudyPopClient.ParameterKeys.Lng :lng
+                    StudyPopClient.ParameterKeys.Lng :lng,
+                    StudyPopClient.ParameterKeys.LatInfo : locInfo
                 ]
                 loadingView.startAnimating()
                 StudyPopClient.sharedInstance.httpPost("", parameters: params, jsonBody: ""){ (results,error) in

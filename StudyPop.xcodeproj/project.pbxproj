@@ -18,6 +18,8 @@
 		AF074B361D090D1A007C8E1F /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF074B351D090D1A007C8E1F /* AddEventViewController.swift */; };
 		AF074B381D091159007C8E1F /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF074B371D091158007C8E1F /* EventTableViewCell.swift */; };
 		AF0B9C1D1D09C166005FD452 /* PickDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0B9C1C1D09C166005FD452 /* PickDateViewController.swift */; };
+		AF0E8F081D12C3F500085B02 /* EventMembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0E8F071D12C3F500085B02 /* EventMembersTableViewController.swift */; };
+		AF0E8F0A1D12CE0500085B02 /* EventMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0E8F091D12CE0500085B02 /* EventMemberTableViewCell.swift */; };
 		AF112A5A1CFBC3C700FE1DB9 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A581CFBC3C700FE1DB9 /* Group.swift */; };
 		AF112A5C1CFBD1D100FE1DB9 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */; };
 		AF112A5E1CFBDAFA00FE1DB9 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A5D1CFBDAFA00FE1DB9 /* GroupViewController.swift */; };
@@ -94,6 +96,8 @@
 		AF074B351D090D1A007C8E1F /* AddEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
 		AF074B371D091158007C8E1F /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		AF0B9C1C1D09C166005FD452 /* PickDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickDateViewController.swift; sourceTree = "<group>"; };
+		AF0E8F071D12C3F500085B02 /* EventMembersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventMembersTableViewController.swift; sourceTree = "<group>"; };
+		AF0E8F091D12CE0500085B02 /* EventMemberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventMemberTableViewCell.swift; sourceTree = "<group>"; };
 		AF112A581CFBC3C700FE1DB9 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		AF112A5D1CFBDAFA00FE1DB9 /* GroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +227,7 @@
 				AF9582EA1D05DF1F00064C98 /* ProfileTableViewCell.swift */,
 				AFA1403F1D065432004C3DB0 /* GroupMemberTableViewCell.swift */,
 				AF074B371D091158007C8E1F /* EventTableViewCell.swift */,
+				AF0E8F091D12CE0500085B02 /* EventMemberTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 				AF59A5551D0B68C000CC0C1F /* EventViewController.swift */,
 				AF52617E1D0BA8A500DA58AC /* EventEditViewController.swift */,
 				AF82C8C81D0D3D6D0043371D /* EventsMapViewController.swift */,
+				AF0E8F071D12C3F500085B02 /* EventMembersTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -482,7 +488,9 @@
 				AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */,
 				AF3740A41CF75D1600216F64 /* GroupsViewController.swift in Sources */,
 				AF00778B1CF530690056904F /* CoreDataStackManager.swift in Sources */,
+				AF0E8F081D12C3F500085B02 /* EventMembersTableViewController.swift in Sources */,
 				AF0077871CF52CB70056904F /* StudyPopClient.swift in Sources */,
+				AF0E8F0A1D12CE0500085B02 /* EventMemberTableViewCell.swift in Sources */,
 				AF9E70EC1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift in Sources */,
 				AF2E2B821CF7DF9A00820183 /* City.swift in Sources */,
 				AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */,

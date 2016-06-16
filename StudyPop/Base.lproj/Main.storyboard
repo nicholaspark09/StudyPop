@@ -365,7 +365,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ENg-hh-Lu1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5989" y="1888"/>
+            <point key="canvasLocation" x="4645" y="-16"/>
         </scene>
         <!--Groups-->
         <scene sceneID="85Z-JL-DW0">
@@ -747,6 +747,70 @@
             </objects>
             <point key="canvasLocation" x="3621" y="1288"/>
         </scene>
+        <!--Table View Controller-->
+        <scene sceneID="yXr-yn-W7v">
+            <objects>
+                <tableViewController id="Gle-go-n1R" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="83" sectionHeaderHeight="28" sectionFooterHeight="28" id="MMb-5X-2VS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EventMember Cell" rowHeight="83" id="JcN-oW-Cvx" customClass="EventMemberTableViewCell" customModule="StudyPop" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="83"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JcN-oW-Cvx" id="TJq-Lg-Uab">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="82"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfileSmall" translatesAutoresizingMaskIntoConstraints="NO" id="Cvj-i6-6jm">
+                                            <rect key="frame" x="8" y="12" width="58" height="58"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="58" id="CYp-4V-OcB"/>
+                                                <constraint firstAttribute="width" constant="58" id="oiX-xJ-olW"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRI-Nt-wL7">
+                                            <rect key="frame" x="82" y="28" width="510" height="25"/>
+                                            <attributedString key="attributedText">
+                                                <fragment content="Profile">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="18" name="AvenirNext-Bold"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="leadingMargin" secondItem="Cvj-i6-6jm" secondAttribute="leading" id="Gez-Zv-ZEb"/>
+                                        <constraint firstItem="Cvj-i6-6jm" firstAttribute="centerY" secondItem="TJq-Lg-Uab" secondAttribute="centerY" id="UYc-5m-KfD"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="FRI-Nt-wL7" secondAttribute="trailing" id="dkI-cR-kfa"/>
+                                        <constraint firstItem="FRI-Nt-wL7" firstAttribute="centerY" secondItem="Cvj-i6-6jm" secondAttribute="centerY" id="jWe-NH-WEU"/>
+                                        <constraint firstItem="FRI-Nt-wL7" firstAttribute="leading" secondItem="Cvj-i6-6jm" secondAttribute="trailing" constant="16" id="xfO-d0-NWW"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="memberImageView" destination="Cvj-i6-6jm" id="fdk-FO-Cjj"/>
+                                    <outlet property="nameLabel" destination="FRI-Nt-wL7" id="Cm6-LU-7N6"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Gle-go-n1R" id="qCb-XQ-J3R"/>
+                            <outlet property="delegate" destination="Gle-go-n1R" id="TmN-Ta-6xP"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <segue destination="NHi-5M-2vN" kind="presentation" identifier="ProfileView Segue" id="WsF-Tp-98Z"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bPe-MT-uMr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3812" y="-11"/>
+        </scene>
         <!--Event View Controller-->
         <scene sceneID="JMh-D6-yn8">
             <objects>
@@ -807,6 +871,9 @@
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7GK-zE-Iie">
                                         <rect key="frame" x="0.0" y="0.0" width="187" height="64"/>
                                         <state key="normal" image="ProfileLarge"/>
+                                        <connections>
+                                            <action selector="membersClicked:" destination="L9B-C4-qL2" eventType="touchUpInside" id="mBk-nh-TKg"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YVJ-7U-Sbu">
                                         <rect key="frame" x="187" y="0.0" width="186" height="64"/>
@@ -887,11 +954,12 @@
                         <outlet property="mapView" destination="DKh-63-CwF" id="l4g-9V-Oit"/>
                         <outlet property="subjectLabel" destination="ulZ-xX-oFR" id="WME-Xn-318"/>
                         <segue destination="HhA-FT-ifY" kind="show" identifier="EventEdit Segue" id="ueq-Nn-Tac"/>
+                        <segue destination="Gle-go-n1R" kind="show" identifier="EventMembers Segue" id="AtM-DO-6jc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vWZ-dC-d18" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4574" y="587"/>
+            <point key="canvasLocation" x="4630" y="725"/>
         </scene>
         <!--Group Events Table View Controller-->
         <scene sceneID="H0E-wM-61z">
@@ -2844,9 +2912,9 @@
         <image name="SubjectWhite" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="h1T-W2-NA3"/>
-        <segue reference="Mde-lY-Zxg"/>
-        <segue reference="x9T-2Z-FQq"/>
+        <segue reference="zhP-Xa-X1a"/>
+        <segue reference="ccH-QP-hsC"/>
+        <segue reference="WsF-Tp-98Z"/>
         <segue reference="cXE-ef-ID2"/>
         <segue reference="EoZ-Ci-xuJ"/>
     </inferredMetricsTieBreakers>

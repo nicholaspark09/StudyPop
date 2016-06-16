@@ -98,6 +98,7 @@ extension StudyPopClient{
         static let Events = "Events"
         static let Event = "Event"
         static let EventMember = "EventMember"
+        static let EventMembers = "EventMembers"
     }
     
     struct JSONResponseValues{

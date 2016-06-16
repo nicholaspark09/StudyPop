@@ -199,7 +199,6 @@ class StudyPickerViewController: UIViewController, UITextFieldDelegate, UITableV
             print("The Error was \(fetchError)")
             return false
         }
-        return false
     }
     
 

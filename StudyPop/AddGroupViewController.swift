@@ -207,9 +207,13 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
             }
             var lat = 0.0
             var lng = 0.0
+            var locInfo = ""
             if location != nil{
                 lat = location!.lat!.doubleValue
                 lng = location!.lng!.doubleValue
+                if location!.info != nil{
+                    locInfo = location!.info!
+                }
             }
             let privateOption = pickerView.selectedRowInComponent(0)+1
             let params = [
@@ -225,7 +229,8 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
                 StudyPopClient.ParameterKeys.IsPublic: "\(privateOption)",
                 StudyPopClient.ParameterKeys.People : "\(100000)",
                 StudyPopClient.ParameterKeys.Lat : "\(lat)",
-                StudyPopClient.ParameterKeys.Lng : "\(lng)"
+                StudyPopClient.ParameterKeys.Lng : "\(lng)",
+                StudyPopClient.ParameterKeys.LatInfo : locInfo
             ]
             StudyPopClient.sharedInstance.httpPost("", parameters: params, jsonBody: ""){ (results,error) in
                 func sendError(error: String){

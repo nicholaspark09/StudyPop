@@ -105,6 +105,7 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
         let member = members[indexPath.row]
         cell.groupMember = member
         if cell.groupMember!.photoblob == nil && !cell.groupMember!.checked{
+            cell.groupMember!.checked = true
             StudyPopClient.sharedInstance.findUserPicture(cell.groupMember!.user!){(results,error) in
                 if let error = error{
                     print("Couldn't find a picture: \(error)")

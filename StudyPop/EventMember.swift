@@ -20,6 +20,7 @@ class EventMember: NSManagedObject {
     @NSManaged var thumbblob: NSData?
     @NSManaged var fromEvent: Event?
     var photoImage: UIImage?
+    var checked = false
     
     struct Keys{
         static let Name = "name"
