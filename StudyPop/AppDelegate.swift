@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if results.count > 0{
                 //A user was found!
                 //Send them to the tabcontroller
-                print("You found a user?")
+                
                 let storyboard = UIStoryboard.init(name: Constants.StoryboardName, bundle: nil)
                 let hc = storyboard.instantiateViewControllerWithIdentifier(Constants.StoryboardHomeTab) as UIViewController
                 self.window = UIWindow(frame: UIScreen.mainScreen().bounds)

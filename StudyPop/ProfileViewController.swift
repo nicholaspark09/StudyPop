@@ -26,11 +26,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet var profileImageView: UIImageView!
     
     
-    var user: User?{
-        didSet{
-            print("YOu set this")
-        }
-    }
+    var user: User?
     var profile:Profile?
     var profileUser = ""
     lazy var sharedContext: NSManagedObjectContext = {
@@ -148,12 +144,17 @@ class ProfileViewController: UIViewController {
             self.nameLabel.text = self.profile!.name!
             self.infoTextView.text = self.profile!.info!
             //Check the DB for a profile Pic
+            print("In the midst of the project")
             if self.profile!.hasPhoto != nil{
-                
+                print("Step 1")
+                self.profileImageView.image = UIImage(data: self.profile!.hasPhoto!.blob!)
+                self.profileImageView.contentMode = UIViewContentMode.ScaleAspectFit
             }else if self.profile!.image != nil && self.profile!.image! != ""{
+                print("Step 2")
                 var found = false
                 if let oldProfile = self.findProfileInDB(){
                     if oldProfile.image != nil && oldProfile.image! == self.profile!.image! {
+                        print("Step 3")
                         if oldProfile.hasPhoto != nil{
                             self.profileImageView.image = UIImage(data: oldProfile.hasPhoto!.blob!)
                             self.profileImageView.contentMode = UIViewContentMode.ScaleAspectFit
@@ -162,6 +163,7 @@ class ProfileViewController: UIViewController {
                     }
                 }
                 if !found {
+                    
                     print("The Profile safekey is \(self.profile!.safekey!)")
                     //Look up the image from the DB
                     //Find the image

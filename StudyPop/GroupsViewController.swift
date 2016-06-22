@@ -357,6 +357,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if results.count > 0{
                 if let temp = results[0] as? User{
                     user = temp
+                    print("UserEmail: \(user!.email!)")
                 }
             }
         } catch {

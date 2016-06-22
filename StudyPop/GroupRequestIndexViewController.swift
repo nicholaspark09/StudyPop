@@ -186,7 +186,45 @@ class GroupRequestIndexViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func rejectIt(index: Int) {
-        
+        let request = requests[index]
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupRequestsController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.ResponseMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.Offset: "\(requests.count)",
+                      StudyPopClient.ParameterKeys.Token : user!.token!,
+                      StudyPopClient.ParameterKeys.SafeKey : request.safekey!,
+                      GroupRequest.Keys.Accepted : "\(Constants.Rejected)",
+                      ]
+        self.loadingView.startAnimating()
+        StudyPopClient.sharedInstance.httpGet("", parameters: params){(results,error) in
+            
+            performOnMain(){
+                self.loadingView.stopAnimating()
+            }
+            
+            func sendError(error: String){
+                self.simpleError(error)
+                
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                sendError("Got nothing from the server. Please try again")
+                return
+            }
+            
+            if stat == StudyPopClient.JSONResponseValues.Success{
+                self.requests.removeAtIndex(index)
+                self.updateUI()
+            }else{
+                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+            }
+        }
     }
 
     
