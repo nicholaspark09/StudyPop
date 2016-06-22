@@ -25,6 +25,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         static let ViewMembersSegue = "ViewMembers Segue"
         static let EventsViewSegue = "EventsView Segue"
         static let GroupPostsSegue = "GroupPosts Segue"
+        static let GroupRequestsSegue = "GroupRequests Segue"
     }
     
     
@@ -270,7 +271,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                       StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.AddMethod,
                       StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
                       StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
-                      StudyPopClient.ParameterKeys.Group: group!.user!,
+                      StudyPopClient.ParameterKeys.Group: group!.safekey!,
                       StudyPopClient.ParameterKeys.Token : user!.token!
         ]
         StudyPopClient.sharedInstance.httpPost("", parameters: params, jsonBody: ""){(results,error) in
@@ -437,6 +438,11 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
             if let gvc = segue.destinationViewController as? GroupPostsViewController{
                 gvc.user = user!
                 gvc.group = group!
+            }
+        }else if segue.identifier == Constants.GroupRequestsSegue{
+            if let grc = segue.destinationViewController as? GroupRequestIndexViewController{
+                grc.user = user!
+                grc.group = group!
             }
         }
     }

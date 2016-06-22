@@ -21,10 +21,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let StoryboardGroupsView = "GroupsView"
         static let StoryboardHomeTab = "HomeTab"
     }
+    
+    lazy var sharedContext: NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
         
         //Check for a logged in user first
         let sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext
@@ -57,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("The error was \(fetchError)")
         }
         
-        
+    
         return true
     }
 
@@ -70,13 +75,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 //Check the login safekey
                 let defaults = NSUserDefaults.standardUserDefaults()
-                let safekey = defaults.objectForKey(User.Keys.Token)
+                let safekey = defaults.objectForKey(User.Keys.Token) as? String
                 if safekey == nil{
                     print("Error: Nothing was found")
                 }else{
-                    let userDetails = [User.Keys.Name:"",User.Keys.Email: defaults.objectForKey(User.Keys.Email)!,User.Keys.Logged:true,User.Keys.Token:safekey!,User.Keys.SafeKey: safekey!]
-                    let user = User.init(dictionary: userDetails, context: CoreDataStackManager.sharedInstance().managedObjectContext)
-                    print("You have a user with email: \(user.email)")
+                    
+                    //First check to see if the user exists
+                    let email = defaults.objectForKey(User.Keys.Email)! as! String
+                    var user = getUser(email)
+                    if user == nil{
+                        let userDetails = [User.Keys.Name:"",User.Keys.Email: defaults.objectForKey(User.Keys.Email)!,User.Keys.Logged:true,User.Keys.Token:safekey!,User.Keys.SafeKey: safekey!]
+                        user = User.init(dictionary: userDetails, context: CoreDataStackManager.sharedInstance().managedObjectContext)
+                    }else{
+                        user!.token = safekey!
+                        user!.safekey = safekey!
+                        user!.logged = true
+                    }
+                    print("You have a user with email: \(user!.email)")
                     CoreDataStackManager.sharedInstance().saveContext()
                     let center = NSNotificationCenter.defaultCenter()
                     let notification = NSNotification(name: StudyPopClient.Constants.UserNotification, object: self, userInfo: [User.Keys.Token: safekey!])
@@ -134,6 +149,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             subjectKey = savedSubjectKey as! String
         }
         return (subjectName,subjectKey)
+    }
+    
+    func getUser(email: String) -> User?{
+        let request = NSFetchRequest(entityName: "User")
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "email == %@", email)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0{
+                if let temp = results[0] as? User{
+                    return temp
+                }
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The error was \(fetchError)")
+        }
+        return nil
     }
  
 }

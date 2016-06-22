@@ -45,6 +45,14 @@ class LoginViewController: UIViewController {
                 self.performSegueWithIdentifier(Constants.HomeTabSegue, sender: nil)
             }
         }
+        
+        getUser()
+        if user != nil{
+            self.performSegueWithIdentifier(Constants.HomeTabSegue, sender: nil)
+            print("YOU have a user!")
+        }else{
+            print("The user is nil!")
+        }
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -86,6 +94,11 @@ class LoginViewController: UIViewController {
     }
     
 
+    @IBAction func unwindToLoginViewController(sender: UIStoryboardSegue){
+        user = nil
+        self.loginButton.enabled = true
+        self.emailTextField.text = ""
+    }
     
     //Hide the keyboard
     func hideKeyboard(){

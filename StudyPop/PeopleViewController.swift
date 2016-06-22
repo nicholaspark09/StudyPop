@@ -24,6 +24,10 @@ class PeopleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         static let SearchLabel = "Search"
         static let CellReuseIdentifier = "Profile Cell"
         static let ProfileViewSegue = "ProfileView Segue"
+        static let LogoutTitle = "Logout of Account"
+        static let LogoutMessage = "Logout"
+        static let LogoutCancel = "Don't Logout"
+        static let UnwindToLoginSegue = "UnwindToLogin Segue"
     }
     
     
@@ -200,6 +204,26 @@ class PeopleViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
         return cell
+    }
+    
+    
+    
+    @IBAction func logoutClicked(sender: UIButton) {
+        let refreshAlert = UIAlertController(title: Constants.LogoutTitle, message: "Are you sure?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: Constants.LogoutCancel, style: .Default, handler: nil))
+        refreshAlert.addAction(UIAlertAction(title: Constants.LogoutMessage, style: .Cancel, handler: { (action: UIAlertAction!) in
+            if self.user != nil{
+                self.user!.logged = false
+                CoreDataStackManager.sharedInstance().saveContext()
+                self.performSegueWithIdentifier(Constants.UnwindToLoginSegue, sender: nil)
+            }
+        }))
+        
+        presentViewController(refreshAlert, animated: true, completion: nil)
+        
+        
+        
     }
     
     

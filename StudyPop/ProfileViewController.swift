@@ -40,7 +40,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if user != nil && profileUser == "" && profile == nil{
+        if user != nil && profileUser == "" && profile == nil && profileUser != user!.token!{
             print("You should be grabbing it")
             //This is your profile
             editButton.hidden = false

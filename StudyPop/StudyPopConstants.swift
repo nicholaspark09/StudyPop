@@ -78,6 +78,7 @@ extension StudyPopClient{
         static let UserThumbMethod = "userthumb"
         static let UserViewMethod = "userview"
         static let GroupEventsMethod = "groupindex"
+        static let ResponseMethod = "response"
         
     }
     
@@ -105,6 +106,7 @@ extension StudyPopClient{
         static let EventMembers = "EventMembers"
         static let GroupPosts = "GroupPosts"
         static let GroupPost = "GroupPost"
+        static let GroupRequests = "GroupRequests"
     }
     
     struct JSONResponseValues{
