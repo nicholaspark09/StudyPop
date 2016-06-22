@@ -121,8 +121,9 @@ class EventMembersTableViewController: UITableViewController {
         }
     }
     
-    func refreshClicked(sender:UIBarButtonItem){
+    func refreshClicked(){
         members = [EventMember]()
+        updateUI()
         indexMembers()
     }
     
@@ -131,7 +132,8 @@ class EventMembersTableViewController: UITableViewController {
         if canLoadMore{
             loadingButton?.title = Constants.LoadingTitle
             loadingButton?.enabled = false
-            let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupMembersController,
+            print("Sending the safekey of \(event!.safekey!)")
+            let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventMembersController,
                           StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.IndexMethod,
                           StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
                           StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,

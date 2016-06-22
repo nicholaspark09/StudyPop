@@ -25,6 +25,7 @@ class Group: NSManagedObject {
     @NSManaged var subject:Subject?
     @NSManaged var location: Location?
     @NSManaged var hasProfilePhoto: Photo?
+    @NSManaged var hasPosts: [GroupPost]?
     var checked: Bool?
     
     var photoImage: UIImage?

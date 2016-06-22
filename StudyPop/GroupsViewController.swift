@@ -53,7 +53,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var group: Group?
     var isLoading = false
     var canLoadMore = true
-    let threshold = 100.0
+    let threshold = 50.0
     /**     
         IBOutlets
 

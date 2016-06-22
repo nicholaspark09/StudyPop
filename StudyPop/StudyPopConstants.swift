@@ -48,6 +48,7 @@ extension StudyPopClient{
         static let Query = "query"
         static let LatInfo = "latinfo"
         static let LocationSafeKey = "locationsafekey"
+        static let BodyType = "type"
     }
     
     struct ParameterValues{
@@ -55,6 +56,8 @@ extension StudyPopClient{
         static let GroupsController = "groups"
         static let GroupRequestsController = "grouprequests"
         static let GroupMembersController = "groupmembers"
+        static let EventMembersController = "eventmembers"
+        static let GroupPostsController = "groupposts"
         static let ProfilesController = "profiles"
         static let EventsController = "events"
         static let CitiesController = "cities"
@@ -75,6 +78,7 @@ extension StudyPopClient{
         static let UserThumbMethod = "userthumb"
         static let UserViewMethod = "userview"
         static let GroupEventsMethod = "groupindex"
+        
     }
     
     struct JSONReponseKeys{
@@ -99,6 +103,8 @@ extension StudyPopClient{
         static let Event = "Event"
         static let EventMember = "EventMember"
         static let EventMembers = "EventMembers"
+        static let GroupPosts = "GroupPosts"
+        static let GroupPost = "GroupPost"
     }
     
     struct JSONResponseValues{

@@ -24,6 +24,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         static let DeleteTitle = "Delete"
         static let ViewMembersSegue = "ViewMembers Segue"
         static let EventsViewSegue = "EventsView Segue"
+        static let GroupPostsSegue = "GroupPosts Segue"
     }
     
     
@@ -43,6 +44,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
     var oldGroup: Group?
     var safekey = ""
     var user:User?
+    var groupMember: GroupMember?
 
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -143,9 +145,9 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                     self.joinButton.hidden = true
                     
                     if let dict = results[StudyPopClient.JSONReponseKeys.GroupMember] as? [String:AnyObject]{
-                        let member = GroupMember.init(dictionary: dict, context: self.sharedContext)
-                        member.safekey = memberKey!
-                        if member.role! == 1{
+                        self.groupMember = GroupMember.init(dictionary: dict, context: self.sharedContext)
+                        self.groupMember!.safekey = memberKey!
+                        if self.groupMember!.role! == 1{
                             //This is an admin
                             //Create an edit Button
                             let editButton = UIBarButtonItem(title: Constants.EditTitle, style: .Plain, target: self, action: #selector(GroupViewProtocol.editClicked))
@@ -201,6 +203,15 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
     func editClicked(){
         performSegueWithIdentifier(Constants.GroupEditSegue, sender: nil)
     }
+    
+    @IBAction func postClicked(sender: UIButton) {
+        if group?.ispublic?.intValue < 3{
+            performSegueWithIdentifier(Constants.GroupPostsSegue, sender: nil)
+        }else if groupMember != nil && groupMember!.safekey != nil{
+            performSegueWithIdentifier(Constants.GroupPostsSegue, sender: nil)
+        }
+    }
+    
     
     // MARK: DELETE Group
     func deleteClicked(){
@@ -421,6 +432,11 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
             if let evc = segue.destinationViewController as? GroupEventsTableViewController{
                 evc.user = user!
                 evc.group = group!
+            }
+        }else if segue.identifier == Constants.GroupPostsSegue{
+            if let gvc = segue.destinationViewController as? GroupPostsViewController{
+                gvc.user = user!
+                gvc.group = group!
             }
         }
     }
