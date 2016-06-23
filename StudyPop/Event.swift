@@ -75,12 +75,13 @@ class Event: NSManagedObject {
         dayof = dictionary[Keys.DayOf] as? String
         safekey = dictionary[Keys.SafeKey] as? String
         if let startString = dictionary[Keys.Start] as? String{
-            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString){
+            
+            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString.trunc(19)){
                 start = startDate
             }
         }
         if let endString = dictionary[Keys.End] as? String{
-            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString){
+            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString.trunc(19)){
                 end = endDate
             }
         }

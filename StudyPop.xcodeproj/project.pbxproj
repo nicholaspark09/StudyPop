@@ -63,6 +63,8 @@
 		AFA1403E1D064C31004C3DB0 /* MembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA1403D1D064C31004C3DB0 /* MembersViewController.swift */; };
 		AFA140401D065432004C3DB0 /* GroupMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA1403F1D065432004C3DB0 /* GroupMemberTableViewCell.swift */; };
 		AFC09EA71D160BD00003BD29 /* GroupPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC09EA61D160BD00003BD29 /* GroupPostTableViewCell.swift */; };
+		AFCAE1E21D1BF49000955601 /* Thumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAE1E01D1BF49000955601 /* Thumb.swift */; };
+		AFCAE1E41D1BF78F00955601 /* GroupPicIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */; };
 		AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26761CE8E1C400754A6D /* AppDelegate.swift */; };
 		AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26781CE8E1C400754A6D /* LoginViewController.swift */; };
 		AFCB267C1CE8E1C400754A6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFCB267A1CE8E1C400754A6D /* Main.storyboard */; };
@@ -147,6 +149,8 @@
 		AFA1403D1D064C31004C3DB0 /* MembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersViewController.swift; sourceTree = "<group>"; };
 		AFA1403F1D065432004C3DB0 /* GroupMemberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberTableViewCell.swift; sourceTree = "<group>"; };
 		AFC09EA61D160BD00003BD29 /* GroupPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPostTableViewCell.swift; sourceTree = "<group>"; };
+		AFCAE1E01D1BF49000955601 /* Thumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumb.swift; sourceTree = "<group>"; };
+		AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPicIndexViewController.swift; sourceTree = "<group>"; };
 		AFCB26731CE8E1C300754A6D /* StudyPop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyPop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFCB26761CE8E1C400754A6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AFCB26781CE8E1C400754A6D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 				AF79B56C1D07BD0B00A046D4 /* Event.swift */,
 				AF52617B1D0B88BF00DA58AC /* EventMember.swift */,
 				AF4FE4781D15B48400C60F64 /* GroupPost.swift */,
+				AFCAE1E01D1BF49000955601 /* Thumb.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 				AF4FE47B1D15B6D000C60F64 /* GroupPostsViewController.swift */,
 				AF7DEF4A1D1A7F5500074B63 /* AddGroupPostViewController.swift */,
 				AF0924DA1D1AB3A7003D8656 /* GroupRequestIndexViewController.swift */,
+				AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -503,6 +509,7 @@
 				AF283DA51D05118D006D4AC1 /* Photo.swift in Sources */,
 				AF074B361D090D1A007C8E1F /* AddEventViewController.swift in Sources */,
 				AF112A5E1CFBDAFA00FE1DB9 /* GroupViewController.swift in Sources */,
+				AFCAE1E21D1BF49000955601 /* Thumb.swift in Sources */,
 				AF4FE47A1D15B48400C60F64 /* GroupPost.swift in Sources */,
 				AF8043AB1CFE5CC400A2B7A4 /* WDCropBorderView.swift in Sources */,
 				AF5AA9DC1D056B730020D5BD /* Profile.swift in Sources */,
@@ -535,6 +542,7 @@
 				AF8043AD1CFE5CC400A2B7A4 /* WDImageCropView.swift in Sources */,
 				AF9E70EA1CFB249800E8B8F6 /* Subject.swift in Sources */,
 				AF112A5C1CFBD1D100FE1DB9 /* GroupTableViewCell.swift in Sources */,
+				AFCAE1E41D1BF78F00955601 /* GroupPicIndexViewController.swift in Sources */,
 				AF3E5EA31D0268A900EE699F /* GroupEditViewController.swift in Sources */,
 				AF3E5EA11D025C5300EE699F /* GroupMember.swift in Sources */,
 			);

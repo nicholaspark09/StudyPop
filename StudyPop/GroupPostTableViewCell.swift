@@ -14,10 +14,15 @@ class GroupPostTableViewCell: UITableViewCell {
         didSet{
             nameLabel.text = post!.name!
             infoTextView.text = post!.pretty!
+            print("The post date is \(post!.created)")
+            if post!.created != nil{
+                dateLabel.text = post!.created!.description
+            }
         }
     }
     
     
+    @IBOutlet var dateLabel: UILabel!
     @IBOutlet var memberImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var infoTextView: UITextView!

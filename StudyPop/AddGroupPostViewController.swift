@@ -96,8 +96,10 @@ class AddGroupPostViewController: UIViewController{
                     let safekey = results[StudyPopClient.JSONReponseKeys.SafeKey] as! String
                     performOnMain(){
                         self.loadingLabel.text = "Saved!"
+                        
                         let postDict = [GroupPost.Keys.Name : "Me", GroupPost.Keys.User : self.user!.token!, GroupPost.Keys.Pretty : text, GroupPost.Keys.SafeKey : safekey]
                         self.post = GroupPost.init(dictionary: postDict, context: self.sharedContext)
+                        self.post!.created = NSDate()
                         self.performSegueWithIdentifier(Constants.UnwindToGroupPostsSegue, sender: nil)
                     }
                 }else{

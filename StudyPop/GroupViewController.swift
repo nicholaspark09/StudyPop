@@ -26,6 +26,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         static let EventsViewSegue = "EventsView Segue"
         static let GroupPostsSegue = "GroupPosts Segue"
         static let GroupRequestsSegue = "GroupRequests Segue"
+        static let GroupPicsSegue = "GroupPics Segue"
     }
     
     
@@ -443,6 +444,11 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
             if let grc = segue.destinationViewController as? GroupRequestIndexViewController{
                 grc.user = user!
                 grc.group = group!
+            }
+        }else if segue.identifier == Constants.GroupPicsSegue{
+            if let gpc = segue.destinationViewController as? GroupPicIndexViewController{
+                gpc.user = user!
+                gpc.group = group!
             }
         }
     }

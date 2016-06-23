@@ -321,4 +321,16 @@ extension StudyPopClient{
     func logout(){
         
     }
+    
+    
+}
+
+extension String {
+    func trunc(length: Int) -> String {
+        if self.characters.count > length {
+            return self.substringToIndex(self.startIndex.advancedBy(length))
+        } else {
+            return self
+        }
+    }
 }

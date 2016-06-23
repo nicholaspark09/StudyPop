@@ -147,7 +147,10 @@ class GroupPostsViewController: UIViewController, UITableViewDelegate, UITableVi
                     if let postsDict = results![StudyPopClient.JSONReponseKeys.GroupPosts] as? [[String:AnyObject]]{
                         for i in postsDict{
                             let dict = i as Dictionary<String,AnyObject>
+                            let date = dict[GroupPost.Keys.Created] as? String
+                            print("The date was \(date)")
                             let post = GroupPost.init(dictionary: dict, context: self.sharedContext)
+                            
                             self.posts.append(post)
                         }
                         if postsDict.count < 10{

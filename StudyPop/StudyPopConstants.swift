@@ -49,6 +49,7 @@ extension StudyPopClient{
         static let LatInfo = "latinfo"
         static let LocationSafeKey = "locationsafekey"
         static let BodyType = "type"
+        static let TheController = "thecontroller"
     }
     
     struct ParameterValues{
@@ -107,6 +108,7 @@ extension StudyPopClient{
         static let GroupPosts = "GroupPosts"
         static let GroupPost = "GroupPost"
         static let GroupRequests = "GroupRequests"
+        static let Thumbs = "Thumbs"
     }
     
     struct JSONResponseValues{

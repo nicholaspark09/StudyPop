@@ -66,12 +66,12 @@ class GroupPost: NSManagedObject {
         thetype = dictionary[Keys.TheType] as? NSNumber
         safekey = dictionary[Keys.SafeKey] as? String
         if let startString = dictionary[Keys.Created] as? String{
-            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString){
+            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString.trunc(19)){
                 created = startDate
             }
         }
         if let endString = dictionary[Keys.Modified] as? String{
-            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString){
+            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString.trunc(19)){
                 modified = endDate
             }
         }

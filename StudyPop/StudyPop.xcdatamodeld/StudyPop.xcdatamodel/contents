@@ -109,10 +109,12 @@
         <attribute name="parentkey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pretty" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbblob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="fromEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="hasPhoto" inverseEntity="Event" syncable="YES"/>
         <relationship name="fromGroupProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="hasProfilePhoto" inverseEntity="Group" syncable="YES"/>
         <relationship name="fromProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="hasPhoto" inverseEntity="Profile" syncable="YES"/>
+        <relationship name="fromThumb" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Thumb" inverseName="hasPic" inverseEntity="Thumb" syncable="YES"/>
     </entity>
     <entity name="Profile" representedClassName=".Profile" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -139,6 +141,17 @@
         <relationship name="hasGroups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="subject" inverseEntity="Group" syncable="YES"/>
         <relationship name="hasProfiles" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="subject" inverseEntity="Profile" syncable="YES"/>
     </entity>
+    <entity name="Thumb" representedClassName=".Thumb" syncable="YES">
+        <attribute name="blob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pretty" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="protection" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="hasPic" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photo" inverseName="fromThumb" inverseEntity="Photo" syncable="YES"/>
+    </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="accesstoken" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -160,9 +173,10 @@
         <element name="GroupPost" positionX="-54" positionY="135" width="128" height="240"/>
         <element name="GroupRequest" positionX="-54" positionY="135" width="128" height="135"/>
         <element name="Location" positionX="-54" positionY="126" width="128" height="240"/>
-        <element name="Photo" positionX="-54" positionY="135" width="128" height="195"/>
+        <element name="Photo" positionX="-54" positionY="135" width="128" height="225"/>
         <element name="Profile" positionX="-54" positionY="36" width="128" height="255"/>
         <element name="Subject" positionX="-63" positionY="90" width="128" height="150"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="Thumb" positionX="-45" positionY="135" width="128" height="180"/>
     </elements>
 </model>
