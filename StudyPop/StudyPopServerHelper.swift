@@ -170,6 +170,40 @@ extension StudyPopClient{
         }
     }
     
+    // MARK: - Get Any Thumb's Parent from Server
+    func findThumbParent(token: String,safekey: String, completionHandlerForPicture: (results: [String:AnyObject]?, error: String?) -> Void){
+        let params = [ParameterKeys.Controller : ParameterValues.PicsController,
+                      ParameterKeys.Method : ParameterValues.ThumbParentMethod,
+                      ParameterKeys.ApiKey : Constants.ApiKey,
+                      ParameterKeys.ApiSecret : Constants.ApiSecret,
+                      ParameterKeys.Token : token,
+                      ParameterKeys.SafeKey : safekey]
+        httpGet("",parameters: params){(results,error) in
+            func sendError(error: String){
+                completionHandlerForPicture(results: nil, error: error)
+            }
+            
+            guard error == nil else{
+                sendError("Error: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard let stat = results[JSONReponseKeys.Result] as? String else{
+                sendError("StudyPop Api didn't return anything")
+                return
+            }
+            
+            guard stat == JSONResponseValues.Success else{
+                sendError("StudyPop Api Returned error: \(results[JSONReponseKeys.Error])")
+                return
+            }
+            
+            if let dict = results[StudyPopClient.JSONReponseKeys.Photo] as? [String:AnyObject]{
+                completionHandlerForPicture(results: dict, error: nil)
+            }
+        }
+    }
+    
     func findThumb(token: String,safekey: String, completionHandlerForPicture: (results: NSData?, error: String?) -> Void){
         let params = [ParameterKeys.Controller : ParameterValues.PicsController,
                       ParameterKeys.Method : ParameterKeys.Thumb,

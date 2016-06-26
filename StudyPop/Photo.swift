@@ -51,6 +51,9 @@ class Photo: NSManagedObject {
         type = dictionary[Keys.TheType] as? NSNumber
         parentkey = dictionary[Keys.ParentKey] as? String
         blob = dictionary[Keys.Blob] as? NSData
+        if pretty != nil && blob == nil{
+            blob = NSData(base64EncodedString: pretty!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+        }
         if blob != nil{
             photoImage = UIImage(data: blob!)
         }

@@ -891,23 +891,134 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="GnH-mO-fSW">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gG8-ei-b0P">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="l5K-Ug-R8s">
+                                    <size key="itemSize" width="84" height="84"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GroupThumb Cell" id="Awg-B8-gr4" customClass="GroupThumbCollectionViewCell" customModule="StudyPop" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="64" width="84" height="84"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="84" height="84"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aPw-04-zwT">
+                                                    <rect key="frame" x="0.0" y="0.0" width="84" height="84"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="84" id="cMF-os-CdM"/>
+                                                        <constraint firstAttribute="width" constant="84" id="y07-kd-KVA"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="aPw-04-zwT" firstAttribute="leading" secondItem="Awg-B8-gr4" secondAttribute="leading" id="Hpd-6O-Sda"/>
+                                            <constraint firstItem="aPw-04-zwT" firstAttribute="top" secondItem="Awg-B8-gr4" secondAttribute="top" id="chL-0D-iKf"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="aPw-04-zwT" id="JQP-Np-KJE"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="vT3-mb-qyq" id="cRS-S3-4rr"/>
+                                    <outlet property="delegate" destination="vT3-mb-qyq" id="jSO-wF-a7G"/>
+                                </connections>
+                            </collectionView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="GnH-mO-fSW">
+                                <rect key="frame" x="0.0" y="57" width="600" height="487"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="GnH-mO-fSW" firstAttribute="centerX" secondItem="dVf-cP-oJP" secondAttribute="centerX" id="LNi-Jk-KaV"/>
-                            <constraint firstItem="GnH-mO-fSW" firstAttribute="centerY" secondItem="dVf-cP-oJP" secondAttribute="centerY" id="Z2d-VT-xer"/>
+                            <constraint firstItem="gG8-ei-b0P" firstAttribute="top" secondItem="dVf-cP-oJP" secondAttribute="top" id="2ea-Y0-KEB"/>
+                            <constraint firstAttribute="bottom" secondItem="gG8-ei-b0P" secondAttribute="bottom" id="4ao-A2-3cH"/>
+                            <constraint firstItem="gG8-ei-b0P" firstAttribute="leading" secondItem="GnH-mO-fSW" secondAttribute="leading" id="Spp-Rv-U8K"/>
+                            <constraint firstItem="gG8-ei-b0P" firstAttribute="centerY" secondItem="GnH-mO-fSW" secondAttribute="centerY" id="aeN-iF-XmW"/>
+                            <constraint firstItem="gG8-ei-b0P" firstAttribute="leading" secondItem="dVf-cP-oJP" secondAttribute="leading" id="ibp-5f-GHD"/>
+                            <constraint firstItem="gG8-ei-b0P" firstAttribute="trailing" secondItem="GnH-mO-fSW" secondAttribute="trailing" id="lA0-uw-GnA"/>
+                            <constraint firstAttribute="trailing" secondItem="gG8-ei-b0P" secondAttribute="trailing" id="xZN-Rv-uGc"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="gG8-ei-b0P" id="YAD-ud-nOT"/>
+                        <outlet property="collectionViewFlow" destination="l5K-Ug-R8s" id="Oo1-Q5-ZKo"/>
                         <outlet property="loadingView" destination="GnH-mO-fSW" id="qhb-3x-L36"/>
+                        <segue destination="FcJ-Tn-b3b" kind="presentation" identifier="ViewPic Segue" modalTransitionStyle="flipHorizontal" id="wW1-vH-UlZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O3v-WP-XT5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1859" y="-1408"/>
+            <point key="canvasLocation" x="1863" y="-1986"/>
+        </scene>
+        <!--Photo View Controller-->
+        <scene sceneID="UMk-m6-jib">
+            <objects>
+                <viewController id="FcJ-Tn-b3b" customClass="PhotoViewController" customModule="StudyPop" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Ot-Gu-4Dd"/>
+                        <viewControllerLayoutGuide type="bottom" id="i31-QY-4uz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aup-gb-plF">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lVh-AS-LzM">
+                                <rect key="frame" x="20" y="20" width="59" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="59" id="EFk-2M-wWd"/>
+                                </constraints>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backClicked:" destination="FcJ-Tn-b3b" eventType="touchUpInside" id="OTF-Yi-0m6"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="3aQ-QA-Sls">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4JX-Bg-PFX">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZs-IM-Jng">
+                                <rect key="frame" x="534" y="28" width="46" height="30"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="deleteClicked:" destination="FcJ-Tn-b3b" eventType="touchUpInside" id="r0q-ha-Pxp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4JX-Bg-PFX" firstAttribute="top" secondItem="aup-gb-plF" secondAttribute="top" id="0nR-7O-gZK"/>
+                            <constraint firstAttribute="trailing" secondItem="4JX-Bg-PFX" secondAttribute="trailing" id="3J6-sb-T1G"/>
+                            <constraint firstItem="4JX-Bg-PFX" firstAttribute="top" secondItem="lVh-AS-LzM" secondAttribute="bottom" constant="-50" id="7wl-0U-MWv"/>
+                            <constraint firstItem="3aQ-QA-Sls" firstAttribute="centerX" secondItem="aup-gb-plF" secondAttribute="centerX" id="IJW-eI-wmG"/>
+                            <constraint firstItem="4JX-Bg-PFX" firstAttribute="leading" secondItem="lVh-AS-LzM" secondAttribute="trailing" constant="-79" id="PlM-Lg-f4Y"/>
+                            <constraint firstItem="4JX-Bg-PFX" firstAttribute="bottom" secondItem="i31-QY-4uz" secondAttribute="top" id="SXg-cf-PQS"/>
+                            <constraint firstItem="4JX-Bg-PFX" firstAttribute="leading" secondItem="aup-gb-plF" secondAttribute="leading" id="UPX-GJ-5xy"/>
+                            <constraint firstItem="3aQ-QA-Sls" firstAttribute="centerY" secondItem="aup-gb-plF" secondAttribute="centerY" id="YNk-XZ-DO2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="TZs-IM-Jng" secondAttribute="trailing" id="jeq-zb-cxm"/>
+                            <constraint firstItem="TZs-IM-Jng" firstAttribute="top" secondItem="6Ot-Gu-4Dd" secondAttribute="bottom" constant="8" id="rnF-aR-zFj"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="4JX-Bg-PFX" id="eY5-B9-ISz"/>
+                        <outlet property="loadingView" destination="3aQ-QA-Sls" id="SO2-TM-I56"/>
+                        <segue destination="vqE-0P-KLm" kind="unwind" identifier="UnwindToGroupPic Segue" unwindAction="unwindToGroupPicIndex:" id="Nvy-5H-JAN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3ge-Z2-fwO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="vqE-0P-KLm" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2508" y="-1992"/>
         </scene>
         <!--Event Members Table View Controller-->
         <scene sceneID="yXr-yn-W7v">
@@ -1186,7 +1297,7 @@
                                                     <attributedString key="attributedText">
                                                         <fragment content="Label">
                                                             <attributes>
-                                                                <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <font key="NSFont" size="13" name="AvenirNext-Regular"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>

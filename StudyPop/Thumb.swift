@@ -31,6 +31,7 @@ class Thumb: NSManagedObject {
         static let User = "user"
         static let Created = "created"
         static let Blob = "blob"
+        static let Protection = "protection"
     }
 
     
@@ -51,6 +52,10 @@ class Thumb: NSManagedObject {
         pretty = dictionary[Keys.Pretty] as? String
         type = dictionary[Keys.TheType] as? NSNumber
         blob = dictionary[Keys.Blob] as? NSData
+        protection = dictionary[Keys.Protection] as? NSNumber
+        if blob == nil && pretty != nil{
+            blob = NSData(base64EncodedString: pretty!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+        }
         if blob != nil{
             photoImage = UIImage(data: blob!)
         }
