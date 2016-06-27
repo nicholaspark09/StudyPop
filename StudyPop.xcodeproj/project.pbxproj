@@ -26,6 +26,7 @@
 		AF112A5C1CFBD1D100FE1DB9 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */; };
 		AF112A5E1CFBDAFA00FE1DB9 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A5D1CFBDAFA00FE1DB9 /* GroupViewController.swift */; };
 		AF1789891CFCF5130026B9E5 /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1789881CFCF5130026B9E5 /* AddGroupViewController.swift */; };
+		AF1D0DE91D214A24003DAA11 /* EventsIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D0DE81D214A24003DAA11 /* EventsIndexViewController.swift */; };
 		AF283DA51D05118D006D4AC1 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF283DA31D05118D006D4AC1 /* Photo.swift */; };
 		AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */; };
 		AF2E2B821CF7DF9A00820183 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2B801CF7DF9A00820183 /* City.swift */; };
@@ -114,6 +115,7 @@
 		AF112A5B1CFBD1D100FE1DB9 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		AF112A5D1CFBDAFA00FE1DB9 /* GroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
 		AF1789881CFCF5130026B9E5 /* AddGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupViewController.swift; sourceTree = "<group>"; };
+		AF1D0DE81D214A24003DAA11 /* EventsIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsIndexViewController.swift; sourceTree = "<group>"; };
 		AF283DA31D05118D006D4AC1 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
 		AF2E2B801CF7DF9A00820183 /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				AF0924DA1D1AB3A7003D8656 /* GroupRequestIndexViewController.swift */,
 				AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */,
 				AF4F66051D1D80E10068C558 /* PhotoViewController.swift */,
+				AF1D0DE81D214A24003DAA11 /* EventsIndexViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				AF0E8F081D12C3F500085B02 /* EventMembersTableViewController.swift in Sources */,
 				AF0077871CF52CB70056904F /* StudyPopClient.swift in Sources */,
 				AF0E8F0A1D12CE0500085B02 /* EventMemberTableViewCell.swift in Sources */,
+				AF1D0DE91D214A24003DAA11 /* EventsIndexViewController.swift in Sources */,
 				AF9E70EC1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift in Sources */,
 				AF2E2B821CF7DF9A00820183 /* City.swift in Sources */,
 				AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */,

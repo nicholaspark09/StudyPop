@@ -27,6 +27,7 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
         static let UnwindToPeopleSegue = "UnwindToPeople Segue"
         static let UnwindToAddGroupEventSegue = "UnwindAddGroupEvent Segue"
         static let UnwindToEventEditSegue = "UnwindToEventEdit Segue"
+        static let UnwindToEventsSegue = "UnwindToEvents Segue"
     }
     
     
@@ -182,6 +183,8 @@ class CityPickerViewController: UIViewController,UITableViewDelegate,UITableView
             performSegueWithIdentifier(Constants.UnwindToAddGroupEventSegue, sender: nil)
         }else if previousController == EventEditViewController.Constants.Controller{
             performSegueWithIdentifier(Constants.UnwindToEventEditSegue, sender: nil)
+        }else if previousController == EventsIndexViewController.Constants.Controller{
+            performSegueWithIdentifier(Constants.UnwindToEventsSegue, sender: nil)
         }
         
     }

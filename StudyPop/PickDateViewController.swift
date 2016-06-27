@@ -39,6 +39,7 @@ class PickDateViewController: UIViewController {
     @IBAction func doneClicked(sender: UIButton) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        print("The date in picker is \(dateFormatter.stringFromDate(datePicker.date))")
         currentDate = dateFormatter.stringFromDate(datePicker.date)
         if previousController == AddEventViewController.Constants.Controller{
             performSegueWithIdentifier(Constants.UnwindToAddGroupEventSegue, sender: nil)

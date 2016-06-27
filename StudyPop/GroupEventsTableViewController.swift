@@ -19,7 +19,7 @@ class GroupEventsTableViewController: UITableViewController {
         static let Title = "Events"
         static let AddTitle = "Add"
         static let AddEventSegue = "AddEvent Segue"
-        static let CellReuseIdentifier = "Event Cell"
+        static let CellReuseIdentifier = "EventCell"
         static let EventViewSegue = "EventView Segue"
     }
     
@@ -75,6 +75,7 @@ class GroupEventsTableViewController: UITableViewController {
                       StudyPopClient.ParameterKeys.Token : user!.token!,
                       StudyPopClient.ParameterKeys.Group : group!.safekey!
         ]
+        
         StudyPopClient.sharedInstance.httpGet("", parameters: params){(results,error) in
             func sendError(error: String){
                 self.simpleError(error)
