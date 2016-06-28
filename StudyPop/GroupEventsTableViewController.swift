@@ -43,8 +43,16 @@ class GroupEventsTableViewController: UITableViewController {
             title = Constants.Title
         }
         
-        let addButton = UIBarButtonItem.init(title: Constants.AddTitle, style: .Plain, target: self, action: #selector(GroupEventsProtocol.addClicked))
-        self.navigationItem.rightBarButtonItem = addButton
+        
+        
+        let image = UIImage(named: "AddSmall")
+        let button = UIButton.init(type: UIButtonType.Custom)
+        button.bounds = CGRectMake(0, 0, image!.size.width, image!.size.height)
+        button.setImage(image, forState: UIControlState.Normal)
+        button.addTarget(self, action: #selector(GroupEventsProtocol.addClicked), forControlEvents: UIControlEvents.TouchUpInside)
+        let barButton = UIBarButtonItem(customView: button)
+        navigationItem.rightBarButtonItem = barButton
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "AddSmall"), style: .Plain, target: self, action: #selector(GroupEventsProtocol.addClicked))
         
         indexEvents()
     }
@@ -195,7 +203,7 @@ class GroupEventsTableViewController: UITableViewController {
             }
         }else if segue.identifier == Constants.EventViewSegue{
             if let safekey = sender as? String{
-                if let evc = segue.destinationViewController as? EventViewController{
+                if let evc = segue.destinationViewController.contentViewController as? EventViewController{
                     evc.safekey = safekey
                     evc.user = user!
                 }

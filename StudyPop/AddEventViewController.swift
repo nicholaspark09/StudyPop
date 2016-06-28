@@ -93,8 +93,7 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
             location = group!.location
         }
         
-        let barButtonItem = UIBarButtonItem(title: Constants.SaveTitle, style: .Plain, target: self, action: #selector(AddEventProtocol.saveClicked(_:)))
-        self.navigationItem.rightBarButtonItem = barButtonItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "SaveSmall"), style: .Plain, target: self, action: #selector(AddEventProtocol.saveClicked(_:)))
     }
     
     override func viewWillAppear(animated: Bool){

@@ -152,9 +152,20 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                         if self.groupMember!.role! == 1{
                             //This is an admin
                             //Create an edit Button
-                            let editButton = UIBarButtonItem(title: Constants.EditTitle, style: .Plain, target: self, action: #selector(GroupViewProtocol.editClicked))
-                            let deleteButton = UIBarButtonItem(title: Constants.DeleteTitle, style: .Plain, target: self, action: #selector(GroupViewProtocol.deleteClicked))
-                            self.navigationItem.setRightBarButtonItems([editButton,deleteButton], animated: true)
+                            let image = UIImage(named: "EditSmall")
+                            let button = UIButton.init(type: UIButtonType.Custom)
+                            button.bounds = CGRectMake(0, 0, image!.size.width, image!.size.height)
+                            button.setImage(image, forState: UIControlState.Normal)
+                            button.addTarget(self, action: #selector(GroupViewProtocol.editClicked), forControlEvents: UIControlEvents.TouchUpInside)
+                            let editButton = UIBarButtonItem(customView: button)
+                            //Create a delete button
+                            let deleteImage = UIImage(named: "DeleteSmall")
+                            let deleteButton = UIButton.init(type: UIButtonType.Custom)
+                            deleteButton.bounds = CGRectMake(0, 0, deleteImage!.size.width, deleteImage!.size.height)
+                            deleteButton.setImage(deleteImage, forState: UIControlState.Normal)
+                            deleteButton.addTarget(self, action: #selector(GroupViewProtocol.deleteClicked), forControlEvents: UIControlEvents.TouchUpInside)
+                            let rightDeleteButton = UIBarButtonItem(customView: deleteButton)
+                            self.navigationItem.setRightBarButtonItems([editButton,rightDeleteButton], animated: true)
                         }
                     }
                     CoreDataStackManager.sharedInstance().saveContext()

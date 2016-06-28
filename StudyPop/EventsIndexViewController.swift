@@ -212,6 +212,12 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
             if let subjectPicker = segue.destinationViewController as? StudyPickerViewController{
                 subjectPicker.previousController = Constants.Controller
             }
+        }else if segue.identifier == Constants.EventViewSegue{
+            let event = sender as! Event
+            if let esc = segue.destinationViewController.contentViewController as? EventViewController{
+                esc.user = user
+                esc.safekey = event.safekey!
+            }
         }
     }
     

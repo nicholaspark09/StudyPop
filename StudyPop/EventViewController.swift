@@ -15,6 +15,7 @@ import MapKit
     func editClicked(sender: UIBarButtonItem)
     func dropClicked(sender: UIBarButtonItem)
     func deleteClicked(sender: UIBarButtonItem)
+    func backClicked()
 }
 
 class EventViewController: UIViewController, MKMapViewDelegate {
@@ -25,6 +26,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         static let EventEditSegue = "EventEdit Segue"
         static let DeleteTitle = "Delete Event"
         static let EventMembersSegue = "EventMembers Segue"
+        static let EventPostsSegue = "EventPosts Segue"
     }
     
     
@@ -54,6 +56,8 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         if safekey != ""{
             getLiveEvent()
         }
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Back", style: .Plain, target: self, action: #selector(EventViewProtocol.backClicked))
     }
     
     
@@ -128,9 +132,23 @@ class EventViewController: UIViewController, MKMapViewDelegate {
                     //Show everything
                     if self.eventMember!.role!.intValue == 1{
                         //This is an Admin, so add an edit button
-                        let editButton = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(EventViewProtocol.editClicked(_:)))
-                        let deleteButton = UIBarButtonItem(title: "Delete", style: .Plain, target: self, action: #selector(EventViewProtocol.deleteClicked(_:)))
-                        self.navigationItem.setRightBarButtonItems([editButton,deleteButton], animated: true)
+                        //Create an edit Button
+                        let image = UIImage(named: "EditSmall")
+                        let button = UIButton.init(type: UIButtonType.Custom)
+                        button.bounds = CGRectMake(0, 0, image!.size.width, image!.size.height)
+                        button.setImage(image, forState: UIControlState.Normal)
+                        button.addTarget(self, action: #selector(EventViewProtocol.editClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                        let editButton = UIBarButtonItem(customView: button)
+                        //Create a delete button
+                        let deleteImage = UIImage(named: "DeleteSmall")
+                        let deleteButton = UIButton.init(type: UIButtonType.Custom)
+                        deleteButton.bounds = CGRectMake(0, 0, deleteImage!.size.width, deleteImage!.size.height)
+                        deleteButton.setImage(deleteImage, forState: UIControlState.Normal)
+                        deleteButton.addTarget(self, action: #selector(EventViewProtocol.deleteClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                        let rightDeleteButton = UIBarButtonItem(customView: deleteButton)
+                        self.navigationItem.setRightBarButtonItems([editButton,rightDeleteButton], animated: true)
+                        
+                        
                     }else{
                         //Just a regular member, add a drop button
                         let dropButton = UIBarButtonItem(title: "Drop", style: .Plain, target: self, action: #selector(EventViewProtocol.dropClicked(_:)))
@@ -373,6 +391,10 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         }
         
     }
+    
+    func backClicked(){
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
 
     
     // MARK: - Navigation
@@ -386,6 +408,11 @@ class EventViewController: UIViewController, MKMapViewDelegate {
             if let emc = segue.destinationViewController as? EventMembersTableViewController{
                 emc.event = event!
                 emc.user = user!
+            }
+        }else if segue.identifier == Constants.EventPostsSegue{
+            if let epc = segue.destinationViewController.contentViewController as? EventPostsViewController{
+                epc.event = event!
+                epc.user = user!
             }
         }
     }

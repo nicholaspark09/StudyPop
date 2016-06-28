@@ -12,8 +12,8 @@ extension StudyPopClient{
     struct Constants{
         static let ApiSecret = "asdfljan2382Kns2lsni2kj"
         static let ApiKey = "harryPotterIs19Cool"
-        static let ApiScheme = "http"
-        static let ApiHost = "stone-booking-130515.appspot.com"
+        static let ApiScheme = "https"
+        static let ApiHost = "2-dot-stone-booking-130515.appspot.com"
         static let ApiPath = "/services/rest"
         static let LoginNotification = "LoginNotification"
         static let LoginKey = "SafeKey"
@@ -58,6 +58,7 @@ extension StudyPopClient{
         static let GroupRequestsController = "grouprequests"
         static let GroupMembersController = "groupmembers"
         static let EventMembersController = "eventmembers"
+        static let EventPostsController = "eventposts"
         static let GroupPostsController = "groupposts"
         static let ProfilesController = "profiles"
         static let EventsController = "events"
@@ -112,6 +113,8 @@ extension StudyPopClient{
         static let Thumbs = "Thumbs"
         static let ThumbKey = "ThumbKey"
         static let Photo = "Photo"
+        static let EventPosts = "EventPosts"
+        static let EventPost = "EventPost"
     }
     
     struct JSONResponseValues{

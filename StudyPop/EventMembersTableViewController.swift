@@ -28,9 +28,12 @@ class EventMembersTableViewController: UITableViewController {
     var members = [EventMember]()
     var loadingButton: UIBarButtonItem?
     var canLoadMore = true
+    let threshold = 50.0
+    var loading = false
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
+    
     
     
     override func viewDidLoad() {
@@ -129,9 +132,10 @@ class EventMembersTableViewController: UITableViewController {
     
     // MARK: - Get Members from StudyPop API
     func indexMembers(){
-        if canLoadMore{
+        if canLoadMore && !loading{
             loadingButton?.title = Constants.LoadingTitle
             loadingButton?.enabled = false
+            loading = true
             print("Sending the safekey of \(event!.safekey!)")
             let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventMembersController,
                           StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.IndexMethod,
@@ -143,6 +147,7 @@ class EventMembersTableViewController: UITableViewController {
             ]
             StudyPopClient.sharedInstance.httpGet("", parameters: params) { (results,error) in
                 
+                self.loading = false
                 func sendError(error: String){
                     self.loadingButton!.title = Constants.RefreshTitle
                     self.loadingButton!.enabled = true
@@ -177,6 +182,17 @@ class EventMembersTableViewController: UITableViewController {
                     sendError(responseError)
                 }
             }
+        }
+    }
+    
+    // MARK: -ScrollView Delegate
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        let contentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+        
+        if !loading && canLoadMore && (Double(maximumOffset) - Double(contentOffset) <= threshold) {
+            // Get more data - API call
+            indexMembers()
         }
     }
 

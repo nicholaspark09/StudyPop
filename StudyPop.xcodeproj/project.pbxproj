@@ -65,6 +65,10 @@
 		AF9E70EC1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9E70EB1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift */; };
 		AFA1403E1D064C31004C3DB0 /* MembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA1403D1D064C31004C3DB0 /* MembersViewController.swift */; };
 		AFA140401D065432004C3DB0 /* GroupMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA1403F1D065432004C3DB0 /* GroupMemberTableViewCell.swift */; };
+		AFA87A2F1D22B1660004B228 /* EventPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA87A2D1D22B1660004B228 /* EventPost.swift */; };
+		AFA87A311D22B7150004B228 /* EventPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA87A301D22B7150004B228 /* EventPostsViewController.swift */; };
+		AFA87A331D22BAEF0004B228 /* EventPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA87A321D22BAEF0004B228 /* EventPostTableViewCell.swift */; };
+		AFA87A351D22C03F0004B228 /* AddEventPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA87A341D22C03F0004B228 /* AddEventPostViewController.swift */; };
 		AFC09EA71D160BD00003BD29 /* GroupPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC09EA61D160BD00003BD29 /* GroupPostTableViewCell.swift */; };
 		AFCAE1E21D1BF49000955601 /* Thumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAE1E01D1BF49000955601 /* Thumb.swift */; };
 		AFCAE1E41D1BF78F00955601 /* GroupPicIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */; };
@@ -154,6 +158,10 @@
 		AF9E70EB1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubjectTableViewCell.swift; sourceTree = "<group>"; };
 		AFA1403D1D064C31004C3DB0 /* MembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersViewController.swift; sourceTree = "<group>"; };
 		AFA1403F1D065432004C3DB0 /* GroupMemberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberTableViewCell.swift; sourceTree = "<group>"; };
+		AFA87A2D1D22B1660004B228 /* EventPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPost.swift; sourceTree = "<group>"; };
+		AFA87A301D22B7150004B228 /* EventPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPostsViewController.swift; sourceTree = "<group>"; };
+		AFA87A321D22BAEF0004B228 /* EventPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPostTableViewCell.swift; sourceTree = "<group>"; };
+		AFA87A341D22C03F0004B228 /* AddEventPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventPostViewController.swift; sourceTree = "<group>"; };
 		AFC09EA61D160BD00003BD29 /* GroupPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPostTableViewCell.swift; sourceTree = "<group>"; };
 		AFCAE1E01D1BF49000955601 /* Thumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumb.swift; sourceTree = "<group>"; };
 		AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPicIndexViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +233,7 @@
 				AF52617B1D0B88BF00DA58AC /* EventMember.swift */,
 				AF4FE4781D15B48400C60F64 /* GroupPost.swift */,
 				AFCAE1E01D1BF49000955601 /* Thumb.swift */,
+				AFA87A2D1D22B1660004B228 /* EventPost.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -255,6 +264,7 @@
 				AFC09EA61D160BD00003BD29 /* GroupPostTableViewCell.swift */,
 				AF0924DC1D1AB59A003D8656 /* GroupRequestTableViewCell.swift */,
 				AF4F66031D1D5B2C0068C558 /* GroupThumbCollectionViewCell.swift */,
+				AFA87A321D22BAEF0004B228 /* EventPostTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -346,6 +356,8 @@
 				AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */,
 				AF4F66051D1D80E10068C558 /* PhotoViewController.swift */,
 				AF1D0DE81D214A24003DAA11 /* EventsIndexViewController.swift */,
+				AFA87A301D22B7150004B228 /* EventPostsViewController.swift */,
+				AFA87A341D22C03F0004B228 /* AddEventPostViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -501,10 +513,13 @@
 				AF9E70E61CFB1F6100E8B8F6 /* StudyPickerViewController.swift in Sources */,
 				AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */,
 				AF59A5561D0B68C000CC0C1F /* EventViewController.swift in Sources */,
+				AFA87A2F1D22B1660004B228 /* EventPost.swift in Sources */,
 				AF0077961CF5393E0056904F /* RegisterViewController.swift in Sources */,
 				AF8043AC1CFE5CC400A2B7A4 /* WDImageCropOverlayView.swift in Sources */,
 				AF5AA9D61D0561A80020D5BD /* ProfileViewController.swift in Sources */,
 				AFA140401D065432004C3DB0 /* GroupMemberTableViewCell.swift in Sources */,
+				AFA87A311D22B7150004B228 /* EventPostsViewController.swift in Sources */,
+				AFA87A351D22C03F0004B228 /* AddEventPostViewController.swift in Sources */,
 				AFA1403E1D064C31004C3DB0 /* MembersViewController.swift in Sources */,
 				AF4FE47C1D15B6D000C60F64 /* GroupPostsViewController.swift in Sources */,
 				AF112A5A1CFBC3C700FE1DB9 /* Group.swift in Sources */,
@@ -547,6 +562,7 @@
 				AFC09EA71D160BD00003BD29 /* GroupPostTableViewCell.swift in Sources */,
 				AF0077941CF532DA0056904F /* User.swift in Sources */,
 				AF52617F1D0BA8A500DA58AC /* EventEditViewController.swift in Sources */,
+				AFA87A331D22BAEF0004B228 /* EventPostTableViewCell.swift in Sources */,
 				AF9E70E41CFB115900E8B8F6 /* CityPickerViewController.swift in Sources */,
 				AF9582EB1D05DF1F00064C98 /* ProfileTableViewCell.swift in Sources */,
 				AF8043A31CFE577B00A2B7A4 /* PickImageViewController.swift in Sources */,
