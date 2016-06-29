@@ -78,13 +78,13 @@ class Event: NSManagedObject {
         safekey = dictionary[Keys.SafeKey] as? String
         startString = dictionary[Keys.Start] as? String
         if startString != nil{
-            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString!){
+            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString!.trunc(16)){
                 start = startDate
             }
         }
         endString = dictionary[Keys.End] as? String
         if endString != nil{
-            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString!){
+            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString!.trunc(16)){
                 end = endDate
             }
         }

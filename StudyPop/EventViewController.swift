@@ -27,6 +27,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         static let DeleteTitle = "Delete Event"
         static let EventMembersSegue = "EventMembers Segue"
         static let EventPostsSegue = "EventPosts Segue"
+        static let EventPhotosSegue = "EventPhotos Segue"
     }
     
     
@@ -411,6 +412,11 @@ class EventViewController: UIViewController, MKMapViewDelegate {
             }
         }else if segue.identifier == Constants.EventPostsSegue{
             if let epc = segue.destinationViewController.contentViewController as? EventPostsViewController{
+                epc.event = event!
+                epc.user = user!
+            }
+        }else if segue.identifier == Constants.EventPhotosSegue{
+            if let epc = segue.destinationViewController as? EventPhotosViewController{
                 epc.event = event!
                 epc.user = user!
             }

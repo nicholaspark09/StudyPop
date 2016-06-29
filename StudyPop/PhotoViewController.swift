@@ -22,7 +22,9 @@ class PhotoViewController: UIViewController {
     
     var thumb:Thumb?
     var group:Group?
+    var event: Event?
     var user:User?
+    var controller = ""
     var index: Int = -1
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext

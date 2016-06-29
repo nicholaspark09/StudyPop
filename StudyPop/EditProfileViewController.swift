@@ -72,8 +72,8 @@ class EditProfileViewController: UIViewController, WDImagePickerDelegate, UIImag
     // Got the image back
     func imagePicker(imagePicker: WDImagePicker, pickedImage: UIImage) {
         self.hideImagePicker()
-        let compressionQuailty = 0.7
-        let scaledBig = resizeImage(pickedImage, newWidth: 250)
+        let compressionQuailty = 0.85
+        let scaledBig = resizeImage(pickedImage, newWidth: 400)
         let bigData = UIImageJPEGRepresentation(scaledBig, CGFloat(compressionQuailty))
         let dict = [Photo.Keys.Name : "Profile Pic", Photo.Keys.TheType: "\(1)", Photo.Keys.Controller : "profiles", Photo.Keys.ParentKey : self.profile!.safekey!, Photo.Keys.Blob : bigData!]
         self.photo = Photo.init(dictionary: dict, context: self.sharedContext)

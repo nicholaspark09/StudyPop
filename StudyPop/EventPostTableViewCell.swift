@@ -15,8 +15,10 @@ class EventPostTableViewCell: UITableViewCell {
         didSet{
             nameLabel.text = post!.name!
             textView.text = post!.pretty!
-            if post!.created != nil{
-                dateLabel.text = post!.created!.description
+            if post!.createdString != nil{
+                dateLabel.text = post!.createdString
+            }else{
+                dateLabel.text = "No date"
             }
         }
     }

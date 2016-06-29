@@ -25,6 +25,7 @@ class GroupPost: NSManagedObject {
     @NSManaged var pretty: String?
     @NSManaged var modified: NSDate?
     @NSManaged var fromGroup: Group?
+    var createdString:String?
     
     struct Keys{
         static let Name = "name"
@@ -65,13 +66,14 @@ class GroupPost: NSManagedObject {
         group = dictionary[Keys.Group] as? String
         thetype = dictionary[Keys.TheType] as? NSNumber
         safekey = dictionary[Keys.SafeKey] as? String
-        if let startString = dictionary[Keys.Created] as? String{
-            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString.trunc(19)){
+        createdString = dictionary[Keys.Created] as? String
+        if createdString != nil{
+            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(createdString!.trunc(16)){
                 created = startDate
             }
         }
         if let endString = dictionary[Keys.Modified] as? String{
-            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString.trunc(19)){
+            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString.trunc(16)){
                 modified = endDate
             }
         }

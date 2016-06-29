@@ -1,63 +1,57 @@
 //
-//  GroupPicIndexViewController.swift
+//  EventPhotosViewController.swift
 //  StudyPop
 //
-//  Created by Nicholas Park on 6/23/16.
+//  Created by Nicholas Park on 6/29/16.
 //  Copyright © 2016 Nicholas Park. All rights reserved.
 //
 
 import UIKit
 import CoreData
 
-@objc protocol GroupPicProtocol{
-    func addPic()
-}
-
-class GroupPicIndexViewController: UIViewController, WDImagePickerDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+class EventPhotosViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, WDImagePickerDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     struct Constants{
-        static let Controller = "groups"
+        static let Controller = "events"
         static let TheType = "\(2)"
-        static let CellReuseIdentiifer = "GroupThumb Cell"
+        static let CellReuseIdentifier = "EventThumb Cell"
         static let ViewPicSegue = "ViewPic Segue"
     }
     
-    
-    
+    var user:User?
+    var event:Event?
+    var thumbs = [Thumb]()
     var loading = false
     var canLoadMore = true
-    var thumbs = [Thumb]()
-    var group:Group?
-    var user:User?
     var imagePicker: WDImagePicker!
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
     
-    @IBOutlet var loadingView: UIActivityIndicatorView!
-    @IBOutlet var collectionView: UICollectionView!
     
+    
+    @IBOutlet var loadingView: UIActivityIndicatorView!
     @IBOutlet var collectionViewFlow: UICollectionViewFlowLayout!{
         didSet{
             collectionViewFlow!.minimumInteritemSpacing = 0
             collectionViewFlow!.minimumLineSpacing = 0
         }
     }
+    @IBOutlet var collectionView: UICollectionView!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if group != nil{
-            title = "\(group!.name!) Pics"
-        }
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(GroupPicProtocol.addPic))
-        
         indexThumbs()
     }
 
-
+    @IBAction func backClicked(sender: UIButton) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    
     // MARK: - Index Thumbs from Server
     func indexThumbs(){
         if !loading && canLoadMore {
@@ -68,7 +62,7 @@ class GroupPicIndexViewController: UIViewController, WDImagePickerDelegate,UIIma
                           StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
                           StudyPopClient.ParameterKeys.Offset: "\(thumbs.count)",
                           StudyPopClient.ParameterKeys.Token : user!.token!,
-                          StudyPopClient.ParameterKeys.SafeKey : group!.safekey!,
+                          StudyPopClient.ParameterKeys.SafeKey : event!.safekey!,
                           StudyPopClient.ParameterKeys.TheController: Constants.Controller,
                           Photo.Keys.TheType : Constants.TheType
             ]
@@ -112,12 +106,48 @@ class GroupPicIndexViewController: UIViewController, WDImagePickerDelegate,UIIma
         }
     }
     
+    func updateUI(){
+        performOnMain(){
+            self.loadingView.stopAnimating()
+            self.collectionView.reloadData()
+        }
+    }
+    
+    // MARK: UICollectionView Methods
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return thumbs.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! EventThumbCollectionViewCell
+        let thumb = thumbs[indexPath.row]
+        if thumb.photoImage == nil{
+            thumb.photoImage = UIImage(data: thumb.blob!)
+        }
+        
+        if thumb.photoImage != nil{
+            performOnMain(){
+                cell.imageView.image = thumb.photoImage
+                cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
+            }
+        }
+        if indexPath.row == thumbs.count-1 {
+            //You've arrived at the last cell, so if you can load more, load more
+            indexThumbs()
+        }
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        performSegueWithIdentifier(Constants.ViewPicSegue, sender: indexPath.row)
+    }
     
     //Image Picker
     //MARK: -WDImagePicker Delegates
     
     // MARK: - ImagePicker with Crop
-    func addPic(){
+    @IBAction func addPic(sender: AnyObject){
         self.imagePicker = WDImagePicker()
         self.imagePicker.cropSize = CGSizeMake(300, 300)
         self.imagePicker.delegate = self
@@ -144,9 +174,9 @@ class GroupPicIndexViewController: UIViewController, WDImagePickerDelegate,UIIma
             StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
             StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
             StudyPopClient.ParameterKeys.Token : user!.token!,
-            StudyPopClient.ParameterKeys.SafeKey : group!.safekey!,
+            StudyPopClient.ParameterKeys.SafeKey : event!.safekey!,
             StudyPopClient.ParameterKeys.TheController : Constants.Controller,
-        ]
+            ]
         let tempDict = [StudyPopClient.ParameterKeys.Body:bigImage]
         self.loadingView.startAnimating()
         StudyPopClient.sharedInstance.POST("", parameters: params, jsonBody: tempDict){ (results,error) in
@@ -165,8 +195,8 @@ class GroupPicIndexViewController: UIViewController, WDImagePickerDelegate,UIIma
             
             if let safekey = results[StudyPopClient.JSONReponseKeys.SafeKey] as? String{
                 let thumbkey = results[StudyPopClient.JSONReponseKeys.ThumbKey] as! String
-                let dict = [Thumb.Keys.Parent : self.group!.safekey!, Thumb.Keys.TheType : "\(2)", Thumb.Keys.Protection : "\(1)", Thumb.Keys.Pretty : bigImage, Thumb.Keys.User : thumbkey]
-                let picDict = [Photo.Keys.Controller : Constants.Controller, Photo.Keys.SafeKey : safekey, Photo.Keys.TheType : "\(2)", Photo.Keys.ParentKey : self.group!.safekey!, Photo.Keys.Pretty : bigImage]
+                let dict = [Thumb.Keys.Parent : self.event!.safekey!, Thumb.Keys.TheType : "\(2)", Thumb.Keys.Protection : "\(1)", Thumb.Keys.Pretty : bigImage, Thumb.Keys.User : thumbkey]
+                let picDict = [Photo.Keys.Controller : Constants.Controller, Photo.Keys.SafeKey : safekey, Photo.Keys.TheType : "\(2)", Photo.Keys.ParentKey : self.event!.safekey!, Photo.Keys.Pretty : bigImage]
                 performOnMain(){
                     let thumb = Thumb.init(dictionary: dict, context: self.sharedContext)
                     let photo = Photo.init(dictionary: picDict, context: self.sharedContext)
@@ -203,88 +233,23 @@ class GroupPicIndexViewController: UIViewController, WDImagePickerDelegate,UIIma
     }
     
     
-    // MARK: UICollectionView Methods
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return thumbs.count
-    }
-    
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Constants.CellReuseIdentiifer, forIndexPath: indexPath) as! GroupThumbCollectionViewCell
-        let thumb = thumbs[indexPath.row]
-        if thumb.photoImage == nil{
-            thumb.photoImage = UIImage(data: thumb.blob!)
-        }
-        
-        if thumb.photoImage != nil{
-            performOnMain(){
-                cell.imageView.image = thumb.photoImage
-                cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
-            }
-        }
-        if indexPath.row == thumbs.count-1 {
-            //You've arrived at the last cell, so if you can load more, load more
-            indexThumbs()
-        }
-        return cell
-    }
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-
-        performSegueWithIdentifier(Constants.ViewPicSegue, sender: indexPath.row)
-    }
-    
-    func getPic(safekey: String) -> Photo?{
-        
-        let request = NSFetchRequest(entityName: "Photo")
-        request.fetchLimit = 1
-        request.predicate = NSPredicate(format: "safekey == %@", safekey)
-        do{
-            let results = try sharedContext.executeFetchRequest(request)
-            if results.count > 0{
-                if let temp = results[0] as? Photo{
-                    return temp
-                }
-            }
-        } catch {
-            let fetchError = error as NSError
-            print("The error was \(fetchError)")
-        }
-
-        return nil
-    }
-    
-    
-    func updateUI(){
-        performOnMain(){
-            self.loadingView.stopAnimating()
-            self.collectionView.reloadData()
-        }
-    }
-    
-    
-    // MARK: - Unwind to GroupPic from other controllers
-    @IBAction func unwindToGroupPicIndex(sender: UIStoryboardSegue){
-        if let pvc = sender.sourceViewController as? PhotoViewController{
-            thumbs.removeAtIndex(pvc.index)
-            updateUI()
-        }
-    }
 
     
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
         if segue.identifier == Constants.ViewPicSegue{
             let index = sender as! Int
             let thumb = thumbs[index]
             if let pvc = segue.destinationViewController as? PhotoViewController{
                 pvc.user = user!
-                pvc.group = group!
+                pvc.event = event!
                 pvc.thumb = thumb
                 pvc.index = index
                 pvc.controller = Constants.Controller
             }
         }
+        
     }
-
-
+    
 }
