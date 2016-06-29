@@ -152,6 +152,14 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     // MARK: - TableView Delegates
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let date = NSDate()
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMMM dd"
+        return dateFormatter.stringFromDate(date)
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return events.count
     }

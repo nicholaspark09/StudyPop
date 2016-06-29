@@ -28,6 +28,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         static let EventMembersSegue = "EventMembers Segue"
         static let EventPostsSegue = "EventPosts Segue"
         static let EventPhotosSegue = "EventPhotos Segue"
+        static let ViewPicSegue = "ViewPic Segue"
     }
     
     
@@ -322,6 +323,14 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         
         presentViewController(refreshAlert, animated: true, completion: nil)
     }
+    
+    // On Image Click, Send them to a bigger view of it!
+    
+    @IBAction func imageClicked(sender: UIButton) {
+        if event!.image != nil && event!.image! != ""{
+            performSegueWithIdentifier(Constants.ViewPicSegue, sender: nil)
+        }
+    }
 
     
     // MARK: MapViewDelegates
@@ -419,6 +428,11 @@ class EventViewController: UIViewController, MKMapViewDelegate {
             if let epc = segue.destinationViewController as? EventPhotosViewController{
                 epc.event = event!
                 epc.user = user!
+            }
+        }else if segue.identifier == Constants.ViewPicSegue{
+            if let pvc = segue.destinationViewController as? PhotoViewController{
+                pvc.event = event!
+                pvc.user = user!
             }
         }
     }

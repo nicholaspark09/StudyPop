@@ -57,6 +57,7 @@ extension StudyPopClient{
         static let GroupsController = "groups"
         static let GroupRequestsController = "grouprequests"
         static let GroupMembersController = "groupmembers"
+        static let AlertsController = "alerts"
         static let EventMembersController = "eventmembers"
         static let EventPostsController = "eventposts"
         static let GroupPostsController = "groupposts"
@@ -115,6 +116,8 @@ extension StudyPopClient{
         static let Photo = "Photo"
         static let EventPosts = "EventPosts"
         static let EventPost = "EventPost"
+        static let Alerts = "Alerts"
+        static let Alert = "Alert"
     }
     
     struct JSONResponseValues{

@@ -40,24 +40,36 @@ class PhotoViewController: UIViewController {
         super.viewDidLoad()
 
         
-        self.imageView.image = thumb!.photoImage
-        self.imageView.contentMode = UIViewContentMode.ScaleAspectFit
-        displayBigImage()
-        if thumb!.hasPic == nil {
-            StudyPopClient.sharedInstance.findThumbParent(user!.token!, safekey: thumb!.user!){ (results,error) in
-                performOnMain(){
-                    self.loadingView.stopAnimating()
+        
+        
+        if thumb != nil{
+            if thumb!.hasPic != nil{
+                self.imageView.image = thumb!.photoImage
+                self.imageView.contentMode = UIViewContentMode.ScaleAspectFit
+                displayBigImage()
+            }else{
+                StudyPopClient.sharedInstance.findThumbParent(user!.token!, safekey: thumb!.user!){ (results,error) in
+                    performOnMain(){
+                        self.loadingView.stopAnimating()
+                    }
+                    if let error = error {
+                        self.simpleError(error)
+                    }else if results != nil{
+                        let photo = Photo.init(dictionary: results!, context: self.sharedContext)
+                        self.thumb!.hasPic = photo
+                        CoreDataStackManager.sharedInstance().saveContext()
+                        self.displayBigImage()
+                    }else{
+                        print("Couldn't find anything")
+                    }
                 }
-                if let error = error {
-                    self.simpleError(error)
-                }else if results != nil{
-                    let photo = Photo.init(dictionary: results!, context: self.sharedContext)
-                    self.thumb!.hasPic = photo
-                    CoreDataStackManager.sharedInstance().saveContext()
-                    self.displayBigImage()
-                }else{
-                    print("Couldn't find anything")
-                }
+            }
+        }else if event != nil{
+            if event!.hasPhoto != nil{
+                self.imageView.image = event!.hasPhoto!.photoImage
+                self.imageView.contentMode = UIViewContentMode.ScaleAspectFit
+            }else{
+                
             }
         }
     }

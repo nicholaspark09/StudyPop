@@ -13,7 +13,7 @@ import CoreData
     func hideKeyboard()
 }
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     struct Constants{
         static let LoadingText = "Loading..."
@@ -21,7 +21,11 @@ class LoginViewController: UIViewController {
         static let HomeTabSegue = "HomeTab Segue"
     }
     
-    @IBOutlet var emailTextField: UITextField!
+    @IBOutlet var emailTextField: UITextField!{
+        didSet{
+            emailTextField.delegate = self
+        }
+    }
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var errorLabel: UILabel!
     var user:User?
@@ -55,11 +59,14 @@ class LoginViewController: UIViewController {
         }
     }
 
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if emailTextField.text?.characters.count > 1{
+            emailTextField.resignFirstResponder()
+            login()
+        }
+        return true
     }
+    
     @IBAction func loginClicked(sender: UIButton) {
         
         login()

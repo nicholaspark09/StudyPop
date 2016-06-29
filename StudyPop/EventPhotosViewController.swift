@@ -131,7 +131,7 @@ class EventPhotosViewController: UIViewController, UICollectionViewDelegate, UIC
                 cell.imageView.contentMode = UIViewContentMode.ScaleAspectFit
             }
         }
-        if indexPath.row == thumbs.count-1 {
+        if indexPath.row == thumbs.count-1 && canLoadMore{
             //You've arrived at the last cell, so if you can load more, load more
             indexThumbs()
         }
