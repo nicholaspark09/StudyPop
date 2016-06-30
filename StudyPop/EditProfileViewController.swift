@@ -55,7 +55,7 @@ class EditProfileViewController: UIViewController, WDImagePickerDelegate, UIImag
         }
         if city == nil{
             cityButton.setTitle("No City", forState: .Normal)
-        }else{
+        }else if city!.name != ""{
             cityButton.setTitle(city!.name!, forState: .Normal)
         }
     }

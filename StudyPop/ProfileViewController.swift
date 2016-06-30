@@ -163,8 +163,6 @@ class ProfileViewController: UIViewController {
                     }
                 }
                 if !found {
-                    
-                    print("The Profile safekey is \(self.profile!.safekey!)")
                     //Look up the image from the DB
                     //Find the image
                     StudyPopClient.sharedInstance.findProfileImage(self.user!.token!, safekey: self.profile!.safekey!){ (imageData,error) in

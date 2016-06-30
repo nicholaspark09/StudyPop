@@ -100,8 +100,13 @@ class EventPhotosViewController: UIViewController, UICollectionViewDelegate, UIC
                     }
                     self.updateUI()
                 }else{
+                    performOnMain(){
+                        self.loadingView.stopAnimating()
+                    }
                     sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                    
                 }
+                
             }
         }
     }

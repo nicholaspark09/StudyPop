@@ -280,7 +280,50 @@ class EventViewController: UIViewController, MKMapViewDelegate {
     
     // MARK: - Add User to Event
     func joinClicked(sender: UIBarButtonItem){
-        
+        sender.enabled = false
+        self.loadingView.startAnimating()
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventRequestsController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.AddMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.SafeKey : event!.safekey!,
+                      StudyPopClient.ParameterKeys.Token : user!.token!
+        ]
+        StudyPopClient.sharedInstance.httpPost("", parameters: params, jsonBody: ""){(results,error) in
+            
+            
+            func sendError(error: String){
+                self.simpleError(error)
+                
+                performOnMain(){
+                    sender.enabled = true
+                }
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error]!)")
+                return
+            }
+            
+            if let safekey = results[StudyPopClient.JSONReponseKeys.SafeKey] as? String{
+                print("You made a request with key: \(safekey)")
+                performOnMain(){
+                    self.loadingView.stopAnimating()
+                    if self.event!.ispublic?.intValue == 1{
+                        //Refresh the page as you're probably a member now
+                        self.getLiveEvent()
+                    }else{
+                            sender.title = "Requested"
+                    }
+                    
+                }
+            }
+        }
     }
     
     // MARK: - Delete Event

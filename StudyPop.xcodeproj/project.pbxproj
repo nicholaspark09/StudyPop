@@ -29,7 +29,6 @@
 		AF1819CB1D2408E500795ED6 /* AlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1819CA1D2408E500795ED6 /* AlertTableViewCell.swift */; };
 		AF1819CF1D240B5F00795ED6 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1819CD1D240B5F00795ED6 /* Alert.swift */; };
 		AF1819D11D240C6B00795ED6 /* AlertIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1819D01D240C6B00795ED6 /* AlertIndexViewController.swift */; };
-		AF1819D31D24143100795ED6 /* RequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1819D21D24143100795ED6 /* RequestViewController.swift */; };
 		AF1D0DE91D214A24003DAA11 /* EventsIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D0DE81D214A24003DAA11 /* EventsIndexViewController.swift */; };
 		AF283DA51D05118D006D4AC1 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF283DA31D05118D006D4AC1 /* Photo.swift */; };
 		AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */; };
@@ -59,6 +58,9 @@
 		AF8043AE1CFE5CC400A2B7A4 /* WDImageCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8043A81CFE5CC400A2B7A4 /* WDImageCropViewController.swift */; };
 		AF8043AF1CFE5CC400A2B7A4 /* WDImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8043A91CFE5CC400A2B7A4 /* WDImagePicker.swift */; };
 		AF8043B01CFE5CC400A2B7A4 /* WDResizableCropOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8043AA1CFE5CC400A2B7A4 /* WDResizableCropOverlayView.swift */; };
+		AF8047441D25433D00CF2A7F /* GroupRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8047431D25433D00CF2A7F /* GroupRequestViewController.swift */; };
+		AF8047461D2551D400CF2A7F /* EventRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8047451D2551D400CF2A7F /* EventRequestViewController.swift */; };
+		AF80474A1D25531800CF2A7F /* EventRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8047481D25531800CF2A7F /* EventRequest.swift */; };
 		AF82C8C91D0D3D6D0043371D /* EventsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF82C8C81D0D3D6D0043371D /* EventsMapViewController.swift */; };
 		AF90352D1D01071500A67F9E /* GroupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF90352B1D01071500A67F9E /* GroupRequest.swift */; };
 		AF9582EB1D05DF1F00064C98 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9582EA1D05DF1F00064C98 /* ProfileTableViewCell.swift */; };
@@ -128,7 +130,6 @@
 		AF1819CA1D2408E500795ED6 /* AlertTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTableViewCell.swift; sourceTree = "<group>"; };
 		AF1819CD1D240B5F00795ED6 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		AF1819D01D240C6B00795ED6 /* AlertIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertIndexViewController.swift; sourceTree = "<group>"; };
-		AF1819D21D24143100795ED6 /* RequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestViewController.swift; sourceTree = "<group>"; };
 		AF1D0DE81D214A24003DAA11 /* EventsIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsIndexViewController.swift; sourceTree = "<group>"; };
 		AF283DA31D05118D006D4AC1 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
@@ -158,6 +159,9 @@
 		AF8043A81CFE5CC400A2B7A4 /* WDImageCropViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WDImageCropViewController.swift; sourceTree = "<group>"; };
 		AF8043A91CFE5CC400A2B7A4 /* WDImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WDImagePicker.swift; sourceTree = "<group>"; };
 		AF8043AA1CFE5CC400A2B7A4 /* WDResizableCropOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WDResizableCropOverlayView.swift; sourceTree = "<group>"; };
+		AF8047431D25433D00CF2A7F /* GroupRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRequestViewController.swift; sourceTree = "<group>"; };
+		AF8047451D2551D400CF2A7F /* EventRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRequestViewController.swift; sourceTree = "<group>"; };
+		AF8047481D25531800CF2A7F /* EventRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventRequest.swift; sourceTree = "<group>"; };
 		AF82C8C81D0D3D6D0043371D /* EventsMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsMapViewController.swift; sourceTree = "<group>"; };
 		AF90352B1D01071500A67F9E /* GroupRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRequest.swift; sourceTree = "<group>"; };
 		AF9582EA1D05DF1F00064C98 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 				AFCAE1E01D1BF49000955601 /* Thumb.swift */,
 				AFA87A2D1D22B1660004B228 /* EventPost.swift */,
 				AF1819CD1D240B5F00795ED6 /* Alert.swift */,
+				AF8047481D25531800CF2A7F /* EventRequest.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -375,7 +380,8 @@
 				AFA87A341D22C03F0004B228 /* AddEventPostViewController.swift */,
 				AF9C23421D23EB1D008FB701 /* EventPhotosViewController.swift */,
 				AF1819D01D240C6B00795ED6 /* AlertIndexViewController.swift */,
-				AF1819D21D24143100795ED6 /* RequestViewController.swift */,
+				AF8047431D25433D00CF2A7F /* GroupRequestViewController.swift */,
+				AF8047451D2551D400CF2A7F /* EventRequestViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -549,6 +555,7 @@
 				AF8043AF1CFE5CC400A2B7A4 /* WDImagePicker.swift in Sources */,
 				AF1819D11D240C6B00795ED6 /* AlertIndexViewController.swift in Sources */,
 				AF8043B01CFE5CC400A2B7A4 /* WDResizableCropOverlayView.swift in Sources */,
+				AF8047441D25433D00CF2A7F /* GroupRequestViewController.swift in Sources */,
 				AF0924DD1D1AB59A003D8656 /* GroupRequestTableViewCell.swift in Sources */,
 				AF8043A11CFE4B3100A2B7A4 /* Location.swift in Sources */,
 				AF283DA51D05118D006D4AC1 /* Photo.swift in Sources */,
@@ -560,10 +567,10 @@
 				AF5AA9DC1D056B730020D5BD /* Profile.swift in Sources */,
 				AF79B56E1D07BD0B00A046D4 /* Event.swift in Sources */,
 				AF0077901CF5321E0056904F /* Helpers.swift in Sources */,
+				AF80474A1D25531800CF2A7F /* EventRequest.swift in Sources */,
 				AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */,
 				AF9C23431D23EB1D008FB701 /* EventPhotosViewController.swift in Sources */,
 				AF4F66061D1D80E10068C558 /* PhotoViewController.swift in Sources */,
-				AF1819D31D24143100795ED6 /* RequestViewController.swift in Sources */,
 				AF3740A41CF75D1600216F64 /* GroupsViewController.swift in Sources */,
 				AF00778B1CF530690056904F /* CoreDataStackManager.swift in Sources */,
 				AF0E8F081D12C3F500085B02 /* EventMembersTableViewController.swift in Sources */,
@@ -595,6 +602,7 @@
 				AF9E70EA1CFB249800E8B8F6 /* Subject.swift in Sources */,
 				AF112A5C1CFBD1D100FE1DB9 /* GroupTableViewCell.swift in Sources */,
 				AFCAE1E41D1BF78F00955601 /* GroupPicIndexViewController.swift in Sources */,
+				AF8047461D2551D400CF2A7F /* EventRequestViewController.swift in Sources */,
 				AF3E5EA31D0268A900EE699F /* GroupEditViewController.swift in Sources */,
 				AF3E5EA11D025C5300EE699F /* GroupMember.swift in Sources */,
 			);

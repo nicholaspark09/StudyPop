@@ -50,6 +50,7 @@ extension StudyPopClient{
         static let LocationSafeKey = "locationsafekey"
         static let BodyType = "type"
         static let TheController = "thecontroller"
+        static let AlertKey = "alertkey"
     }
     
     struct ParameterValues{
@@ -65,6 +66,7 @@ extension StudyPopClient{
         static let EventsController = "events"
         static let CitiesController = "cities"
         static let PicsController = "pics"
+        static let EventRequestsController = "eventrequests"
         static let SubjectsController = "subjects"
         static let LoginMethod = "iphonelogin"
         static let RegisterMethod = "iphoneregistration"
@@ -118,6 +120,8 @@ extension StudyPopClient{
         static let EventPost = "EventPost"
         static let Alerts = "Alerts"
         static let Alert = "Alert"
+        static let GroupRequest = "GroupRequest"
+        static let EventRequest = "EventRequest"
     }
     
     struct JSONResponseValues{

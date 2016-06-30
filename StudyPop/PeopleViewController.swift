@@ -28,6 +28,7 @@ class PeopleViewController: UIViewController, UITableViewDelegate, UITableViewDa
         static let LogoutMessage = "Logout"
         static let LogoutCancel = "Don't Logout"
         static let UnwindToLoginSegue = "UnwindToLogin Segue"
+        static let LoginStoryboardName = "LoginView"
     }
     
     
@@ -216,7 +217,9 @@ class PeopleViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if self.user != nil{
                 self.user!.logged = false
                 CoreDataStackManager.sharedInstance().saveContext()
-                self.performSegueWithIdentifier(Constants.UnwindToLoginSegue, sender: nil)
+                print("YOu have been logged out")
+                let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier(Constants.LoginStoryboardName)
+                UIApplication.sharedApplication().keyWindow?.rootViewController = loginViewController
             }
         }))
         

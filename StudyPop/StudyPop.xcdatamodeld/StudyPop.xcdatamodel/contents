@@ -2,6 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
     <entity name="Alert" representedClassName=".Alert" syncable="YES">
         <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="blob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="controller" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
@@ -61,6 +62,14 @@
         <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="seen" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="thetype" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="EventRequest" representedClassName=".EventRequest" syncable="YES">
+        <attribute name="accepted" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="eventkey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seen" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Group" representedClassName=".Group" syncable="YES">
@@ -190,6 +199,7 @@
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Profile" inverseName="fromUser" inverseEntity="Profile" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Alert" positionX="-45" positionY="135" width="128" height="210"/>
         <element name="City" positionX="-45" positionY="108" width="128" height="165"/>
         <element name="Event" positionX="-45" positionY="144" width="128" height="315"/>
         <element name="EventMember" positionX="-45" positionY="135" width="128" height="135"/>
@@ -204,6 +214,6 @@
         <element name="Subject" positionX="-63" positionY="90" width="128" height="150"/>
         <element name="Thumb" positionX="-45" positionY="135" width="128" height="180"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="195"/>
-        <element name="Alert" positionX="-45" positionY="135" width="128" height="195"/>
+        <element name="EventRequest" positionX="-45" positionY="135" width="128" height="135"/>
     </elements>
 </model>

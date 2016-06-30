@@ -16,6 +16,10 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
         static let GroupRequestsController = "grouprequests"
         static let EventRequestsController = "eventrequests"
         static let ViewRequestSegue = "ViewRequest Segue"
+        static let GroupRequestSegue = "GroupRequest Segue"
+        static let EventRequestSegue = "EventRequest Segue"
+        static let RefreshingTitle = "Loading..."
+        static let RefreshTitle = "Refresh"
     }
     
     let threshold = 50.0
@@ -31,7 +35,7 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBOutlet var loadingView: UIActivityIndicatorView!
     @IBOutlet var tableView: UITableView!
-    
+    @IBOutlet var refreshButton: UIButton!
     
     
     
@@ -50,6 +54,14 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
     
     
     // MARK: - TableView Delegates
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if alerts.count < 1{
+            return "No notifications"
+        }
+        return nil
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return alerts.count
     }
@@ -59,6 +71,22 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
         let alert = alerts[indexPath.row]
         if alert.name != nil{
             cell.label.text = alert.name!
+        }
+        if alert.blob != nil{
+            cell.alertImageView.image = UIImage(data: alert.blob!)
+        }else if alert.controller! == Constants.EventRequestsController || alert.controller! == Constants.GroupRequestsController && !alert.checked && alert.originaluser != ""{
+            // This was a request from a user, so grab their picture if you can
+            alerts[indexPath.row].checked = true
+            StudyPopClient.sharedInstance.findUserPicture(alert.originaluser!){(results,error) in
+                if let error = error{
+                    print("Couldn't find a picture: \(error)")
+                }else if results != nil{
+                    self.alerts[indexPath.row].blob = results!
+                    performOnMain(){
+                        cell.alertImageView.image = UIImage(data: results!)
+                    }
+                }
+            }
         }
         if alert.seen?.boolValue == false{
             cell.alertImageView.image = unseenImage
@@ -73,9 +101,9 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
         let alert = alerts[indexPath.row]
         if alert.controller != nil{
             if alert.controller! == Constants.EventRequestsController{
-                performSegueWithIdentifier(Constants.ViewRequestSegue, sender: Constants.EventRequestsController)
+                performSegueWithIdentifier(Constants.EventRequestSegue, sender: alert)
             }else if alert.controller == Constants.GroupRequestsController{
-                performSegueWithIdentifier(Constants.ViewRequestSegue, sender: Constants.GroupRequestsController)
+                performSegueWithIdentifier(Constants.GroupRequestSegue, sender: alert)
             }
         }
     }
@@ -91,12 +119,17 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
                           StudyPopClient.ParameterKeys.Offset: "\(alerts.count)",
                           StudyPopClient.ParameterKeys.Token : user!.token!
             ]
+            refreshButton.setTitle(Constants.RefreshingTitle, forState: .Normal)
+            refreshButton.enabled = false
             StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in
                 self.loading = false
                 func sendError(error: String){
                     self.simpleError(error)
                     self.canLoadMore = false
-                    print("You have hit an error")
+                    performOnMain(){
+                        self.refreshButton.setTitle(Constants.RefreshTitle, forState: .Normal)
+                        self.refreshButton.enabled = true
+                    }
                 }
                 
                 guard error == nil else{
@@ -135,11 +168,23 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    
+    @IBAction func refreshClicked(sender: AnyObject) {
+        alerts = [Alert]()
+        updateUI()
+        canLoadMore = true
+        indexAlerts()
+    }
+    
+    
+    
     // MARK: - UpdateTable
     func updateUI(){
         //Keep updates on the main UI Thread
         performOnMain(){
             self.tableView.reloadData()
+            self.refreshButton.setTitle(Constants.RefreshTitle, forState: .Normal)
+            self.refreshButton.enabled = true
         }
     }
     
@@ -155,15 +200,25 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
 
-    /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == Constants.GroupRequestSegue{
+            let alert = sender as! Alert
+            if let rvc = segue.destinationViewController as? GroupRequestViewController{
+                rvc.user = user!
+                rvc.alert = alert
+            }
+        }else if segue.identifier == Constants.EventRequestSegue{
+            let alert = sender as! Alert
+            if let rvc = segue.destinationViewController as? EventRequestViewController{
+                rvc.user = user!
+                rvc.alert = alert
+            }
+        }
     }
-    */
+    
+    
+
     
     func getUser(){
         let request = NSFetchRequest(entityName: "User")

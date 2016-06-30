@@ -22,7 +22,9 @@ class Alert: NSManagedObject {
     @NSManaged var created: NSDate?
     @NSManaged var originaluser: String?
     @NSManaged var image: String?
+    @NSManaged var blob: NSData?
     var createdString:String?
+    var checked = false
     
     struct Keys{
         static let Name = "name"
@@ -35,6 +37,7 @@ class Alert: NSManagedObject {
         static let Seen = "seen"
         static let OriginalUser = "originaluser"
         static let Image = "image"
+        static let Blob = "blob"
     }
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -57,6 +60,7 @@ class Alert: NSManagedObject {
         safekey = dictionary[Keys.SafeKey] as? String
         createdString = dictionary[Keys.Created] as? String
         image = dictionary[Keys.Image] as? String
+        blob = dictionary[Keys.Blob] as? NSData
         if createdString != nil{
             if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(createdString!.trunc(16)){
                 created = startDate
