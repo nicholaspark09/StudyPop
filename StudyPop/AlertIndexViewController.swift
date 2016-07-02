@@ -185,7 +185,11 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
             self.tableView.reloadData()
             self.refreshButton.setTitle(Constants.RefreshTitle, forState: .Normal)
             self.refreshButton.enabled = true
+            let center = NSNotificationCenter.defaultCenter()
+            let notification = NSNotification(name: StudyPopClient.Constants.AlertNotification, object: self, userInfo: [StudyPopClient.JSONReponseKeys.Count: self.alerts.count])
+            center.postNotification(notification)
         }
+        
     }
     
     // MARK: -ScrollView Delegate

@@ -1010,16 +1010,16 @@
         <scene sceneID="rtI-pC-TRd">
             <objects>
                 <tableViewController id="g7E-g6-QRR" customClass="MyGroupsTableViewController" customModule="StudyPop" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="70M-wE-t2K">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="73" sectionHeaderHeight="28" sectionFooterHeight="28" id="70M-wE-t2K">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Group Cell" rowHeight="65" id="6vc-R6-Z51" customClass="GroupTableViewCell" customModule="StudyPop" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="65"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Group Cell" rowHeight="73" id="6vc-R6-Z51" customClass="GroupTableViewCell" customModule="StudyPop" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="73"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6vc-R6-Z51" id="4VC-pC-DF4">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6K-Vq-hpL">
@@ -1034,7 +1034,7 @@
                                             </attributedString>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SubjectBlue" translatesAutoresizingMaskIntoConstraints="NO" id="wmn-gw-ZgK">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="SubjectBlue" translatesAutoresizingMaskIntoConstraints="NO" id="wmn-gw-ZgK">
                                             <rect key="frame" x="8" y="5" width="54" height="54"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="54" id="rE4-sY-fjy"/>
@@ -1081,6 +1081,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="1Sv-qe-Op2"/>
+                    <connections>
+                        <segue destination="3ah-Tf-SEc" kind="show" identifier="GroupView Segue" id="ls7-ak-9vZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pui-3E-l9A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1406,7 +1409,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vfu-TO-emi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-740" y="1393"/>
+            <point key="canvasLocation" x="5380" y="3073"/>
         </scene>
         <!--Group Pic Index View Controller-->
         <scene sceneID="Myl-wv-snB">
@@ -4859,10 +4862,11 @@
         <segue reference="JLb-LI-2qf"/>
         <segue reference="qaL-23-2S4"/>
         <segue reference="8R6-de-wYO"/>
-        <segue reference="EoZ-Ci-xuJ"/>
         <segue reference="cXE-ef-ID2"/>
-        <segue reference="hEL-j1-5i6"/>
         <segue reference="1lx-0f-ne1"/>
-        <segue reference="dfd-le-xnW"/>
+        <segue reference="Joj-Og-RTd"/>
+        <segue reference="Axe-i6-b8I"/>
+        <segue reference="ZbP-sN-HDK"/>
+        <segue reference="ls7-ak-9vZ"/>
     </inferredMetricsTieBreakers>
 </document>

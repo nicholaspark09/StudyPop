@@ -20,7 +20,7 @@ class MyGroupsTableViewController: UITableViewController {
         static let RefreshTitle = "Refresh"
         static let RefreshingTitle = "Loading..."
         static let CellReuseIdentifier = "Group Cell"
-        static let EventViewSegue = "GroupView Segue"
+        static let GroupViewSegue = "GroupView Segue"
     }
     
     var members = [GroupMember]()
@@ -91,6 +91,10 @@ class MyGroupsTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let group = members[indexPath.row].fromGroup!
+        performSegueWithIdentifier(Constants.GroupViewSegue, sender: group)
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -103,7 +107,7 @@ class MyGroupsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
-            
+            dropGroup(members[indexPath.row].safekey!)
             members.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
@@ -129,11 +133,11 @@ class MyGroupsTableViewController: UITableViewController {
 
     // MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == Constants.EventViewSegue{
-            let safekey = sender as! String
-            if let evc = segue.destinationViewController as? EventViewController{
-                evc.user = user!
-                evc.safekey = safekey
+        if segue.identifier == Constants.GroupViewSegue{
+            let group = sender as! Group
+            if let gvc = segue.destinationViewController.contentViewController as? GroupViewController{
+                gvc.user = user!
+                gvc.group = group
             }
         }
     }
@@ -204,13 +208,36 @@ class MyGroupsTableViewController: UITableViewController {
     
     // MARK: - Drop from Group
     func dropGroup(safekey: String){
-        
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupMembersController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.DeleteMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.SafeKey: safekey,
+                      StudyPopClient.ParameterKeys.Token : self.user!.token!
+        ]
+        StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
+            func sendError(error: String){
+                self.simpleError(error)
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error]!)")
+                return
+            }
+            
+        }
     }
     
     func updateUI(){
         performOnMain(){
             self.loading = false
             self.refreshButton!.title = Constants.RefreshTitle
+            self.refreshButton!.enabled = true
             self.tableView.reloadData()
         }
     }

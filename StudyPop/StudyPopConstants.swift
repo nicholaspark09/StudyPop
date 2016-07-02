@@ -22,6 +22,7 @@ extension StudyPopClient{
         static let Subject = "subject"
         static let SubjectKey = "subjectkey"
         static let UserNotification = "StudyPopUser Notification"
+        static let AlertNotification = "StudyPopAlert Notification"
     }
     
     struct ParameterKeys{
@@ -88,6 +89,7 @@ extension StudyPopClient{
         static let ThumbParentMethod = "thumbparent"
         static let FacebookLoginMethod = "iphonefacebook"
         static let MyIndexMethod = "myindex"
+        static let UnseenCount = "unseencount"
     }
     
     struct JSONReponseKeys{
@@ -124,6 +126,7 @@ extension StudyPopClient{
         static let Alert = "Alert"
         static let GroupRequest = "GroupRequest"
         static let EventRequest = "EventRequest"
+        static let Count = "Count"
     }
     
     struct JSONResponseValues{
