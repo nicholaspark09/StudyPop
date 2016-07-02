@@ -31,6 +31,7 @@ class GroupMember: NSManagedObject {
         static let FromGroup = "FromGroup"
         static let PhotoBlob = "photoblob"
         static let PhotoImage = "photoimage"
+        static let Group = "group"
     }
     
     
@@ -53,6 +54,9 @@ class GroupMember: NSManagedObject {
         photoblob = dictionary[Keys.PhotoBlob] as? NSData
         if photoblob != nil{
             photoImage = UIImage(data: photoblob!)
+        }
+        if let groupDict = dictionary[Keys.Group] as? [String:AnyObject]{
+            fromGroup = Group.init(dictionary: groupDict, context: context)
         }
     }
 

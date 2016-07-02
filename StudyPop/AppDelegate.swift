@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 
+
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -29,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
         
         //Check for a logged in user first
         let sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext
@@ -62,11 +63,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("The error was \(fetchError)")
         }
         
-    
-        return true
+        
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        
+        
+       
+        return true
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        
+        print("Are you even running this?")
         
         let urlString = url.absoluteString
         let data = urlString.componentsSeparatedByString("/")
@@ -98,14 +108,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     center.postNotification(notification)
                 }
                 /*
-                print("You observed it. Now broadcast it")
-                let center = NSNotificationCenter.defaultCenter()
-                let notification = NSNotification(name: StudyPopClient.Constants.LoginNotification, object: self, userInfo: [StudyPopClient.Constants.LoginKey:data[3]])
-                center.postNotification(notification)
- */
+                 print("You observed it. Now broadcast it")
+                 let center = NSNotificationCenter.defaultCenter()
+                 let notification = NSNotification(name: StudyPopClient.Constants.LoginNotification, object: self, userInfo: [StudyPopClient.Constants.LoginKey:data[3]])
+                 center.postNotification(notification)
+                 */
             }
         }
-        return true
+        
+        
+        
+        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
     //Get the locale

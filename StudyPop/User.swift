@@ -29,7 +29,7 @@ class User: NSManagedObject {
         static let Email = "email"
         static let Locale = "locale"
         static let Name = "name"
-        static let Oauthtokenuid = "oauthrtokenuid"
+        static let Oauthtokenuid = "oauthtokenuid"
         static let SafeKey = "safekey"
         static let Token = "token"
         static let AccessToken = "accesstoken"
@@ -54,6 +54,7 @@ class User: NSManagedObject {
         locale = dictionary[Keys.Locale] as? String
         safekey = dictionary[Keys.SafeKey] as? String
         token = dictionary[Keys.Token] as? String
+        oauthtokenuid = dictionary[Keys.Oauthtokenuid] as? NSNumber
         accesstoken = dictionary[Keys.AccessToken] as? String
         group = dictionary[Keys.Group] as? NSNumber
         logged = dictionary[Keys.Logged] as? NSNumber

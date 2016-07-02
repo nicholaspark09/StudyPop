@@ -26,6 +26,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         static let Controller = "GroupsViewController"
         static let AddSegue = "AddGroup Segue"
         static let GroupViewSegue = "GroupView Segue"
+        static let MyGroupsSegue = "MyGroups Segue"
     }
     
     /**
@@ -287,6 +288,18 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    func getLocalGroups(){
+        let fetchRequest = NSFetchRequest(entityName: "Group")
+        do{
+            self.groups = try sharedContext.executeFetchRequest(fetchRequest) as! [Group]
+            if self.groups.count > 0{
+                updateUI()
+            }
+        } catch let error as NSError{
+            print("The error was \(error)")
+        }
+    }
+    
     // MARK: - Navigation
     //Prep time
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -306,10 +319,24 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if let groupView = segue.destinationViewController.contentViewController as? GroupViewController{
                 groupView.group = sender as? Group
             }
+        }else if segue.identifier == Constants.MyGroupsSegue{
+            if let mgc = segue.destinationViewController.contentViewController as? MyGroupsTableViewController{
+                mgc.user = user!
+
+            }
         }
     }
     
     // MARK: - TableView Delegates
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if groups.count < 1{
+            return "No groups"
+        }
+        return nil
+    }
+    
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groups.count
     }
@@ -357,7 +384,6 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if results.count > 0{
                 if let temp = results[0] as? User{
                     user = temp
-                    print("UserEmail: \(user!.email!)")
                 }
             }
         } catch {

@@ -21,6 +21,7 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
         static let Controller = "Events"
         static let CellReuseIdentifier = "EventCell"
         static let EventViewSegue = "EventView Segue"
+        static let MyEventsSegue = "MyEvents Segue"
     }
     
     
@@ -192,7 +193,6 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
             if results.count > 0{
                 if let temp = results[0] as? User{
                     user = temp
-                    print("UserEmail: \(user!.email!)")
                 }
             }
         } catch {
@@ -225,6 +225,10 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
             if let esc = segue.destinationViewController.contentViewController as? EventViewController{
                 esc.user = user
                 esc.safekey = event.safekey!
+            }
+        }else if segue.identifier == Constants.MyEventsSegue{
+            if let mec = segue.destinationViewController.contentViewController as? MyEventsTableViewController{
+                mec.user = user!
             }
         }
     }

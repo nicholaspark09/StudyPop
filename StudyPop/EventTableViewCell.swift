@@ -28,6 +28,9 @@ class EventTableViewCell: UITableViewCell {
             if event!.info != nil && event!.info! != ""{
                 textView.text = event!.info!
             }
+            if event!.currentpeople != nil{
+                attendingLabel.text = "\(event!.currentpeople!.intValue)"
+            }
         }
     }
     
@@ -36,6 +39,8 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var dayLabel: UILabel!
+    @IBOutlet var attendingLabel: UILabel!
+    
     
     
     override func awakeFromNib() {

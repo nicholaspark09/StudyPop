@@ -51,6 +51,7 @@ extension StudyPopClient{
         static let BodyType = "type"
         static let TheController = "thecontroller"
         static let AlertKey = "alertkey"
+        static let OauthUid = "oauthuid"
     }
     
     struct ParameterValues{
@@ -85,7 +86,8 @@ extension StudyPopClient{
         static let GroupEventsMethod = "groupindex"
         static let ResponseMethod = "response"
         static let ThumbParentMethod = "thumbparent"
-        
+        static let FacebookLoginMethod = "iphonefacebook"
+        static let MyIndexMethod = "myindex"
     }
     
     struct JSONReponseKeys{

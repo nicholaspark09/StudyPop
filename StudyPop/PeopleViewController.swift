@@ -180,6 +180,14 @@ class PeopleViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     // MARK: - TableView Delegates
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if profiles.count < 1{
+            return "No profiles"
+        }
+        return nil
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return profiles.count
     }

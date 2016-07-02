@@ -9,8 +9,11 @@
 import UIKit
 import CoreData
 
+
+
 @objc protocol LoginViewProtocol{
     func hideKeyboard()
+    //func tokenChanged(notification:NSNotification)
 }
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
@@ -53,10 +56,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         getUser()
         if user != nil{
             self.performSegueWithIdentifier(Constants.HomeTabSegue, sender: nil)
-            print("YOU have a user!")
         }else{
             print("The user is nil!")
         }
+        
+        /*
+        FBSDKProfile.enableUpdatesOnAccessTokenChange(true)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewProtocol.tokenChanged(_:)), name: FBSDKProfileDidChangeNotification, object: nil)
+ */
     }
 
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -70,7 +77,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func loginClicked(sender: UIButton) {
         
         login()
-        
         
     }
 
@@ -120,6 +126,120 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    @IBAction func facebookLoginClicked(sender: AnyObject) {
+        
+        errorLabel.text = "Connecting to Facebook..."
+        
+        let login = FBSDKLoginManager.init()
+        login.logInWithReadPermissions(["public_profile"], fromViewController: self.parentViewController, handler: { (result,error) in
+            
+            func sendMessage(message: String){
+                performOnMain(){
+                    self.errorLabel.text = message
+                }
+            }
+            
+            if let error = error{
+                sendMessage("LoginError: \(error.localizedDescription)")
+            }else if result.isCancelled{
+                sendMessage("Login cancelled")
+                
+            }else{
+                sendMessage("Connected to facebook. Logging you in...")
+                
+                // GET Profile information from Facebook so you can finally save this dang user
+                let token = result.token.tokenString
+                let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"name"], tokenString: token, version: nil, HTTPMethod: "GET")
+                request.startWithCompletionHandler({ (connection,result,error: NSError!) in
+                    if let error = error{
+                        sendMessage("Error: \(error.localizedDescription)")
+                    }else{
+                        let facebookId = result.valueForKey("id") as! String
+                        let userName = result.valueForKey("name") as! String
+                        print("You got a user name back with id \(facebookId) and username: \(userName)")
+                        //Login the user to StudyPop API
+                        //Check to see if there's already a local user
+                        
+                            let request = NSFetchRequest(entityName: "User")
+                            request.fetchLimit = 1
+                            request.predicate = NSPredicate(format: "oauthtokenuid == %@", facebookId)
+                            do{
+                                let results = try self.sharedContext.executeFetchRequest(request)
+                                if results.count > 0{
+                                    if let temp = results[0] as? User{
+                                        self.user = temp
+                                        self.user!.logged = true
+                                        self.user!.accesstoken = token
+                                        performOnMain(){
+                                            CoreDataStackManager.sharedInstance().saveContext()
+                                            self.performSegueWithIdentifier(Constants.HomeTabSegue, sender: nil)
+                                        }
+                                    }
+                                }else{
+                                    //No User, so register them into the StudyPop API first!
+                                    let params = [
+                                        StudyPopClient.ParameterKeys.Controller : StudyPopClient.ParameterValues.UserController,
+                                        StudyPopClient.ParameterKeys.Method : StudyPopClient.ParameterValues.FacebookLoginMethod,
+                                        StudyPopClient.ParameterKeys.ApiKey : StudyPopClient.Constants.ApiKey,
+                                        StudyPopClient.ParameterKeys.ApiSecret : StudyPopClient.Constants.ApiSecret,
+                                        StudyPopClient.ParameterKeys.OauthUid : facebookId,
+                                        User.Keys.Name : userName
+                                    ]
+                                    StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
+            
+                                        
+                                        guard error == nil else{
+                                            sendMessage("Error: \(error!.localizedDescription)")
+                                            return
+                                        }
+                                        guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                                            sendMessage("Nothing came back from the server")
+                                            return
+                                        }
+                                        
+                                        guard stat == StudyPopClient.JSONResponseValues.Success else{
+                                            sendMessage("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                                            return
+                                        }
+                                        
+                                        guard let safekey = results[StudyPopClient.JSONReponseKeys.SafeKey] as? String else{
+                                            sendMessage("Couldn't find the safekey in the response")
+                                            return
+                                        }
+                                        
+                                        //You have a returned item, go ahead and save it as a new user!
+                                        let userDict = [User.Keys.Name : userName, User.Keys.SafeKey : safekey, User.Keys.Token : safekey, User.Keys.Oauthtokenuid : facebookId, User.Keys.AccessToken : token]
+                                        self.user = User.init(dictionary: userDict, context: self.sharedContext)
+                                        self.user!.logged = true
+                                        performOnMain(){
+                                            CoreDataStackManager.sharedInstance().saveContext()
+                                            self.performSegueWithIdentifier(Constants.HomeTabSegue, sender: nil)
+                                        }
+                                    }
+                                }
+                            } catch {
+                                let fetchError = error as NSError
+                                print("Couldn't access CoreData: \(fetchError.localizedDescription)")
+                            }
+                        }
+                    
+                })
+            }
+        })
+    }
+    
+    /*
+        Once you're logged on with facebook, the token should change and this function
+        will be called per NSNotification
+            - Get the profile information and update the server as well as save the
+    func tokenChanged(notification:NSNotification){
+        if FBSDKAccessToken.currentAccessToken() != nil{
+            
+        }
+    }
+ */
+    
     
     func getUser(){
         let request = NSFetchRequest(entityName: "User")

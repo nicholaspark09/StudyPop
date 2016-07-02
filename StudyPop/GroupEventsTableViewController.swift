@@ -63,11 +63,6 @@ class GroupEventsTableViewController: UITableViewController {
     
     func updateUI(){
         performOnMain(){
-            if self.events.count < 1{
-                let eventDict = [Event.Keys.SafeKey : "", Event.Keys.Name : "No events"]
-                let event = Event.init(dictionary: eventDict, context: self.sharedContext)
-                self.events.append(event)
-            }
             self.tableView.reloadData()
         }
     }
@@ -130,6 +125,13 @@ class GroupEventsTableViewController: UITableViewController {
     
     
     // MARK: - Table view data source
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if events.count < 1{
+            return "No Events. Create one!"
+        }
+        return nil
+    }
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections

@@ -28,6 +28,7 @@ class EventMember: NSManagedObject {
         static let Role = "role"
         static let SafeKey = "safekey"
         static let Thumbblob = "thumblob"
+        static let Event = "event"
     }
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
@@ -49,6 +50,9 @@ class EventMember: NSManagedObject {
         thumbblob = dictionary[Keys.Thumbblob] as? NSData
         if thumbblob != nil{
             photoImage = UIImage(data: thumbblob!)
+        }
+        if let eventDict = dictionary[Keys.Event] as? [String:AnyObject]{
+            fromEvent = Event.init(dictionary: eventDict, context: context)
         }
     }
     

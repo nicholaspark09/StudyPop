@@ -19,8 +19,8 @@ class StudyPopClient: NSObject{
         //request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
 
-            let returnedString = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("The data: \(returnedString)")
+            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print("You got back \(string)")
             
             func sendError(error: String){
                 print(error)
@@ -101,8 +101,6 @@ class StudyPopClient: NSObject{
         request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(jsonBody, options: NSJSONWritingOptions.PrettyPrinted)
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
             
-            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("The results were: \(string)")
             
             func sendError(error: String){
                 print(error)

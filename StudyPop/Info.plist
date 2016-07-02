@@ -12,6 +12,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>studypop</string>
+                <string>fb651809254972235</string>
 			</array>
 			<key>CFBundleURLName</key>
 			<string>com.wymm</string>
@@ -56,5 +57,16 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+    <key>FacebookAppID</key>
+    <string>651809254972235</string>
+    <key>FacebookDisplayName</key>
+    <string>StudyPop</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
+    </array>
 </dict>
 </plist>
