@@ -77,6 +77,9 @@
 		AFA87A311D22B7150004B228 /* EventPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA87A301D22B7150004B228 /* EventPostsViewController.swift */; };
 		AFA87A331D22BAEF0004B228 /* EventPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA87A321D22BAEF0004B228 /* EventPostTableViewCell.swift */; };
 		AFA87A351D22C03F0004B228 /* AddEventPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA87A341D22C03F0004B228 /* AddEventPostViewController.swift */; };
+		AFB5A88B1D289E1B000ED889 /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB5A88A1D289E1B000ED889 /* CheckInViewController.swift */; };
+		AFB5A88D1D28A3BA000ED889 /* AttendanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB5A88C1D28A3BA000ED889 /* AttendanceViewController.swift */; };
+		AFB5A88F1D28AB64000ED889 /* CheckMeInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB5A88E1D28AB64000ED889 /* CheckMeInViewController.swift */; };
 		AFC09EA71D160BD00003BD29 /* GroupPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC09EA61D160BD00003BD29 /* GroupPostTableViewCell.swift */; };
 		AFCAE1E21D1BF49000955601 /* Thumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAE1E01D1BF49000955601 /* Thumb.swift */; };
 		AFCAE1E41D1BF78F00955601 /* GroupPicIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */; };
@@ -88,6 +91,8 @@
 		AFCB26841CE8E1C400754A6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFCB26821CE8E1C400754A6D /* LaunchScreen.storyboard */; };
 		AFCB268F1CE8E1C400754A6D /* StudyPopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB268E1CE8E1C400754A6D /* StudyPopTests.swift */; };
 		AFCB269A1CE8E1C400754A6D /* StudyPopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26991CE8E1C400754A6D /* StudyPopUITests.swift */; };
+		AFD3A6001D28B7D300D0F0B3 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD3A5FE1D28B7D300D0F0B3 /* Attendance.swift */; };
+		AFD3A6021D28BAB900D0F0B3 /* AttendanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD3A6011D28BAB900D0F0B3 /* AttendanceTableViewCell.swift */; };
 		AFFA64D11D274591006B3A60 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFFA64CF1D274591006B3A60 /* FBSDKCoreKit.framework */; };
 		AFFA64D21D274591006B3A60 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFFA64D01D274591006B3A60 /* FBSDKLoginKit.framework */; };
 		AFFA64D41D274598006B3A60 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFFA64D31D274598006B3A60 /* FBSDKShareKit.framework */; };
@@ -184,6 +189,9 @@
 		AFA87A301D22B7150004B228 /* EventPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPostsViewController.swift; sourceTree = "<group>"; };
 		AFA87A321D22BAEF0004B228 /* EventPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPostTableViewCell.swift; sourceTree = "<group>"; };
 		AFA87A341D22C03F0004B228 /* AddEventPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventPostViewController.swift; sourceTree = "<group>"; };
+		AFB5A88A1D289E1B000ED889 /* CheckInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
+		AFB5A88C1D28A3BA000ED889 /* AttendanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceViewController.swift; sourceTree = "<group>"; };
+		AFB5A88E1D28AB64000ED889 /* CheckMeInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckMeInViewController.swift; sourceTree = "<group>"; };
 		AFC09EA61D160BD00003BD29 /* GroupPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPostTableViewCell.swift; sourceTree = "<group>"; };
 		AFCAE1E01D1BF49000955601 /* Thumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumb.swift; sourceTree = "<group>"; };
 		AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPicIndexViewController.swift; sourceTree = "<group>"; };
@@ -201,6 +209,8 @@
 		AFCB26951CE8E1C400754A6D /* StudyPopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StudyPopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFCB26991CE8E1C400754A6D /* StudyPopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyPopUITests.swift; sourceTree = "<group>"; };
 		AFCB269B1CE8E1C400754A6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AFD3A5FE1D28B7D300D0F0B3 /* Attendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
+		AFD3A6011D28BAB900D0F0B3 /* AttendanceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceTableViewCell.swift; sourceTree = "<group>"; };
 		AFFA64CF1D274591006B3A60 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		AFFA64D01D274591006B3A60 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		AFFA64D31D274598006B3A60 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -272,6 +282,7 @@
 				AFFA64D61D274748006B3A60 /* ObjectiveCFile.m */,
 				AFFA64D51D274748006B3A60 /* StudyPop-Bridging-Header.h */,
 				AFFA64D81D27475E006B3A60 /* ObjectiveCFile.h */,
+				AFD3A5FE1D28B7D300D0F0B3 /* Attendance.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -305,6 +316,7 @@
 				AFA87A321D22BAEF0004B228 /* EventPostTableViewCell.swift */,
 				AF9C23441D23EEAF008FB701 /* EventThumbCollectionViewCell.swift */,
 				AF1819CA1D2408E500795ED6 /* AlertTableViewCell.swift */,
+				AFD3A6011D28BAB900D0F0B3 /* AttendanceTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -405,6 +417,9 @@
 				AF8047451D2551D400CF2A7F /* EventRequestViewController.swift */,
 				AFFA64D91D277356006B3A60 /* MyEventsTableViewController.swift */,
 				AFFA64DB1D2788A4006B3A60 /* MyGroupsTableViewController.swift */,
+				AFB5A88A1D289E1B000ED889 /* CheckInViewController.swift */,
+				AFB5A88C1D28A3BA000ED889 /* AttendanceViewController.swift */,
+				AFB5A88E1D28AB64000ED889 /* CheckMeInViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -566,6 +581,7 @@
 				AF7DEF4B1D1A7F5500074B63 /* AddGroupPostViewController.swift in Sources */,
 				AF1819CF1D240B5F00795ED6 /* Alert.swift in Sources */,
 				AF52617D1D0B88BF00DA58AC /* EventMember.swift in Sources */,
+				AFB5A88F1D28AB64000ED889 /* CheckMeInViewController.swift in Sources */,
 				AF074B381D091159007C8E1F /* EventTableViewCell.swift in Sources */,
 				AF90352D1D01071500A67F9E /* GroupRequest.swift in Sources */,
 				AFFA64D71D274748006B3A60 /* ObjectiveCFile.m in Sources */,
@@ -585,7 +601,9 @@
 				AF4FE47C1D15B6D000C60F64 /* GroupPostsViewController.swift in Sources */,
 				AF112A5A1CFBC3C700FE1DB9 /* Group.swift in Sources */,
 				AFCB26771CE8E1C400754A6D /* AppDelegate.swift in Sources */,
+				AFB5A88D1D28A3BA000ED889 /* AttendanceViewController.swift in Sources */,
 				AF0077891CF52E7A0056904F /* StudyPopServerHelper.swift in Sources */,
+				AFD3A6021D28BAB900D0F0B3 /* AttendanceTableViewCell.swift in Sources */,
 				AF0924DB1D1AB3A7003D8656 /* GroupRequestIndexViewController.swift in Sources */,
 				AF8043AF1CFE5CC400A2B7A4 /* WDImagePicker.swift in Sources */,
 				AF1819D11D240C6B00795ED6 /* AlertIndexViewController.swift in Sources */,
@@ -625,6 +643,7 @@
 				AF9E70E21CFB0F4B00E8B8F6 /* CityTableViewCell.swift in Sources */,
 				AF0B9C1D1D09C166005FD452 /* PickDateViewController.swift in Sources */,
 				AF0077841CF52C810056904F /* StudyPopConstants.swift in Sources */,
+				AFD3A6001D28B7D300D0F0B3 /* Attendance.swift in Sources */,
 				AF82C8C91D0D3D6D0043371D /* EventsMapViewController.swift in Sources */,
 				AFC09EA71D160BD00003BD29 /* GroupPostTableViewCell.swift in Sources */,
 				AF0077941CF532DA0056904F /* User.swift in Sources */,
@@ -636,6 +655,7 @@
 				AF4F66041D1D5B2C0068C558 /* GroupThumbCollectionViewCell.swift in Sources */,
 				AF8043AD1CFE5CC400A2B7A4 /* WDImageCropView.swift in Sources */,
 				AF9E70EA1CFB249800E8B8F6 /* Subject.swift in Sources */,
+				AFB5A88B1D289E1B000ED889 /* CheckInViewController.swift in Sources */,
 				AF112A5C1CFBD1D100FE1DB9 /* GroupTableViewCell.swift in Sources */,
 				AFCAE1E41D1BF78F00955601 /* GroupPicIndexViewController.swift in Sources */,
 				AF8047461D2551D400CF2A7F /* EventRequestViewController.swift in Sources */,

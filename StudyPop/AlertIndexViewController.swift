@@ -108,6 +108,13 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        getCount()
+    }
+    
+    
+    
 
     // MARK: -IndexAlerts from Server
     func indexAlerts(){
@@ -185,11 +192,7 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
             self.tableView.reloadData()
             self.refreshButton.setTitle(Constants.RefreshTitle, forState: .Normal)
             self.refreshButton.enabled = true
-            let center = NSNotificationCenter.defaultCenter()
-            let notification = NSNotification(name: StudyPopClient.Constants.AlertNotification, object: self, userInfo: [StudyPopClient.JSONReponseKeys.Count: self.alerts.count])
-            center.postNotification(notification)
         }
-        
     }
     
     // MARK: -ScrollView Delegate
@@ -238,6 +241,55 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
         } catch {
             let fetchError = error as NSError
             print("The error was \(fetchError)")
+        }
+    }
+    
+    func updateCount(count: Int){
+        performOnMain(){
+            let item = self.tabBarItem
+            item.title = "Alerts \(count)"
+            if count > 0{
+                item.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.redColor()], forState: .Normal)
+            }else{
+                item.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.grayColor()], forState: .Normal)
+            }
+        }
+    }
+    
+    //Check for Updates from StudyPop API
+    func getCount(){
+        print("Getting count")
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.AlertsController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.UnseenCount,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.Token : user!.token!
+        ]
+        
+        StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in
+            
+            func sendError(error: String){
+                print("The error was \(error)")
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                sendError("Got nothing back")
+                return
+            }
+            
+            guard stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                return
+            }
+            
+            if let tempCount = results[StudyPopClient.JSONReponseKeys.Count] as? Int{
+                self.updateCount(tempCount)
+            }
         }
     }
 

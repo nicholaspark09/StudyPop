@@ -29,6 +29,8 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         static let EventPostsSegue = "EventPosts Segue"
         static let EventPhotosSegue = "EventPhotos Segue"
         static let ViewPicSegue = "ViewPic Segue"
+        static let AttendanceSegue = "Attendance Segue"
+        static let CheckMeInSegue = "CheckMeIn Segue"
     }
     
     
@@ -445,6 +447,20 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         
     }
     
+    
+    
+    @IBAction func qrButtonClicked(sender: AnyObject) {
+        if eventMember != nil{
+            if eventMember!.role!.intValue < 3{
+                performSegueWithIdentifier(Constants.AttendanceSegue, sender: nil)
+            }else{
+                performSegueWithIdentifier(Constants.CheckMeInSegue, sender: nil)
+            }
+        }
+    }
+    
+    
+    
     func backClicked(){
         self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -476,6 +492,18 @@ class EventViewController: UIViewController, MKMapViewDelegate {
             if let pvc = segue.destinationViewController as? PhotoViewController{
                 pvc.event = event!
                 pvc.user = user!
+            }
+        }else if segue.identifier == Constants.AttendanceSegue{
+            if let cvc = segue.destinationViewController as? AttendanceViewController{
+                cvc.user = user!
+                cvc.eventMember = eventMember!
+                cvc.event = event!
+            }
+        }else if segue.identifier == Constants.CheckMeInSegue{
+            if let cvc = segue.destinationViewController as? CheckMeInViewController{
+                cvc.user = user!
+                cvc.member = eventMember!
+                cvc.event = event!
             }
         }
     }

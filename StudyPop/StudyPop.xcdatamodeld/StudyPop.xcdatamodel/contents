@@ -13,6 +13,16 @@
         <attribute name="seen" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Attendance" representedClassName=".Attendance" syncable="YES">
+        <attribute name="blob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="event" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="fromEventMember" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="EventMember" inverseName="hasAttendance" inverseEntity="EventMember" syncable="YES"/>
+    </entity>
     <entity name="City" representedClassName=".City" syncable="YES">
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -50,6 +60,7 @@
         <attribute name="thumbblob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="fromEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="hasMembers" inverseEntity="Event" syncable="YES"/>
+        <relationship name="hasAttendance" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Attendance" inverseName="fromEventMember" inverseEntity="Attendance" syncable="YES"/>
     </entity>
     <entity name="EventPost" representedClassName=".EventPost" syncable="YES">
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
@@ -202,8 +213,9 @@
         <element name="Alert" positionX="-45" positionY="135" width="128" height="210"/>
         <element name="City" positionX="-45" positionY="108" width="128" height="165"/>
         <element name="Event" positionX="-45" positionY="144" width="128" height="315"/>
-        <element name="EventMember" positionX="-45" positionY="135" width="128" height="135"/>
+        <element name="EventMember" positionX="-45" positionY="135" width="128" height="150"/>
         <element name="EventPost" positionX="-45" positionY="135" width="128" height="210"/>
+        <element name="EventRequest" positionX="-45" positionY="135" width="128" height="135"/>
         <element name="Group" positionX="-63" positionY="90" width="128" height="270"/>
         <element name="GroupMember" positionX="-54" positionY="135" width="128" height="150"/>
         <element name="GroupPost" positionX="-54" positionY="135" width="128" height="240"/>
@@ -214,6 +226,6 @@
         <element name="Subject" positionX="-63" positionY="90" width="128" height="150"/>
         <element name="Thumb" positionX="-45" positionY="135" width="128" height="180"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="195"/>
-        <element name="EventRequest" positionX="-45" positionY="135" width="128" height="135"/>
+        <element name="Attendance" positionX="-45" positionY="135" width="128" height="165"/>
     </elements>
 </model>

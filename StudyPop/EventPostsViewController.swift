@@ -54,6 +54,13 @@ class EventPostsViewController: UIViewController, UITableViewDelegate, UITableVi
     
     // MARK: - Table view data source
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if posts.count < 1{
+            return "No posts yet. Write something!"
+        }
+        return nil
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
