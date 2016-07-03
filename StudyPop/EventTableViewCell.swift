@@ -20,10 +20,12 @@ class EventTableViewCell: UITableViewCell {
                 dayLabel.text = "\(formatter.stringFromDate(event!.start!))"
                 formatter.dateFormat = "MMM dd"
                 dateLabel.text = "\(formatter.stringFromDate(event!.start!))"
-                let dateString = event!.startString! as NSString
-                let hour = dateString.substringFromIndex(12)
-                let finalHour = (hour as NSString).substringToIndex(4)
-                hourLabel.text = "\(finalHour)"
+                if event!.startString != nil{
+                    let dateString = event!.startString! as NSString
+                    let hour = dateString.substringFromIndex(12)
+                    let finalHour = (hour as NSString).substringToIndex(4)
+                    hourLabel.text = "\(finalHour)"
+                }
             }
             if event!.info != nil && event!.info! != ""{
                 textView.text = event!.info!

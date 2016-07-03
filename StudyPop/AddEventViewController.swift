@@ -13,6 +13,7 @@ import CoreData
     func keyboardWillShow(sender: NSNotification)
     func keybaordWillHide(sender: NSNotification)
     func saveClicked(sender: UIBarButtonItem)
+    func hideKeyboard()
 }
 
 
@@ -94,6 +95,9 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
         }
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "SaveSmall"), style: .Plain, target: self, action: #selector(AddEventProtocol.saveClicked(_:)))
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(AddEventProtocol.hideKeyboard))
+        view.addGestureRecognizer(tap)
     }
     
     override func viewWillAppear(animated: Bool){
@@ -135,6 +139,11 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
         return keyboardSize.CGRectValue().height
     }
     
+    
+    //Hide the keyboard
+    func hideKeyboard(){
+        view.endEditing(true)
+    }
     
     
     // MARK: - Unwind To This Controller

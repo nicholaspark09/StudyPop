@@ -9,6 +9,10 @@
 import UIKit
 import CoreData
 
+@objc protocol AlertIndexProtocol{
+    func refreshClicked()
+}
+
 class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     struct Constants{
@@ -29,13 +33,12 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
     var canLoadMore = true
     let seenImage = UIImage(named: "AlertSeen")
     let unseenImage = UIImage(named: "AlertSmall")
+    var refreshControl: UIRefreshControl!
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
     
-    @IBOutlet var loadingView: UIActivityIndicatorView!
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var refreshButton: UIButton!
     
     
     
@@ -47,6 +50,12 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
         tableView.delegate = self
         tableView.dataSource = self
         getUser()
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to Refresh")
+        refreshControl.addTarget(self, action: #selector(AlertIndexProtocol.refreshClicked), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
+        
         if user != nil{
             indexAlerts()
         }
@@ -118,6 +127,7 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: -IndexAlerts from Server
     func indexAlerts(){
+        print("Calling this")
         if !loading && canLoadMore{
             let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.AlertsController,
                           StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.IndexMethod,
@@ -126,16 +136,15 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
                           StudyPopClient.ParameterKeys.Offset: "\(alerts.count)",
                           StudyPopClient.ParameterKeys.Token : user!.token!
             ]
-            refreshButton.setTitle(Constants.RefreshingTitle, forState: .Normal)
-            refreshButton.enabled = false
+            loading = true
+            refreshControl.beginRefreshing()
             StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in
                 self.loading = false
                 func sendError(error: String){
                     self.simpleError(error)
                     self.canLoadMore = false
                     performOnMain(){
-                        self.refreshButton.setTitle(Constants.RefreshTitle, forState: .Normal)
-                        self.refreshButton.enabled = true
+                        self.refreshControl.endRefreshing()
                     }
                 }
                 
@@ -154,13 +163,14 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
                     return
                 }
                 
-                performOnMain(){
                     if let groupDictionary = results![StudyPopClient.JSONReponseKeys.Alerts] as? [[String:AnyObject]]{
                         for i in groupDictionary{
                             let dict = i as Dictionary<String,AnyObject>
                             let alert = Alert.init(dictionary: dict, context: self.sharedContext)
                             self.alerts.append(alert)
                         }
+                        print("The length of dictionary is \(groupDictionary.count)")
+                        print("you have \(self.alerts.count) alerts")
                         if groupDictionary.count < 10{
                             print("can't Keep going")
                             self.canLoadMore = false
@@ -170,17 +180,19 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
                         }
                         self.updateUI()
                     }
-                }
+            
             }
         }
     }
     
     
-    @IBAction func refreshClicked(sender: AnyObject) {
-        alerts = [Alert]()
-        updateUI()
-        canLoadMore = true
-        indexAlerts()
+    func refreshClicked() {
+        if !loading{
+            alerts = [Alert]()
+            updateUI()
+            canLoadMore = true
+            indexAlerts()
+        }
     }
     
     
@@ -190,8 +202,7 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
         //Keep updates on the main UI Thread
         performOnMain(){
             self.tableView.reloadData()
-            self.refreshButton.setTitle(Constants.RefreshTitle, forState: .Normal)
-            self.refreshButton.enabled = true
+            self.refreshControl.endRefreshing()
         }
     }
     

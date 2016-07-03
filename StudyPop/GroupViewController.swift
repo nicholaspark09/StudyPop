@@ -168,8 +168,6 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                             self.navigationItem.setRightBarButtonItems([editButton,rightDeleteButton], animated: true)
                         }
                     }
-                    CoreDataStackManager.sharedInstance().saveContext()
-                    self.updateUI()
                 }
             }else{
                 //Check for request first
@@ -190,6 +188,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                     }
                 }
             }
+            self.updateUI()
         }
     }
     
@@ -311,11 +310,6 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                 performOnMain(){
                     self.loadingView.stopAnimating()
                     self.joinButton.setTitle("Requested. Waiting for Approval", forState: .Normal)
-                        //A Safekey was found, so save the GroupRequest
-                    let dict = [GroupRequest.Keys.Name: "Request to \(self.group!.name!)",GroupRequest.Keys.GroupKey: self.group!.safekey!, GroupRequest.Keys.User : self.user!.token!, GroupRequest.Keys.SafeKey : safekey, GroupRequest.Keys.Seen: "\(0)", GroupRequest.Keys.Accepted: "\(-1)"]
-                    let groupRequest = GroupRequest.init(dictionary: dict, context: self.sharedContext)
-                    print("You are saving a request with \(groupRequest.name)")
-                    CoreDataStackManager.sharedInstance().saveContext()
                 }
             }
         }
@@ -392,16 +386,18 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                             let image = UIImage(data: imageData)
                             self.groupImageView.image = image
                             self.groupImageView.contentMode = UIViewContentMode.ScaleAspectFit
+                            
+                            print("The group safekey is \(self.group!.safekey)")
+                            
+                            
                             let photoDict = [Photo.Keys.Blob : imageData, Photo.Keys.Controller : "groups", Photo.Keys.TheType : "\(1)", Photo.Keys.SafeKey : self.group!.image!, Photo.Keys.ParentKey : self.group!.safekey!]
                             let photo = Photo.init(dictionary: photoDict, context: self.sharedContext)
                             self.group!.hasProfilePhoto = photo
-                            CoreDataStackManager.sharedInstance().saveContext()
                         }
                     }
                 }
             }
         }
-        
     }
     
 
@@ -425,6 +421,23 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         }
         
         return pinView
+    }
+    
+    func findGroup(safekey: String) -> Group?{
+        let request = NSFetchRequest(entityName: "Group")
+        request.predicate = NSPredicate(format: "safekey == %@", safekey)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0{
+                if let temp = results[0] as? Group{
+                    return temp
+                }
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The error was \(fetchError)")
+        }
+        return nil
     }
 
 

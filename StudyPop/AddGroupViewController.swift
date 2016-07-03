@@ -9,6 +9,10 @@
 import UIKit
 import CoreData
 
+@objc protocol AddGroupProtocol{
+    func hideKeyboard()
+}
+
 class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     struct Constants{
@@ -65,6 +69,9 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
         if currentSubjectKey != ""{
             subjectLabel.text = currentSubject
         }
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(AddGroupProtocol.hideKeyboard))
+        view.addGestureRecognizer(tap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -130,6 +137,11 @@ class AddGroupViewController: UIViewController, UITextFieldDelegate, UIPickerVie
         textField.resignFirstResponder()
         groupTextView.becomeFirstResponder()
         return true
+    }
+    
+    //Hide the keyboard
+    func hideKeyboard(){
+        view.endEditing(true)
     }
  
         /* Image Picker

@@ -60,6 +60,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         if safekey != ""{
             getLiveEvent()
         }
+        print("The Safekey for this is \(safekey)")
         
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Back", style: .Plain, target: self, action: #selector(EventViewProtocol.backClicked))
     }
@@ -107,11 +108,14 @@ class EventViewController: UIViewController, MKMapViewDelegate {
                 //Members always return a dict
                 if let memberDict = results[StudyPopClient.JSONReponseKeys.EventMember] as? [String:AnyObject]{
                     if let safekey = memberDict[EventMember.Keys.SafeKey] as? String{
-                            self.eventMember = self.checkEventMember(safekey)
+                        if let tempMember = self.checkEventMember(safekey){
+                            self.eventMember = tempMember
+                        }else{
                             self.eventMember = EventMember.init(dictionary: memberDict, context: self.sharedContext)
+                            self.eventMember!.fromEvent = self.event!
+                        }
                     }
                 }
-                CoreDataStackManager.sharedInstance().saveContext()
                 self.updateUI()
             }
         }
@@ -221,7 +225,6 @@ class EventViewController: UIViewController, MKMapViewDelegate {
                                 let photoDict = [Photo.Keys.Blob : imageData, Photo.Keys.Controller : "events", Photo.Keys.TheType : "\(1)", Photo.Keys.SafeKey : self.event!.image!, Photo.Keys.ParentKey : self.event!.safekey!]
                                 let photo = Photo.init(dictionary: photoDict, context: self.sharedContext)
                                 self.event!.hasPhoto = photo
-                                CoreDataStackManager.sharedInstance().saveContext()
                             }
                         }
                     }

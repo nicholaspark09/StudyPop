@@ -9,6 +9,10 @@
 import UIKit
 import CoreData
 
+@objc protocol EventsIndexProtocol{
+    func refreshClicked()
+}
+
 class EventsIndexViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     struct Constants{
@@ -33,6 +37,7 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
     var canLoadMore = true
     var loading = false
     var locale = "en_US"
+    var refreshControl: UIRefreshControl!
 
     // MARK: SharedContext
     lazy var sharedContext: NSManagedObjectContext = {
@@ -41,7 +46,6 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
     
     
     @IBOutlet var textField: UITextField!
-    @IBOutlet var loadingView: UIActivityIndicatorView!
     @IBOutlet var cityButton: UIButton!
     @IBOutlet var subjectButton: UIButton!
     @IBOutlet var tableView: UITableView!
@@ -63,6 +67,11 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
         }else{
             subjectButton.setImage(UIImage(named: Constants.SubjectUnpickedButton), forState: .Normal)
         }
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to Refresh")
+        refreshControl.addTarget(self, action: #selector(EventsIndexProtocol.refreshClicked), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
         
         getUser()
         // Upload events right away and pull from the server as you want today's events
@@ -90,13 +99,22 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
+    func refreshClicked(){
+        events = [Event]()
+        self.updateUI()
+        self.canLoadMore = true
+        indexEvents()
+    }
+    
     
     // MARK: -IndexEvents From Server
-    //Live!
+    //Live! Don't pull from the local db as events will constantly change
+    // It's important that users don't get the wrong information
     func indexEvents(){
         if !loading && canLoadMore{
             loading = true
             let name = textField.text!
+            self.refreshControl.beginRefreshing()
             let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventsController,
                           StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.IndexMethod,
                           StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
@@ -116,7 +134,7 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
                     self.simpleError(error)
                     self.canLoadMore = false
                     performOnMain(){
-                        self.loadingView.stopAnimating()
+                        self.refreshControl.endRefreshing()
                     }
                     print("You have hit an error")
                 }
@@ -179,7 +197,7 @@ class EventsIndexViewController: UIViewController, UITableViewDataSource, UITabl
     
     func updateUI(){
         performOnMain(){
-            self.loadingView.stopAnimating()
+            self.refreshControl.endRefreshing()
             self.tableView.reloadData()
         }
     }

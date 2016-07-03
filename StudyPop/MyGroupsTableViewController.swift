@@ -68,10 +68,9 @@ class MyGroupsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! GroupTableViewCell
         let group = members[indexPath.row].fromGroup
         if group != nil{
-            print("The group name is \(group!.name!)")
-            cell.group = group!
-            if cell.group!.city != nil{
-                cell.cityLabel.text = cell.group!.city!.name!
+            cell.groupNameLabel.text = group!.name!
+            if group!.city != nil{
+                cell.cityLabel.text = group!.city!.name!
             }
             if group!.thumbblob == nil && group!.image != nil && group!.image != "" && group!.checked == false{
                 StudyPopClient.sharedInstance.findThumb(self.user!.token!, safekey: group!.image!){(results,error) in

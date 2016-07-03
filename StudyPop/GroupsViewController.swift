@@ -9,6 +9,10 @@
 import UIKit
 import CoreData
 
+@objc protocol GroupsViewProtocol{
+    func refreshClicked()
+}
+
 class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     struct Constants{
@@ -55,6 +59,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var isLoading = false
     var canLoadMore = true
     let threshold = 50.0
+    var refreshControl: UIRefreshControl!
     /**     
         IBOutlets
 
@@ -83,13 +88,20 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         getUser()
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to Refresh")
+        refreshControl.addTarget(self, action: #selector(GroupsViewProtocol.refreshClicked), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
+        getLocalGroups()
+        /*
         if user != nil{
             if subjectKey != "" || cityKey != ""{
                 searchGroups()
             }else{
                 indexGroups()
             }
-        }
+        }*/
+        
     }
 
     // MARK: -ScrollView Delegate
@@ -103,6 +115,12 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    func refreshClicked(){
+        if !isLoading{
+            groups = []
+            indexGroups()
+        }
+    }
     
     
     @IBAction func logoutClicked(sender: UIButton) {
@@ -204,15 +222,22 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             performOnMain(){
                 if let groupDictionary = results![StudyPopClient.JSONReponseKeys.Groups] as? [[String:AnyObject]]{
-                    var x = 0
+                    
                     for i in groupDictionary{
                         let dict = i as Dictionary<String,AnyObject>
+                        
+                        //Check to make sure there are no duplicates
+                        let safekey = dict[Group.Keys.SafeKey] as! String
+                        if let group = self.findGroup(safekey){
+                            self.sharedContext.deleteObject(group)
+                        }
                         let group = Group.init(dictionary: dict, context: self.sharedContext)
                         self.groups.append(group)
-                        x+=1
                     }
-                    print("There are \(x) number or groups in this batch")
-                    if x < 10{
+                    performOnMain(){
+                        CoreDataStackManager.sharedInstance().saveContext()
+                    }
+                    if groupDictionary.count < 10{
                         print("can't Keep going")
                         self.canLoadMore = false
                     }else{
@@ -246,6 +271,10 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 self.simpleError(error)
                 self.isLoading = false
                 self.canLoadMore = false
+                if self.groups.count < 1{
+                    //Get the groups from the local DB
+                    
+                }
             }
             
             guard error == nil else{
@@ -258,17 +287,23 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 return
             }
             
-            performOnMain(){
+
                 if let groupDictionary = results![StudyPopClient.JSONReponseKeys.Groups] as? [[String:AnyObject]]{
-                    var x = 0
                     for i in groupDictionary{
                         let dict = i as Dictionary<String,AnyObject>
+                        
+                        //Check to make sure there are no duplicates
+                        let safekey = dict[Group.Keys.SafeKey] as! String
+                        if let group = self.findGroup(safekey){
+                            self.sharedContext.deleteObject(group)
+                        }
                         let group = Group.init(dictionary: dict, context: self.sharedContext)
                         self.groups.append(group)
-                        x+=1
                     }
-                    print("There are \(x) number or groups in this batch")
-                    if x < 10{
+                    performOnMain(){
+                        CoreDataStackManager.sharedInstance().saveContext()
+                    }
+                    if groupDictionary.count < 10{
                         print("can't Keep going")
                         self.canLoadMore = false
                     }else{
@@ -278,17 +313,37 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     self.updateUI()
                 }
                 self.isLoading = false
-            }
+            
         }
     }
 
     func updateUI(){
         performOnMain(){
             self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
+            self.isLoading = false
         }
     }
     
+    func findGroup(safekey: String) -> Group?{
+        let request = NSFetchRequest(entityName: "Group")
+        request.predicate = NSPredicate(format: "safekey == %@", safekey)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0{
+                if let temp = results[0] as? Group{
+                    return temp
+                }
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The error was \(fetchError)")
+        }
+        return nil
+    }
+    
     func getLocalGroups(){
+        isLoading = true
         let fetchRequest = NSFetchRequest(entityName: "Group")
         do{
             self.groups = try sharedContext.executeFetchRequest(fetchRequest) as! [Group]
@@ -358,6 +413,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         print("got back in image")
                         self.groups[indexPath.row].thumbblob = results!
                         cell.group = self.groups[indexPath.row]
+                        CoreDataStackManager.sharedInstance().saveContext()
                     }
                 }
             }
@@ -366,8 +422,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        group = groups[indexPath.row]
-        performSegueWithIdentifier(Constants.GroupViewSegue, sender: group)
+        performSegueWithIdentifier(Constants.GroupViewSegue, sender: groups[indexPath.row])
     }
     
     //Ensure the Popover is just the right size

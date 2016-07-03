@@ -42,7 +42,10 @@ class MyEventsTableViewController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: #selector(MyEventsProtocol.backClicked))
         navigationItem.rightBarButtonItem = refreshButton
         
-        indexMyEvents()
+        getLocalEvents()
+        if members.count < 1 {
+            indexMyEvents()
+        }
     }
 
     func backClicked(){
@@ -148,6 +151,7 @@ class MyEventsTableViewController: UITableViewController {
             if let evc = segue.destinationViewController as? EventViewController{
                 evc.user = user!
                 evc.safekey = safekey
+                print("OK, so the safekey is !!! \(safekey)")
             }
         }
     }
@@ -157,6 +161,23 @@ class MyEventsTableViewController: UITableViewController {
         canLoadMore = true
         members = [EventMember]()
         indexMyEvents()
+    }
+    
+    func findEventMember(safekey: String) -> EventMember?{
+        let request = NSFetchRequest(entityName: "EventMember")
+        request.predicate = NSPredicate(format: "safekey == %@", safekey)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0{
+                if let temp = results[0] as? EventMember{
+                    return temp
+                }
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The error was \(fetchError)")
+        }
+        return nil
     }
     
     // MARK: -IndexMyEvents
@@ -195,10 +216,17 @@ class MyEventsTableViewController: UITableViewController {
                     if let membersDictionary = results![StudyPopClient.JSONReponseKeys.EventMembers] as? [[String:AnyObject]]{
                         for i in membersDictionary{
                             let dict = i as Dictionary<String,AnyObject>
-                            let member = EventMember.init(dictionary:dict, context: self.sharedContext)
-                            self.members.append(member)
+                            let safekey = dict[EventMember.Keys.SafeKey] as! String
+                            if let eventMember = self.findEventMember(safekey){
+                                self.members.append(eventMember)
+                            }else{
+                                let member = EventMember.init(dictionary:dict, context: self.sharedContext)
+                                self.members.append(member)
+                            }
                         }
-                        print("you got back \(membersDictionary.count) members")
+                        performOnMain(){
+                            CoreDataStackManager.sharedInstance().saveContext()
+                        }
                         if membersDictionary.count < 10{
                             self.canLoadMore = false
                         }else{
@@ -213,6 +241,22 @@ class MyEventsTableViewController: UITableViewController {
         }
     }
     
+    // MARK: - Method to Get Local Events
+    func getLocalEvents(){
+        let fetchRequest = NSFetchRequest(entityName: "EventMember")
+        fetchRequest.includesSubentities = true
+        do{
+            self.members = try sharedContext.executeFetchRequest(fetchRequest) as! [EventMember]
+            for i in self.members{
+                let member = i as? EventMember
+                print("The event was \(member?.fromEvent?.name) and the key was \(member?.fromEvent?.safekey)")
+            }
+            updateUI()
+        } catch let error as NSError{
+            print("The error was \(error)")
+        }
+    }
+
     func updateUI(){
         performOnMain(){
             self.loading = false

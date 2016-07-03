@@ -26,6 +26,9 @@ class CheckInViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
     
+    @IBOutlet var loadingView: UIActivityIndicatorView!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +69,8 @@ class CheckInViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
         
+        print("You should be capturing things...")
+        
         // Check if the metadataObjects array is not nil and it contains at least one object.
         if metadataObjects == nil || metadataObjects.count == 0 {
             qrCodeFrameView?.frame = CGRectZero
@@ -81,7 +86,58 @@ class CheckInViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
             let barCodeObject = videoPreviewLayer?.transformedMetadataObjectForMetadataObject(metadataObj as AVMetadataMachineReadableCodeObject) as! AVMetadataMachineReadableCodeObject
             qrCodeFrameView?.frame = barCodeObject.bounds;
             
+
+            
             if metadataObj.stringValue != nil {
+                print("You got a string of \(metadataObj.stringValue)")
+                
+                captureSession!.stopRunning()
+                
+                //Sign them in!
+                performOnMain(){
+                    self.title = "Checking in..."
+                    self.loadingView.startAnimating()
+                }
+                let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.AttendancesController,
+                              StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.AddMethod,
+                              StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                              StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                              StudyPopClient.ParameterKeys.SafeKey: metadataObj.stringValue,
+                              StudyPopClient.ParameterKeys.Token : user!.token!
+                ]
+                StudyPopClient.sharedInstance.httpPost("", parameters: params, jsonBody: ""){(results,error) in
+                    
+                    
+                    func sendError(error: String){
+                        self.simpleError(error)
+                        
+                        performOnMain(){
+                            self.loadingView.stopAnimating()
+                        }
+                    }
+                    
+                    guard error == nil else{
+                        sendError(error!.localizedDescription)
+                        return
+                    }
+                    guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                        sendError("Nothing returned")
+                        return
+                    }
+                    
+                    guard stat == StudyPopClient.JSONResponseValues.Success else{
+                        sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error]!)")
+                        return
+                    }
+                    
+               
+                        performOnMain(){
+                            print("You saved the attendance")
+                            self.loadingView.stopAnimating()
+                            self.title = "Checked in!!"
+                        }
+                    
+                }
                 self.title = metadataObj.stringValue
             }
         }
