@@ -193,60 +193,62 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // MARK: - IndexGroups
     func indexGroups(){
-        isLoading = true
-        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupsController,
-                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.IndexMethod,
-                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
-                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
-                      StudyPopClient.ParameterKeys.Offset: "\(groups.count)",
-                      StudyPopClient.ParameterKeys.Locale:locale,
-                      StudyPopClient.ParameterKeys.Token : user!.token!
-        ]
-        StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in
-            func sendError(error: String){
-                self.simpleError(error)
-                self.isLoading = false
-                self.canLoadMore = false
-                print("You have hit an error")
-            }
-            
-            guard error == nil else{
-                sendError(error!.localizedDescription)
-                return
-            }
-            
-            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
-                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
-                return
-            }
-            
-            performOnMain(){
-                if let groupDictionary = results![StudyPopClient.JSONReponseKeys.Groups] as? [[String:AnyObject]]{
-                    
-                    for i in groupDictionary{
-                        let dict = i as Dictionary<String,AnyObject>
-                        
-                        //Check to make sure there are no duplicates
-                        let safekey = dict[Group.Keys.SafeKey] as! String
-                        if let group = self.findGroup(safekey){
-                            self.sharedContext.deleteObject(group)
-                        }
-                        let group = Group.init(dictionary: dict, context: self.sharedContext)
-                        self.groups.append(group)
-                    }
-                    performOnMain(){
-                        CoreDataStackManager.sharedInstance().saveContext()
-                    }
-                    if groupDictionary.count < 10{
-                        print("can't Keep going")
-                        self.canLoadMore = false
-                    }else{
-                        print("Keep going")
-                        self.canLoadMore = true
-                    }
-                    self.updateUI()
+        if !isLoading{
+            isLoading = true
+            let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupsController,
+                          StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.IndexMethod,
+                          StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                          StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                          StudyPopClient.ParameterKeys.Offset: "\(groups.count)",
+                          StudyPopClient.ParameterKeys.Locale:locale,
+                          StudyPopClient.ParameterKeys.Token : user!.token!
+            ]
+            StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in
+                func sendError(error: String){
+                    self.simpleError(error)
+                    self.isLoading = false
+                    self.canLoadMore = false
+                    print("You have hit an error")
                 }
-                self.isLoading = false
+                
+                guard error == nil else{
+                    sendError(error!.localizedDescription)
+                    return
+                }
+                
+                guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
+                    sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                    return
+                }
+                
+                performOnMain(){
+                    if let groupDictionary = results![StudyPopClient.JSONReponseKeys.Groups] as? [[String:AnyObject]]{
+                        
+                        for i in groupDictionary{
+                            let dict = i as Dictionary<String,AnyObject>
+                            
+                            //Check to make sure there are no duplicates
+                            let safekey = dict[Group.Keys.SafeKey] as! String
+                            if let group = self.findGroup(safekey){
+                                self.sharedContext.deleteObject(group)
+                            }
+                            let group = Group.init(dictionary: dict, context: self.sharedContext)
+                            self.groups.append(group)
+                        }
+                        performOnMain(){
+                            CoreDataStackManager.sharedInstance().saveContext()
+                        }
+                        if groupDictionary.count < 10{
+                            print("can't Keep going")
+                            self.canLoadMore = false
+                        }else{
+                            print("Keep going")
+                            self.canLoadMore = true
+                        }
+                        self.updateUI()
+                    }
+                    self.isLoading = false
+                }
             }
         }
     }
@@ -343,7 +345,6 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func getLocalGroups(){
-        isLoading = true
         let fetchRequest = NSFetchRequest(entityName: "Group")
         do{
             self.groups = try sharedContext.executeFetchRequest(fetchRequest) as! [Group]
