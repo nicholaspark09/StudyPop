@@ -258,6 +258,7 @@
                         <outlet property="emailTextField" destination="Val-lP-eZS" id="2rt-Qb-fIq"/>
                         <outlet property="errorLabel" destination="2jb-lN-Vpc" id="wd1-KM-fTZ"/>
                         <outlet property="nameTextField" destination="7RM-0r-V7D" id="JbL-9X-lyZ"/>
+                        <outlet property="registerButton" destination="aUb-nB-dlM" id="iQ9-pL-SHp"/>
                         <segue destination="sPD-cd-ppa" kind="show" identifier="HomeTab Segue" id="ogb-3J-EoM"/>
                     </connections>
                 </viewController>
