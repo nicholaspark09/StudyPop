@@ -215,7 +215,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
             if event!.subject != nil && event!.subject!.safekey != nil{
                 subjectKey = event!.subject!.safekey!
             }
-            print("The event has a start of \(startDate) and an end date of \(endDate)")
+            self.loadingView.startAnimating()
             let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventsController,
                           StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.EditMethod,
                           StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
@@ -243,6 +243,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
                     self.simpleError(error)
                     performOnMain(){
                         sender.enabled = true
+                        self.loadingView.stopAnimating()
                     }
                 }
                 
@@ -262,6 +263,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
                 }
 
                     performOnMain(){
+                        self.loadingView.stopAnimating()
                         sender.enabled = true
                         self.performSegueWithIdentifier(Constants.UnwindToEventViewSegue, sender: nil)
                     }

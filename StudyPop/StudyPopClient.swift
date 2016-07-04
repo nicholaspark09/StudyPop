@@ -19,8 +19,6 @@ class StudyPopClient: NSObject{
         //request.addValue(Constants.ApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
 
-            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            print("You got back \(string)")
             
             func sendError(error: String){
                 print(error)

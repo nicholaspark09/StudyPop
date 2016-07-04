@@ -31,6 +31,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var errorLabel: UILabel!
+    @IBOutlet var loadingView: UIActivityIndicatorView!
+    
+    
     var user:User?
     
     
@@ -85,15 +88,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginButton.enabled = false
         errorLabel.text = "Logging in..."
         let email = emailTextField.text!
+        loadingView.startAnimating()
         StudyPopClient.sharedInstance.login(email){ (result,error) in
             if let error = error{
                 performOnMain({ 
                     self.errorLabel.text = error
                     self.loginButton.enabled = true
+                    self.loadingView.stopAnimating()
                 })
             }else if let safekey = result{
                 print("The resulting safekey is \(safekey)")
                 performOnMain({
+                    self.loadingView.stopAnimating()
                     //Save the token in defaults
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setValue(email, forKey: User.Keys.Email)
@@ -130,13 +136,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func facebookLoginClicked(sender: AnyObject) {
         
         errorLabel.text = "Connecting to Facebook..."
-        
+        self.loadingView.startAnimating()
         let login = FBSDKLoginManager.init()
         login.logInWithReadPermissions(["public_profile"], fromViewController: self.parentViewController, handler: { (result,error) in
             
             func sendMessage(message: String){
                 performOnMain(){
                     self.errorLabel.text = message
+                    self.loadingView.stopAnimating()
                 }
             }
             
@@ -150,10 +157,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 // GET Profile information from Facebook so you can finally save this dang user
                 let token = result.token.tokenString
+                performOnMain(){
+                    self.loadingView.startAnimating()
+                }
                 let request = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"name"], tokenString: token, version: nil, HTTPMethod: "GET")
                 request.startWithCompletionHandler({ (connection,result,error: NSError!) in
                     if let error = error{
                         sendMessage("Error: \(error.localizedDescription)")
+                        performOnMain(){
+                            self.loadingView.stopAnimating()
+                        }
                     }else{
                         let facebookId = result.valueForKey("id") as! String
                         let userName = result.valueForKey("name") as! String
@@ -208,11 +221,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                             return
                                         }
                                         
+                                        
                                         //You have a returned item, go ahead and save it as a new user!
                                         let userDict = [User.Keys.Name : userName, User.Keys.SafeKey : safekey, User.Keys.Token : safekey, User.Keys.Oauthtokenuid : facebookId, User.Keys.AccessToken : token]
                                         self.user = User.init(dictionary: userDict, context: self.sharedContext)
                                         self.user!.logged = true
                                         performOnMain(){
+                                            self.loadingView.stopAnimating()
                                             CoreDataStackManager.sharedInstance().saveContext()
                                             self.performSegueWithIdentifier(Constants.HomeTabSegue, sender: nil)
                                         }

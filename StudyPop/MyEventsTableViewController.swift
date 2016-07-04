@@ -218,11 +218,11 @@ class MyEventsTableViewController: UITableViewController {
                             let dict = i as Dictionary<String,AnyObject>
                             let safekey = dict[EventMember.Keys.SafeKey] as! String
                             if let eventMember = self.findEventMember(safekey){
-                                self.members.append(eventMember)
-                            }else{
+                                self.sharedContext.deleteObject(eventMember)
+                            }
                                 let member = EventMember.init(dictionary:dict, context: self.sharedContext)
                                 self.members.append(member)
-                            }
+                            
                         }
                         performOnMain(){
                             CoreDataStackManager.sharedInstance().saveContext()

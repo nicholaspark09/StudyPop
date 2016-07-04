@@ -98,7 +98,9 @@ class EditProfileViewController: UIViewController, WDImagePickerDelegate, UIImag
         StudyPopClient.sharedInstance.POST("", parameters: params, jsonBody: tempDict){ (results,error) in
             func sendError(error: String){
                 self.simpleError(error)
-                self.loadingView.stopAnimating()
+                performOnMain(){
+                   self.loadingView.stopAnimating()
+                }
             }
             guard error == nil else{
                 sendError(error!.localizedDescription)

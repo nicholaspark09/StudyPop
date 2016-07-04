@@ -89,13 +89,20 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Zf-YG-VUu">
-                                <rect key="frame" x="268" y="313" width="64" height="64"/>
-                                <state key="normal" image="Facebook"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Zf-YG-VUu">
+                                <rect key="frame" x="125" y="306" width="332" height="91"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="332" id="Zwy-df-mlb"/>
+                                    <constraint firstAttribute="height" constant="91" id="ltt-dx-ht2"/>
+                                </constraints>
+                                <state key="normal" title="     Facebook Login" image="FacebookLarge"/>
                                 <connections>
                                     <action selector="facebookLoginClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZEI-SX-cDj"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="jsc-Z2-Uzd">
+                                <rect key="frame" x="526" y="178" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.60392156862745094" green="0.65490196078431373" blue="0.69411764705882351" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -109,7 +116,9 @@
                             <constraint firstItem="Hpy-dL-sef" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="PlQ-BL-MQf"/>
                             <constraint firstItem="eUy-1q-xZ5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Qf9-CF-BnM"/>
                             <constraint firstItem="sGN-bu-Tbb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ry4-cE-Stu"/>
+                            <constraint firstItem="jsc-Z2-Uzd" firstAttribute="centerY" secondItem="sGN-bu-Tbb" secondAttribute="centerY" id="TsO-EI-Vdp"/>
                             <constraint firstItem="5Zf-YG-VUu" firstAttribute="top" secondItem="wIr-qr-RwT" secondAttribute="bottom" constant="29" id="WZ5-fw-wn6"/>
+                            <constraint firstItem="jsc-Z2-Uzd" firstAttribute="leading" secondItem="sGN-bu-Tbb" secondAttribute="trailing" constant="-54" id="Xy4-qc-Bpa"/>
                             <constraint firstAttribute="leadingMargin" secondItem="eUy-1q-xZ5" secondAttribute="leading" id="fdq-M6-acR"/>
                             <constraint firstItem="UKU-OM-lxJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="g4E-fP-lYB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sGN-bu-Tbb" secondAttribute="trailing" id="j1L-XH-42R"/>
@@ -121,6 +130,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="sGN-bu-Tbb" id="DTl-mT-UWy"/>
                         <outlet property="errorLabel" destination="eUy-1q-xZ5" id="kV9-Pk-kWt"/>
+                        <outlet property="loadingView" destination="jsc-Z2-Uzd" id="1AB-j6-iaa"/>
                         <outlet property="loginButton" destination="UKU-OM-lxJ" id="SzJ-Ku-TcZ"/>
                         <segue destination="sPD-cd-ppa" kind="show" identifier="HomeTab Segue" id="QhL-dt-9Qv"/>
                     </connections>
@@ -5091,7 +5101,6 @@
         <image name="DeleteSmall" width="64" height="64"/>
         <image name="EventLarge" width="128" height="128"/>
         <image name="EventSmall" width="64" height="64"/>
-        <image name="Facebook" width="64" height="64"/>
         <image name="FacebookLarge" width="128" height="128"/>
         <image name="Groups" width="16" height="16"/>
         <image name="LargeCityBlue" width="128" height="128"/>
@@ -5109,16 +5118,16 @@
         <image name="Unlock" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="QhL-dt-9Qv"/>
+        <segue reference="1lx-0f-ne1"/>
+        <segue reference="dfd-le-xnW"/>
         <segue reference="hEL-j1-5i6"/>
-        <segue reference="ogb-3J-EoM"/>
+        <segue reference="Axe-i6-b8I"/>
+        <segue reference="ls7-ak-9vZ"/>
         <segue reference="JLb-LI-2qf"/>
         <segue reference="qaL-23-2S4"/>
         <segue reference="8R6-de-wYO"/>
         <segue reference="cXE-ef-ID2"/>
         <segue reference="h1T-W2-NA3"/>
-        <segue reference="1lx-0f-ne1"/>
-        <segue reference="dfd-le-xnW"/>
-        <segue reference="Axe-i6-b8I"/>
-        <segue reference="ls7-ak-9vZ"/>
     </inferredMetricsTieBreakers>
 </document>
