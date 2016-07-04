@@ -49,7 +49,8 @@ extension StudyPopClient{
             ParameterKeys.Method : ParameterValues.RegisterMethod,
             ParameterKeys.ApiKey : Constants.ApiKey,
             ParameterKeys.ApiSecret : Constants.ApiSecret,
-            User.Keys.Email : email
+            User.Keys.Email : email,
+            User.Keys.Name : name
         ]
         httpPost("", parameters: params, jsonBody: ""){ (results,error) in
             func sendError(error: String){

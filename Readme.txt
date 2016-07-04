@@ -15,5 +15,9 @@ Study Pop
 	Login / Registration:
 		Logging in or registering requires an email or a Facebook account.
 		The app can only be used after having logged in.
+
+		** You can now register with a Facebook account as well, which is 			faster.
+
+		** When the website asks you to open in StudyPop, please click open.**
 	
 		Most of the application requires an internet connection as this is a networking application. A camera is required to use the QR Check In section.

@@ -209,23 +209,46 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2jb-lN-Vpc">
+                                <rect key="frame" x="25" y="269" width="553" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="grq-Mv-QKZ"/>
+                                </constraints>
+                                <attributedString key="attributedText"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3oz-J1-EtG">
+                                <rect key="frame" x="147" y="327" width="309" height="86"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="86" id="8nI-F6-bzh"/>
+                                </constraints>
+                                <state key="normal" title="Facebook Registration" image="FacebookLarge"/>
+                                <connections>
+                                    <action selector="facebookLoginClicked:" destination="yER-Hp-hZj" eventType="touchUpInside" id="2FL-Jx-c7F"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.72549019607843135" green="0.792156862745098" blue="0.80784313725490198" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="xnY-Tb-beh" firstAttribute="centerX" secondItem="7KH-kl-M3L" secondAttribute="centerX" id="27K-y5-W8a"/>
                             <constraint firstItem="GWq-ky-Q51" firstAttribute="top" secondItem="Val-lP-eZS" secondAttribute="bottom" constant="10" id="40P-Ne-kW7"/>
                             <constraint firstItem="aUb-nB-dlM" firstAttribute="leading" secondItem="7KH-kl-M3L" secondAttribute="leadingMargin" constant="5" id="5wg-Jx-YAL"/>
+                            <constraint firstItem="3oz-J1-EtG" firstAttribute="top" secondItem="2jb-lN-Vpc" secondAttribute="bottom" constant="14" id="Di6-k5-IOO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Val-lP-eZS" secondAttribute="trailing" constant="2" id="EsT-tW-fQK"/>
+                            <constraint firstItem="3oz-J1-EtG" firstAttribute="centerX" secondItem="2jb-lN-Vpc" secondAttribute="centerX" id="Fq9-X5-Nki"/>
                             <constraint firstItem="7RM-0r-V7D" firstAttribute="leading" secondItem="7KH-kl-M3L" secondAttribute="leadingMargin" constant="3" id="OX6-aa-OUs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GWq-ky-Q51" secondAttribute="trailing" constant="2" id="Q09-PQ-vzU"/>
                             <constraint firstItem="xnY-Tb-beh" firstAttribute="top" secondItem="sAz-kY-L1K" secondAttribute="bottom" constant="20" id="SAk-P5-ccr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7RM-0r-V7D" secondAttribute="trailing" constant="2" id="WRb-i8-Uzk"/>
                             <constraint firstItem="BCV-kd-oaW" firstAttribute="centerY" secondItem="xnY-Tb-beh" secondAttribute="centerY" id="aAq-FS-Lwn"/>
                             <constraint firstItem="Val-lP-eZS" firstAttribute="top" secondItem="7RM-0r-V7D" secondAttribute="bottom" constant="10" id="hmd-7f-DAG"/>
+                            <constraint firstItem="2jb-lN-Vpc" firstAttribute="top" secondItem="GWq-ky-Q51" secondAttribute="bottom" constant="19" id="mrL-TC-ZmL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2jb-lN-Vpc" secondAttribute="trailing" constant="2" id="qdC-6D-5cL"/>
                             <constraint firstItem="GWq-ky-Q51" firstAttribute="leading" secondItem="7KH-kl-M3L" secondAttribute="leadingMargin" constant="3" id="roQ-F1-PHX"/>
                             <constraint firstItem="oAB-CA-ARh" firstAttribute="top" secondItem="aUb-nB-dlM" secondAttribute="bottom" id="s04-Gc-k1X"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aUb-nB-dlM" secondAttribute="trailing" constant="2" id="unV-UJ-7fk"/>
                             <constraint firstItem="Val-lP-eZS" firstAttribute="leading" secondItem="7KH-kl-M3L" secondAttribute="leadingMargin" constant="3" id="uyE-JO-wz5"/>
+                            <constraint firstItem="2jb-lN-Vpc" firstAttribute="leading" secondItem="7KH-kl-M3L" secondAttribute="leadingMargin" constant="5" id="vIf-mo-d0l"/>
                             <constraint firstItem="7RM-0r-V7D" firstAttribute="top" secondItem="xnY-Tb-beh" secondAttribute="bottom" constant="20" id="wUo-ul-3bj"/>
                             <constraint firstItem="BCV-kd-oaW" firstAttribute="leading" secondItem="7KH-kl-M3L" secondAttribute="leadingMargin" constant="5" id="x1N-Ga-oJX"/>
                         </constraints>
@@ -233,13 +256,14 @@
                     <connections>
                         <outlet property="confirmTextField" destination="GWq-ky-Q51" id="pS1-Oi-S6m"/>
                         <outlet property="emailTextField" destination="Val-lP-eZS" id="2rt-Qb-fIq"/>
+                        <outlet property="errorLabel" destination="2jb-lN-Vpc" id="wd1-KM-fTZ"/>
                         <outlet property="nameTextField" destination="7RM-0r-V7D" id="JbL-9X-lyZ"/>
-                        <outlet property="registerButton" destination="aUb-nB-dlM" id="viL-43-4JG"/>
+                        <segue destination="sPD-cd-ppa" kind="show" identifier="HomeTab Segue" id="ogb-3J-EoM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vec-I0-wl9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="700" y="-132"/>
+            <point key="canvasLocation" x="804" y="1182"/>
         </scene>
         <!--Home Tab View Controller-->
         <scene sceneID="jxt-Zn-fVB">
@@ -5067,6 +5091,7 @@
         <image name="EventLarge" width="128" height="128"/>
         <image name="EventSmall" width="64" height="64"/>
         <image name="Facebook" width="64" height="64"/>
+        <image name="FacebookLarge" width="128" height="128"/>
         <image name="Groups" width="16" height="16"/>
         <image name="LargeCityBlue" width="128" height="128"/>
         <image name="LargeGroup" width="128" height="128"/>
@@ -5083,14 +5108,15 @@
         <image name="Unlock" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="hEL-j1-5i6"/>
+        <segue reference="ogb-3J-EoM"/>
         <segue reference="JLb-LI-2qf"/>
         <segue reference="qaL-23-2S4"/>
         <segue reference="8R6-de-wYO"/>
         <segue reference="cXE-ef-ID2"/>
         <segue reference="h1T-W2-NA3"/>
-        <segue reference="dfd-le-xnW"/>
-        <segue reference="hEL-j1-5i6"/>
         <segue reference="1lx-0f-ne1"/>
+        <segue reference="dfd-le-xnW"/>
         <segue reference="Axe-i6-b8I"/>
         <segue reference="ls7-ak-9vZ"/>
     </inferredMetricsTieBreakers>
