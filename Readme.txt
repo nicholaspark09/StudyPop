@@ -19,5 +19,11 @@ Study Pop
 		** You can now register with a Facebook account as well, which is 			faster.
 
 		** When the website asks you to open in StudyPop, please click open.**
+
+
+	Network Messages:
+		** Couldn’t Find Proper Permissions
+			- This indicates an area a user is not permitted to enter 				because an event/group is not public or they aren’t admins
+ 
 	
 		Most of the application requires an internet connection as this is a networking application. A camera is required to use the QR Check In section.
