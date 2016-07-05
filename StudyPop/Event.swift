@@ -21,6 +21,7 @@ class Event: NSManagedObject {
     @NSManaged var ispublic: NSNumber?
     @NSManaged var price: NSNumber?
     @NSManaged var start: NSDate?
+    @NSManaged var deadline: NSDate?
     @NSManaged var end: NSDate?
     @NSManaged var dayof: String?
     @NSManaged var photoblob: NSData?
@@ -52,6 +53,7 @@ class Event: NSManagedObject {
         static let PhotoBlob = "photoblob"
         static let HasMembers = "hasmembers"
         static let SafeKey = "safekey"
+        static let Deadline = "deadline"
     }
     
     
@@ -78,14 +80,20 @@ class Event: NSManagedObject {
         safekey = dictionary[Keys.SafeKey] as? String
         startString = dictionary[Keys.Start] as? String
         if startString != nil{
-            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString!.trunc(16)){
+            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString!){
                 start = startDate
             }
         }
         endString = dictionary[Keys.End] as? String
         if endString != nil{
-            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString!.trunc(16)){
+            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString!){
                 end = endDate
+            }
+        }
+        let deadlineString = dictionary[Keys.Deadline] as? String
+        if deadlineString != nil{
+            if let deadlineDate = StudyPopClient.sharedDateFormatter.dateFromString(deadlineString!){
+                deadline = deadlineDate
             }
         }
         if let cityDict = dictionary[Keys.City] as? [String:AnyObject]{

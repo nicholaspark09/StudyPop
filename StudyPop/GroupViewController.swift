@@ -13,6 +13,7 @@ import MapKit
 @objc protocol GroupViewProtocol{
     func editClicked()
     func deleteClicked()
+    func joinClicked()
 }
 
 class GroupViewController: UIViewController, MKMapViewDelegate {
@@ -33,10 +34,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var realInfoView: UILabel!
-    @IBOutlet var joinButton: UIButton!
-    @IBOutlet var infoTextView: UITextView!
     @IBOutlet var loadingView: UIActivityIndicatorView!
-    @IBOutlet var joinView: UIView!
     @IBOutlet var groupImageView: UIImageView!
     @IBOutlet var cityLabel: UILabel!
     @IBOutlet var subjectLabel: UILabel!
@@ -47,6 +45,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
     var safekey = ""
     var user:User?
     var groupMember: GroupMember?
+    var rightButton: UIBarButtonItem?
 
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
@@ -56,11 +55,17 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         getUser()
         self.title = group?.name!
-        infoTextView.text = group!.info!
         realInfoView.text = group!.info!
         print("The group info is \(group!.info!)")
         //findGroupInDB()
         getGroup()
+        let image = UIImage(named: "AddSmall")
+        let button = UIButton.init(type: UIButtonType.Custom)
+        button.bounds = CGRectMake(0, 0, image!.size.width, image!.size.height)
+        button.setImage(image, forState: UIControlState.Normal)
+        button.addTarget(self, action: #selector(GroupViewProtocol.joinClicked), forControlEvents: UIControlEvents.TouchUpInside)
+        self.rightButton = UIBarButtonItem(customView: button)
+        self.navigationItem.rightBarButtonItem = self.rightButton
     }
 
     override func didReceiveMemoryWarning() {
@@ -120,9 +125,11 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
             func sendError(error: String){
                 self.simpleError(error)
                 performOnMain(){
-                    //Couldn't access the server for whatever reason, so find your latest backup!
                     self.group = self.findGroupInDB()
                     self.updateUI()
+        
+                    
+                
                 }
             }
             
@@ -133,7 +140,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
             }
             
             guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
-                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                sendError("Error: \(results[StudyPopClient.JSONReponseKeys.Error])")
                 return
             }
             
@@ -142,9 +149,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                 //You are a member
                 //Hide the join view
                 performOnMain(){
-                    
-                    self.joinView.hidden = true
-                    self.joinButton.hidden = true
+                    self.navigationItem.rightBarButtonItem = nil
                     
                     if let dict = results[StudyPopClient.JSONReponseKeys.GroupMember] as? [String:AnyObject]{
                         self.groupMember = GroupMember.init(dictionary: dict, context: self.sharedContext)
@@ -167,24 +172,6 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                             let rightDeleteButton = UIBarButtonItem(customView: deleteButton)
                             self.navigationItem.setRightBarButtonItems([editButton,rightDeleteButton], animated: true)
                         }
-                    }
-                }
-            }else{
-                //Check for request first
-                performOnMain(){
-                    let request = NSFetchRequest(entityName: "GroupRequest")
-                    request.fetchLimit = 1
-                    let predicate = NSPredicate(format: "groupkey == %@", self.group!.safekey!)
-                    let secondPredicate = NSPredicate(format: "user == %@", self.user!.token!)
-                    request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate,secondPredicate])
-                    do{
-                        let results = try self.sharedContext.executeFetchRequest(request)
-                        if results.count > 0{
-                            self.joinButton.setTitle("Join Requested. Waiting", forState: .Normal)
-                        }
-                    } catch{
-                        let fetchError = error as NSError
-                        print("The fetch error was \(fetchError)")
                     }
                 }
             }
@@ -274,9 +261,9 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         }
     }
 
-    @IBAction func joinClicked(sender: UIButton) {
+    func joinClicked() {
         
-        sender.enabled = false
+        rightButton!.enabled = false
         loadingView.startAnimating()
         let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.GroupRequestsController,
                       StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.AddMethod,
@@ -292,7 +279,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                 self.simpleError(error)
                 
                 performOnMain(){
-                    sender.enabled = true
+                    self.rightButton!.enabled = true
                 }
             }
             
@@ -305,13 +292,16 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                 sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error]!)")
                 return
             }
+
+                self.simpleError("Requested")
             
-            if let safekey = results[StudyPopClient.JSONReponseKeys.SafeKey] as? String{
                 performOnMain(){
                     self.loadingView.stopAnimating()
-                    self.joinButton.setTitle("Requested. Waiting for Approval", forState: .Normal)
+                    if self.group != nil && self.group?.ispublic?.intValue < 2{
+                        self.getGroup()
+                    }
                 }
-            }
+
         }
         
     }
@@ -325,7 +315,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
             if self.group!.subject != nil{
                 self.subjectLabel.text = self.group!.subject!.name!
             }
-            self.infoTextView.text = self.group!.info!
+            self.realInfoView.text = self.group!.info!
             //Set the map
             if self.group!.location != nil && self.group!.location!.lat != 0{
                 let lat = self.group!.location!.lat!.doubleValue

@@ -52,7 +52,11 @@ class EventViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var infoTextView: UITextView!
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var eventImageView: UIImageView!
+    @IBOutlet var endDateLabel: UILabel!
     
+    @IBOutlet var priceLabel: UILabel!
+    
+    @IBOutlet var deadlineLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +98,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
             }
             
             guard stat == StudyPopClient.JSONResponseValues.Success else{
-                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                sendError("Message: \(results[StudyPopClient.JSONReponseKeys.Error])")
                 return
             }
             
@@ -124,9 +128,21 @@ class EventViewController: UIViewController, MKMapViewDelegate {
     func updateUI(){
         if event != nil{
             performOnMain(){
+                let formatter = NSDateFormatter()
+                formatter.dateFormat = "MMM dd H:mm a"
                 self.title = self.event!.name!
                 if self.event!.start != nil{
-                    self.eventDateLabel.text = self.event!.start!.description
+                    
+                    self.eventDateLabel.text = formatter.stringFromDate(self.event!.start!)
+                }
+                if self.event!.end != nil{
+                    self.endDateLabel.text = formatter.stringFromDate(self.event!.end!)
+                }
+                if self.event!.price != nil{
+                    self.priceLabel.text = "\(self.event!.price!)"
+                }
+                if self.event!.deadline != nil{
+                    self.deadlineLabel.text = formatter.stringFromDate(self.event!.deadline!)
                 }
                 self.infoTextView.text = self.event!.info!
                 self.loadingView.stopAnimating()
@@ -162,12 +178,11 @@ class EventViewController: UIViewController, MKMapViewDelegate {
                         let dropButton = UIBarButtonItem(title: "Drop", style: .Plain, target: self, action: #selector(EventViewProtocol.dropClicked(_:)))
                         self.navigationItem.rightBarButtonItem = dropButton
                     }
-                    self.showLocation()
+
                 }else{
                     //Check privacy level of Event
                     if self.event!.ispublic?.intValue == 1{
                         //Public event, show everything
-                        self.showLocation()
                     }else if self.event!.ispublic?.intValue == 2{
                         // Part way private
                         // Show city, subject, location

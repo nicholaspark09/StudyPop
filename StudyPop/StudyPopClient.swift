@@ -175,7 +175,7 @@ class StudyPopClient: NSObject{
             
             static func generateDateFormatter() -> NSDateFormatter {
                 let formatter = NSDateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+                formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
                 
                 return formatter
             }

@@ -29,8 +29,10 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
         static let PickEndSegue = "PickEnd Segue"
         static let StartAction = "StartAction"
         static let EndAction = "EndAction"
+        static let DeadlineAction = "DeadlineAction"
         static let SaveTitle = "Save"
         static let UnwindToGroupEventsSegue = "UnwindToGroupEvents Segue"
+        static let PickDeadlineSegue = "PickDeadline Segue"
     }
     
     
@@ -41,6 +43,7 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
     var location:Location?
     var startDate = ""
     var endDate = ""
+    var deadlineDate = ""
     var safekey: String?
     var privateOptions = ["Public","Private (Searchable)","Private (Dark)"]
     lazy var sharedContext: NSManagedObjectContext = {
@@ -51,6 +54,7 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
     //IBOutlets
     @IBOutlet var startButton: UIButton!
     @IBOutlet var endButton: UIButton!
+    @IBOutlet var deadlineButton: UIButton!
     @IBOutlet var priceTextField: UITextField!
     @IBOutlet var maxTextField: UITextField!
     @IBOutlet var pickerView: UIPickerView!
@@ -193,9 +197,12 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
             if dvc.previousAction == Constants.StartAction{
                 startDate = dvc.currentDate!
                 startButton.setTitle("Start: \(startDate)", forState: .Normal)
-            }else{
+            }else if dvc.previousAction == Constants.EndAction{
                 endDate = dvc.currentDate!
                 endButton.setTitle("End: \(endDate)", forState: .Normal)
+            }else{
+                deadlineDate = dvc.currentDate!
+                deadlineButton.setTitle("Deadline: \(deadlineDate)", forState: .Normal)
             }
         }
     }
@@ -230,6 +237,14 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
             if let pdc = segue.destinationViewController as? PickDateViewController{
                 pdc.previousController = Constants.Controller
                 pdc.previousAction = Constants.EndAction
+                if let ppc = pdc.popoverPresentationController{
+                    ppc.delegate = self
+                }
+            }
+        }else if segue.identifier == Constants.PickDeadlineSegue{
+            if let pdc = segue.destinationViewController as? PickDateViewController{
+                pdc.previousController = Constants.Controller
+                pdc.previousAction = Constants.DeadlineAction
                 if let ppc = pdc.popoverPresentationController{
                     ppc.delegate = self
                 }
@@ -287,6 +302,44 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
                 subjectKey = subject!.safekey!
             }
             let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventsController,
+                          StudyPopClient.ParameterKeys.Method: "testadd",
+                          StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                          StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                          StudyPopClient.ParameterKeys.Token : user!.token!,
+                          StudyPopClient.ParameterKeys.Group : group!.safekey!,
+                          Event.Keys.City : cityKey,
+                          Event.Keys.Subject : subjectKey,
+                          Location.Keys.Lat : lat,
+                          Location.Keys.Lng : lng,
+                          StudyPopClient.ParameterKeys.LatInfo : latInfo,
+                          Event.Keys.Start : startDate,
+                          Event.Keys.End : endDate
+            ]
+            let jsonBody = [Event.Keys.Name : title, Event.Keys.Info: info, Event.Keys.MaxPeople : maxPeople, Event.Keys.IsPublic : isPublic, Event.Keys.Price : price, Location.Keys.Lat : lat, Location.Keys.Lng : lng, Event.Keys.Start : startDate, Event.Keys.End : endDate, Event.Keys.Deadline : deadlineDate]
+            StudyPopClient.sharedInstance.POST("", parameters: params, jsonBody: jsonBody){ (results,error) in
+                func sendError(error: String){
+                    self.simpleError(error)
+                    
+                }
+                guard error == nil else{
+                    sendError(error!.localizedDescription)
+                    return
+                }
+                guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
+                    sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                    return
+                }
+                
+                self.safekey = results[StudyPopClient.JSONReponseKeys.SafeKey] as? String
+                if self.safekey != nil{
+                    performOnMain(){
+                        self.performSegueWithIdentifier(Constants.UnwindToGroupEventsSegue, sender: nil)
+                    }
+                }
+            }
+            
+            /*
+            let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventsController,
                           StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.AddMethod,
                           StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
                           StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
@@ -337,6 +390,7 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
                     }
                 }
             }
+ */
         }
     }
 

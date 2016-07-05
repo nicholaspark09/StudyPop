@@ -13,7 +13,6 @@ class EventTableViewCell: UITableViewCell {
     var event: Event?{
         didSet{
             titleLabel.text = event!.name!
-            print("The date is \(event!.start)")
             if event!.start != nil{
                 let formatter = NSDateFormatter()
                 formatter.dateFormat = "EEEE"
@@ -21,10 +20,8 @@ class EventTableViewCell: UITableViewCell {
                 formatter.dateFormat = "MMM dd"
                 dateLabel.text = "\(formatter.stringFromDate(event!.start!))"
                 if event!.startString != nil{
-                    let dateString = event!.startString! as NSString
-                    let hour = dateString.substringFromIndex(12)
-                    let finalHour = (hour as NSString).substringToIndex(4)
-                    hourLabel.text = "\(finalHour)"
+                    formatter.dateFormat = "H:mm a"
+                    hourLabel.text = "\(formatter.stringFromDate(event!.start!))"
                 }
             }
             if event!.info != nil && event!.info! != ""{
