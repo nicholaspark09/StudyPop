@@ -51,9 +51,7 @@ class EventMember: NSManagedObject {
         if thumbblob != nil{
             photoImage = UIImage(data: thumbblob!)
         }
-        if let eventDict = dictionary[Keys.Event] as? [String:AnyObject]{
-            fromEvent = Event.init(dictionary: eventDict, context: context)
-        }
+        
     }
     
 

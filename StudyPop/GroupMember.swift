@@ -55,9 +55,6 @@ class GroupMember: NSManagedObject {
         if photoblob != nil{
             photoImage = UIImage(data: photoblob!)
         }
-        if let groupDict = dictionary[Keys.Group] as? [String:AnyObject]{
-            fromGroup = Group.init(dictionary: groupDict, context: context)
-        }
     }
 
 }

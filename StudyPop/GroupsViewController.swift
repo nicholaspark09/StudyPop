@@ -117,7 +117,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func refreshClicked(){
         if !isLoading{
-            groups = []
+            groups = [Group]()
+            updateUI()
             indexGroups()
         }
     }
@@ -179,12 +180,13 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.canLoadMore = true
         let query = searchTextField.text!
         if cityKey == "" && subjectKey == "" && query.characters.count < 1{
-            groups = []
+            groups = [Group]()
+            updateUI()
             searching = false
             indexGroups()
         }else{
             searching = true
-            groups = []
+            groups = [Group]()
             updateUI()
             searchGroups()
         }

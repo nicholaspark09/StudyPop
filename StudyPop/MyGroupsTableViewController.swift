@@ -72,7 +72,9 @@ class MyGroupsTableViewController: UITableViewController {
             if group!.city != nil{
                 cell.cityLabel.text = group!.city!.name!
             }
-            if group!.thumbblob == nil && group!.image != nil && group!.image != "" && group!.checked == false{
+            if group!.thumbblob != nil{
+                cell.group = self.members[indexPath.row].fromGroup!
+            }else if group!.thumbblob == nil && group!.image != nil && group!.image != "" && group!.checked == false{
                 StudyPopClient.sharedInstance.findThumb(self.user!.token!, safekey: group!.image!){(results,error) in
                     self.members[indexPath.row].fromGroup!.checked = true
                     if let error = error{
@@ -148,6 +150,7 @@ class MyGroupsTableViewController: UITableViewController {
     func refreshClicked(){
         canLoadMore = true
         members = [GroupMember]()
+        updateUI()
         indexMyGroups()
     }
     
@@ -188,7 +191,16 @@ class MyGroupsTableViewController: UITableViewController {
                         for i in membersDictionary{
                             let dict = i as Dictionary<String,AnyObject>
                             let member = GroupMember.init(dictionary:dict, context: self.sharedContext)
-                            self.members.append(member)
+                            if let groupDict = dict[GroupMember.Keys.Group] as? [String:AnyObject]{
+                                let safekey = groupDict[Group.Keys.SafeKey] as! String
+                                if let tempGroup = self.findGroup(safekey){
+                                    member.fromGroup = tempGroup
+                                }else{
+                                    let group = Group.init(dictionary: groupDict, context: self.sharedContext)
+                                    member.fromGroup = group
+                                }
+                                self.members.append(member)
+                            }
                         }
                         print("you got back \(membersDictionary.count) members")
                         if membersDictionary.count < 10{
@@ -230,6 +242,24 @@ class MyGroupsTableViewController: UITableViewController {
             }
             
         }
+    }
+    
+    //Find Local DB Group
+    func findGroup(safekey: String) -> Group?{
+        let request = NSFetchRequest(entityName: "Group")
+        request.predicate = NSPredicate(format: "safekey == %@", safekey)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0{
+                if let temp = results[0] as? Group{
+                    return temp
+                }
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The error was \(fetchError)")
+        }
+        return nil
     }
     
     func updateUI(){

@@ -12,10 +12,13 @@ class GroupTableViewCell: UITableViewCell {
 
     var group: Group?{
         didSet{
-            groupNameLabel.text = group!.name!
-            if group!.thumbblob != nil{
-                setupImage()
+            if group != nil && group!.name != nil{
+                groupNameLabel.text = group!.name!
+                if group!.thumbblob != nil{
+                    setupImage()
+                }
             }
+            
         }
     }
     

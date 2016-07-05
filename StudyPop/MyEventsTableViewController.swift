@@ -160,6 +160,7 @@ class MyEventsTableViewController: UITableViewController {
     func refreshClicked(){
         canLoadMore = true
         members = [EventMember]()
+        updateUI()
         indexMyEvents()
     }
     
@@ -179,6 +180,25 @@ class MyEventsTableViewController: UITableViewController {
         }
         return nil
     }
+    
+    func findEvent(safekey: String) -> Event?{
+        let request = NSFetchRequest(entityName: "Event")
+        request.predicate = NSPredicate(format: "safekey == %@", safekey)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0{
+                if let temp = results[0] as? Event{
+                    return temp
+                }
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The error was \(fetchError)")
+        }
+        return nil
+    }
+    
+    
     
     // MARK: -IndexMyEvents
     func indexMyEvents(){
@@ -220,7 +240,17 @@ class MyEventsTableViewController: UITableViewController {
                             if let eventMember = self.findEventMember(safekey){
                                 self.sharedContext.deleteObject(eventMember)
                             }
-                                let member = EventMember.init(dictionary:dict, context: self.sharedContext)
+                            let member = EventMember.init(dictionary:dict, context: self.sharedContext)
+                            if let eventDict = dict[EventMember.Keys.Event] as? [String:AnyObject]{
+                                let safekey = dict[EventMember.Keys.SafeKey] as! String
+                                if let tempEvent = self.findEvent(safekey){
+                                    member.fromEvent = tempEvent
+                                }else{
+                                    let fromEvent = Event.init(dictionary: eventDict, context: self.sharedContext)
+                                    member.fromEvent = fromEvent
+                                }
+                                
+                            }
                                 self.members.append(member)
                             
                         }
