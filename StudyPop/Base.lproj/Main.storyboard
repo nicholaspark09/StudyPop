@@ -2852,25 +2852,25 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bMl-tm-XhN">
-                                <rect key="frame" x="163" y="115" width="417" height="50"/>
+                                <rect key="frame" x="163" y="115" width="417" height="46"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="3Oq-j0-MAZ"/>
+                                    <constraint firstAttribute="height" constant="46" id="LYl-Ty-M5a"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Max People: -1 = No Limit, 10 = 10 people" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RdT-fK-cqe">
-                                <rect key="frame" x="163" y="174" width="417" height="35"/>
+                                <rect key="frame" x="163" y="170" width="417" height="29"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="ldE-02-MwU"/>
+                                    <constraint firstAttribute="height" constant="29" id="spG-zl-Hpe"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UoR-Ui-Gvh">
-                                <rect key="frame" x="163" y="211" width="417" height="70"/>
+                                <rect key="frame" x="163" y="201" width="417" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="RHF-2l-M2Y"/>
                                 </constraints>
@@ -2880,7 +2880,7 @@
                                 </connections>
                             </pickerView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Price: 0 = Free" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="brx-9I-HAD">
-                                <rect key="frame" x="163" y="285" width="417" height="35"/>
+                                <rect key="frame" x="163" y="275" width="417" height="35"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="RMv-r7-OFh"/>
@@ -2889,8 +2889,9 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfZ-Fo-W63">
-                                <rect key="frame" x="163" y="385" width="417" height="37"/>
+                                <rect key="frame" x="163" y="379" width="417" height="26"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="gwc-J6-DZA"/>
                                     <constraint firstAttribute="width" constant="417" id="po4-GG-AN4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
@@ -2903,23 +2904,8 @@
                                     </segue>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PGb-OY-XaF">
-                                <rect key="frame" x="163" y="340" width="417" height="37"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="417" id="ewb-Yd-e47"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
-                                <state key="normal" title="No Start Time Picked">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Iaz-e0-8rw" kind="popoverPresentation" identifier="StartDate Segue" popoverAnchorView="PGb-OY-XaF" id="cXE-ef-ID2">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SOz-2Z-B1I">
-                                <rect key="frame" x="15" y="234" width="135" height="24"/>
+                                <rect key="frame" x="15" y="224" width="135" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="135" id="JZA-1v-f2F"/>
                                 </constraints>
@@ -2977,7 +2963,7 @@
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEQ-u8-EOD">
-                                <rect key="frame" x="15" y="291" width="135" height="24"/>
+                                <rect key="frame" x="15" y="281" width="135" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="135" id="atl-DF-BNk"/>
                                 </constraints>
@@ -2992,6 +2978,38 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lha-tM-FIf">
+                                <rect key="frame" x="163" y="318" width="417" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="417" id="p67-eL-ilZ"/>
+                                    <constraint firstAttribute="height" constant="26" id="tX4-wZ-6Ym"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                <state key="normal" title="Payment Deadline">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Iaz-e0-8rw" kind="popoverPresentation" identifier="PickDeadline Segue" popoverAnchorView="lha-tM-FIf" id="srm-Xj-73L">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PGb-OY-XaF">
+                                <rect key="frame" x="163" y="345" width="417" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="9rd-VD-4AV"/>
+                                    <constraint firstAttribute="width" constant="417" id="ewb-Yd-e47"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="18"/>
+                                <state key="normal" title="No Start Time Picked">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="Iaz-e0-8rw" kind="popoverPresentation" identifier="StartDate Segue" popoverAnchorView="PGb-OY-XaF" id="cXE-ef-ID2">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.73333333329999995" green="0.83921568629999999" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -3008,16 +3026,17 @@
                             <constraint firstItem="bMl-tm-XhN" firstAttribute="top" secondItem="ObG-H4-SAf" secondAttribute="bottom" constant="8" id="IXq-zZ-6tZ"/>
                             <constraint firstItem="lcj-s9-pRw" firstAttribute="centerX" secondItem="3bY-YG-rsJ" secondAttribute="centerX" id="Iwy-U2-geF"/>
                             <constraint firstItem="hfZ-Fo-W63" firstAttribute="top" secondItem="PGb-OY-XaF" secondAttribute="bottom" constant="8" id="JI4-KV-xpb"/>
+                            <constraint firstItem="PGb-OY-XaF" firstAttribute="top" secondItem="lha-tM-FIf" secondAttribute="bottom" constant="1" id="LFe-fd-f4N"/>
                             <constraint firstItem="AEQ-u8-EOD" firstAttribute="centerY" secondItem="brx-9I-HAD" secondAttribute="centerY" id="LIw-Gq-YfU"/>
                             <constraint firstItem="UoR-Ui-Gvh" firstAttribute="top" secondItem="RdT-fK-cqe" secondAttribute="bottom" constant="2" id="MBl-Pl-Mjo"/>
                             <constraint firstItem="brx-9I-HAD" firstAttribute="leading" secondItem="3bY-YG-rsJ" secondAttribute="leadingMargin" constant="143" id="NNu-yX-0Ob"/>
                             <constraint firstItem="SOz-2Z-B1I" firstAttribute="leading" secondItem="3bY-YG-rsJ" secondAttribute="leadingMargin" constant="-5" id="NR0-su-svM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ObG-H4-SAf" secondAttribute="trailing" id="NRR-Vx-w4K"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bMl-tm-XhN" secondAttribute="trailing" id="SG1-3O-kkn"/>
+                            <constraint firstItem="lha-tM-FIf" firstAttribute="top" secondItem="brx-9I-HAD" secondAttribute="bottom" constant="8" id="Vi0-D7-igf"/>
                             <constraint firstItem="RdT-fK-cqe" firstAttribute="top" secondItem="bMl-tm-XhN" secondAttribute="bottom" constant="9" id="X6N-Gd-EWp"/>
                             <constraint firstItem="SOz-2Z-B1I" firstAttribute="centerY" secondItem="UoR-Ui-Gvh" secondAttribute="centerY" id="YKS-eW-c3D"/>
                             <constraint firstAttribute="trailingMargin" secondItem="UoR-Ui-Gvh" secondAttribute="trailing" id="ZVq-BO-LDv"/>
-                            <constraint firstItem="PGb-OY-XaF" firstAttribute="top" secondItem="brx-9I-HAD" secondAttribute="bottom" constant="20" id="cbb-I4-7xk"/>
                             <constraint firstItem="bMl-tm-XhN" firstAttribute="leading" secondItem="hmq-3Y-D5q" secondAttribute="trailing" constant="13" id="dt9-51-TPC"/>
                             <constraint firstItem="hmq-3Y-D5q" firstAttribute="leading" secondItem="3bY-YG-rsJ" secondAttribute="leadingMargin" constant="-20" id="gfX-MB-ts6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="brx-9I-HAD" secondAttribute="trailing" id="hwH-FJ-2fB"/>
@@ -3026,11 +3045,14 @@
                             <constraint firstItem="AEQ-u8-EOD" firstAttribute="leading" secondItem="3bY-YG-rsJ" secondAttribute="leadingMargin" constant="-5" id="s5H-hx-uLw"/>
                             <constraint firstItem="R8M-Sy-v7I" firstAttribute="top" secondItem="aBJ-gH-aoP" secondAttribute="bottom" id="sg3-Ef-Mrf"/>
                             <constraint firstItem="brx-9I-HAD" firstAttribute="top" secondItem="UoR-Ui-Gvh" secondAttribute="bottom" constant="4" id="uhr-jr-TVC"/>
+                            <constraint firstItem="lha-tM-FIf" firstAttribute="leading" secondItem="AEQ-u8-EOD" secondAttribute="trailing" constant="13" id="vMg-Tm-g5Y"/>
                             <constraint firstItem="XFa-8r-cCd" firstAttribute="top" secondItem="lAg-r8-R17" secondAttribute="bottom" id="xHZ-Z7-Bov"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lha-tM-FIf" secondAttribute="trailing" id="yJT-tM-Nv1"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cityButton" destination="AwS-8m-Glh" id="Wnl-nY-Tlp"/>
+                        <outlet property="deadlineButton" destination="lha-tM-FIf" id="UAG-aM-9OS"/>
                         <outlet property="endButton" destination="hfZ-Fo-W63" id="Pae-rn-4BU"/>
                         <outlet property="eventImageView" destination="hmq-3Y-D5q" id="BDj-uU-wHg"/>
                         <outlet property="infoTextView" destination="bMl-tm-XhN" id="XLp-Vk-UaP"/>
@@ -5171,7 +5193,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Kr-ym-4E6" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Yzg-xW-8ML" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5977" y="813"/>
+            <point key="canvasLocation" x="6197" y="175"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XVq-SF-Rhp">
@@ -5339,16 +5361,16 @@
         <image name="Unlock" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ls7-ak-9vZ"/>
         <segue reference="QhL-dt-9Qv"/>
         <segue reference="JLb-LI-2qf"/>
         <segue reference="qaL-23-2S4"/>
         <segue reference="8R6-de-wYO"/>
+        <segue reference="x9T-2Z-FQq"/>
+        <segue reference="srm-Xj-73L"/>
+        <segue reference="Mde-lY-Zxg"/>
+        <segue reference="EoZ-Ci-xuJ"/>
         <segue reference="1lx-0f-ne1"/>
+        <segue reference="ls7-ak-9vZ"/>
         <segue reference="4wq-cf-NSJ"/>
-        <segue reference="TTQ-U2-eE7"/>
-        <segue reference="HXW-Cq-Fkw"/>
-        <segue reference="P4L-TL-Vaw"/>
-        <segue reference="bzN-k2-YlO"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -26,6 +26,8 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
         static let PickCitySegue = "PickCity Segue"
         static let PickLocationSegue = "PickLocation Segue"
         static let UnwindToEventViewSegue = "UnwindToEventView Segue"
+        static let DeadlineAction = "DeadlineAction"
+        static let PickDeadlineSegue = "PickDeadline Segue"
     }
     
     
@@ -44,6 +46,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
     var photo:Photo?
     var startDate = ""
     var endDate = ""
+    var deadlineDate = ""
     
     
     @IBOutlet var titleTextField: UITextField!
@@ -58,6 +61,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
     @IBOutlet var locationButton: UIButton!
     @IBOutlet var eventImageView: UIImageView!
     @IBOutlet var loadingView: UIActivityIndicatorView!
+    @IBOutlet var deadlineButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,6 +104,9 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
                 }
                 if self.event!.ispublic != nil{
                     self.isPublicPickerView.selectRow(Int(self.event!.ispublic!.intValue), inComponent: 0, animated: true)
+                }
+                if self.event!.deadline != nil{
+                    self.deadlineButton.setTitle(self.event!.deadline!.description, forState: .Normal)
                 }
                 //Check to see if there's an image on db first
                 if self.event!.hasPhoto != nil && self.event!.hasPhoto!.safekey != nil{
@@ -227,22 +234,15 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
                           StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
                           StudyPopClient.ParameterKeys.Token : user!.token!,
                           StudyPopClient.ParameterKeys.SafeKey : event!.safekey!,
-                          Event.Keys.Name: title,
-                          Event.Keys.Info : info,
-                          Event.Keys.MaxPeople : maxPeople,
                           Event.Keys.City : cityKey,
                           Event.Keys.Subject : subjectKey,
-                          Event.Keys.IsPublic : isPublic,
-                          Event.Keys.Price : price,
                           Location.Keys.Lat : lat,
                           Location.Keys.Lng : lng,
                           StudyPopClient.ParameterKeys.LocationSafeKey : locationKey,
-                          StudyPopClient.ParameterKeys.LatInfo : latInfo,
-                          Event.Keys.Start : startDate,
-                          Event.Keys.End : endDate
+                          StudyPopClient.ParameterKeys.LatInfo : latInfo
             ]
-            print("You are saving it with a title \(title)")
-            StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
+            let jsonBody = [Event.Keys.Name : title, Event.Keys.Info: info, Event.Keys.MaxPeople : maxPeople, Event.Keys.IsPublic : isPublic, Event.Keys.Price : price, Location.Keys.Lat : lat, Location.Keys.Lng : lng, Event.Keys.Start : startDate, Event.Keys.End : endDate, Event.Keys.Deadline : deadlineDate]
+            StudyPopClient.sharedInstance.POST("", parameters: params, jsonBody: jsonBody){ (results,error) in
                 func sendError(error: String){
                     print("Error in transmission: \(error)")
                     self.simpleError(error)
@@ -318,14 +318,15 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
                 locationButton.setTitle("Location", forState: .Normal)
             }
         }else if let dvc = sender.sourceViewController as? PickDateViewController{
-            print("You are here")
-            print("The previous action is \(dvc.previousAction)")
             if dvc.previousAction == Constants.StartAction{
                 startDate = dvc.currentDate!
                 startButton.setTitle("Start: \(dvc.currentDate!)", forState: .Normal)
-            }else{
+            }else if dvc.previousAction == Constants.EndAction{
                 endDate = dvc.currentDate!
                 endButton.setTitle("End: \(endDate)", forState: .Normal)
+            }else{
+                deadlineDate = dvc.currentDate!
+                deadlineButton.setTitle(deadlineDate, forState: .Normal)
             }
         }
     }
@@ -457,6 +458,11 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
             if let pvc = segue.destinationViewController as? PickDateViewController{
                 pvc.previousController = Constants.Controller
                 pvc.previousAction = Constants.EndAction
+            }
+        }else if segue.identifier == Constants.PickDeadlineSegue{
+            if let pvc = segue.destinationViewController as? PickDateViewController{
+                pvc.previousController = Constants.Controller
+                pvc.previousAction = Constants.DeadlineAction
             }
         }else if segue.identifier == Constants.PickSubjectSegue{
             if let svc = segue.destinationViewController as? StudyPickerViewController{
