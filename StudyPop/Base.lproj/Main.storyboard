@@ -2050,6 +2050,9 @@
                         <segue destination="FcJ-Tn-b3b" kind="presentation" identifier="ViewPic Segue" id="8R6-de-wYO"/>
                         <segue destination="QZj-hD-Dan" kind="show" identifier="Attendance Segue" id="68N-GH-jKy"/>
                         <segue destination="yvk-8H-t8Z" kind="show" identifier="CheckMeIn Segue" id="pfS-gg-kTx"/>
+                        <segue destination="GR8-hc-CKe" kind="popoverPresentation" popoverAnchorView="WfD-mg-ZgZ" id="fib-2p-HeP">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vWZ-dC-d18" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2090,6 +2093,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kuj-u2-R2A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7232" y="884"/>
+        </scene>
+        <!--Pay With Credit View Controller-->
+        <scene sceneID="h5d-d8-ucq">
+            <objects>
+                <viewController id="GR8-hc-CKe" customClass="PayWithCreditViewController" customModule="StudyPop" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DFf-eC-Zdk"/>
+                        <viewControllerLayoutGuide type="bottom" id="rBf-cD-mV5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Q6V-FN-Htd">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="350"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="400" height="350"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qVB-kO-mbv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7110" y="1456"/>
         </scene>
         <!--Event Photos View Controller-->
         <scene sceneID="iwd-wb-EkH">

@@ -29,6 +29,7 @@
 		AF1819CB1D2408E500795ED6 /* AlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1819CA1D2408E500795ED6 /* AlertTableViewCell.swift */; };
 		AF1819CF1D240B5F00795ED6 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1819CD1D240B5F00795ED6 /* Alert.swift */; };
 		AF1819D11D240C6B00795ED6 /* AlertIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1819D01D240C6B00795ED6 /* AlertIndexViewController.swift */; };
+		AF1B52BD1D2D523E0041038E /* PayWithCreditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1B52BC1D2D523E0041038E /* PayWithCreditViewController.swift */; };
 		AF1C26E21D2D276100F65D3E /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1C26E11D2D276100F65D3E /* LocationViewController.swift */; };
 		AF1D0DE91D214A24003DAA11 /* EventsIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D0DE81D214A24003DAA11 /* EventsIndexViewController.swift */; };
 		AF283DA51D05118D006D4AC1 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF283DA31D05118D006D4AC1 /* Photo.swift */; };
@@ -101,6 +102,7 @@
 		AFFA64D71D274748006B3A60 /* ObjectiveCFile.m in Sources */ = {isa = PBXBuildFile; fileRef = AFFA64D61D274748006B3A60 /* ObjectiveCFile.m */; };
 		AFFA64DA1D277356006B3A60 /* MyEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFA64D91D277356006B3A60 /* MyEventsTableViewController.swift */; };
 		AFFA64DC1D2788A4006B3A60 /* MyGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFA64DB1D2788A4006B3A60 /* MyGroupsTableViewController.swift */; };
+		D66272B01A816A2743C90EEE /* libPods-StudyPop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9099D892DA7198625FC2C667 /* libPods-StudyPop.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +123,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		33F4CF85756AF66163CC2117 /* Pods-StudyPop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyPop.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StudyPop/Pods-StudyPop.debug.xcconfig"; sourceTree = "<group>"; };
+		78ACE00FB8B481D4CD146706 /* Pods-StudyPop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyPop.release.xcconfig"; path = "Pods/Target Support Files/Pods-StudyPop/Pods-StudyPop.release.xcconfig"; sourceTree = "<group>"; };
+		9099D892DA7198625FC2C667 /* libPods-StudyPop.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-StudyPop.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF0077831CF52C810056904F /* StudyPopConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPopConstants.swift; sourceTree = "<group>"; };
 		AF0077861CF52CB70056904F /* StudyPopClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPopClient.swift; sourceTree = "<group>"; };
 		AF0077881CF52E7A0056904F /* StudyPopServerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudyPopServerHelper.swift; sourceTree = "<group>"; };
@@ -143,6 +148,7 @@
 		AF1819CA1D2408E500795ED6 /* AlertTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTableViewCell.swift; sourceTree = "<group>"; };
 		AF1819CD1D240B5F00795ED6 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		AF1819D01D240C6B00795ED6 /* AlertIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertIndexViewController.swift; sourceTree = "<group>"; };
+		AF1B52BC1D2D523E0041038E /* PayWithCreditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayWithCreditViewController.swift; sourceTree = "<group>"; };
 		AF1C26E11D2D276100F65D3E /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		AF1D0DE81D214A24003DAA11 /* EventsIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsIndexViewController.swift; sourceTree = "<group>"; };
 		AF283DA31D05118D006D4AC1 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
@@ -233,6 +239,7 @@
 				AFFA64D21D274591006B3A60 /* FBSDKLoginKit.framework in Frameworks */,
 				AFFA64D11D274591006B3A60 /* FBSDKCoreKit.framework in Frameworks */,
 				AFFA64D41D274598006B3A60 /* FBSDKShareKit.framework in Frameworks */,
+				D66272B01A816A2743C90EEE /* libPods-StudyPop.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +260,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0543A9979337B82FDFE435B2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				33F4CF85756AF66163CC2117 /* Pods-StudyPop.debug.xcconfig */,
+				78ACE00FB8B481D4CD146706 /* Pods-StudyPop.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		43F16776F34CAD72D33DB94F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9099D892DA7198625FC2C667 /* libPods-StudyPop.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AF0077851CF52CA80056904F /* StudyPopServer */ = {
 			isa = PBXGroup;
 			children = (
@@ -333,6 +357,8 @@
 				AFCB268D1CE8E1C400754A6D /* StudyPopTests */,
 				AFCB26981CE8E1C400754A6D /* StudyPopUITests */,
 				AFCB26741CE8E1C300754A6D /* Products */,
+				0543A9979337B82FDFE435B2 /* Pods */,
+				43F16776F34CAD72D33DB94F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -426,6 +452,7 @@
 				AFB5A88C1D28A3BA000ED889 /* AttendanceViewController.swift */,
 				AFB5A88E1D28AB64000ED889 /* CheckMeInViewController.swift */,
 				AF1C26E11D2D276100F65D3E /* LocationViewController.swift */,
+				AF1B52BC1D2D523E0041038E /* PayWithCreditViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -456,9 +483,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AFCB269E1CE8E1C400754A6D /* Build configuration list for PBXNativeTarget "StudyPop" */;
 			buildPhases = (
+				5074D73F08E99EF485EC9CC7 /* [CP] Check Pods Manifest.lock */,
 				AFCB266F1CE8E1C300754A6D /* Sources */,
 				AFCB26701CE8E1C300754A6D /* Frameworks */,
 				AFCB26711CE8E1C300754A6D /* Resources */,
+				429222BC8BB33C1017C1E22C /* [CP] Embed Pods Frameworks */,
+				BADF9A195B9C4018D465BEBA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -579,6 +609,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		429222BC8BB33C1017C1E22C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StudyPop/Pods-StudyPop-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5074D73F08E99EF485EC9CC7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BADF9A195B9C4018D465BEBA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-StudyPop/Pods-StudyPop-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AFCB266F1CE8E1C300754A6D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -620,6 +698,7 @@
 				AF8043A11CFE4B3100A2B7A4 /* Location.swift in Sources */,
 				AFFA64DA1D277356006B3A60 /* MyEventsTableViewController.swift in Sources */,
 				AF283DA51D05118D006D4AC1 /* Photo.swift in Sources */,
+				AF1B52BD1D2D523E0041038E /* PayWithCreditViewController.swift in Sources */,
 				AF074B361D090D1A007C8E1F /* AddEventViewController.swift in Sources */,
 				AF112A5E1CFBDAFA00FE1DB9 /* GroupViewController.swift in Sources */,
 				AFCAE1E21D1BF49000955601 /* Thumb.swift in Sources */,
@@ -808,6 +887,7 @@
 		};
 		AFCB269F1CE8E1C400754A6D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33F4CF85756AF66163CC2117 /* Pods-StudyPop.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -826,6 +906,7 @@
 		};
 		AFCB26A01CE8E1C400754A6D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 78ACE00FB8B481D4CD146706 /* Pods-StudyPop.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

@@ -32,7 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        Stripe.setDefaultPublishableKey("pk_test_IeR8DmaKtT6Gi5W7vvySoCiO")
+        Stripe.setDefaultPublishableKey("pk_test_7X1ayU7WskNyrzAmfen9Kc87")
+ 
         
         //Check for a logged in user first
         let sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext
