@@ -194,7 +194,9 @@ class MyGroupsTableViewController: UITableViewController {
                             if let groupDict = dict[GroupMember.Keys.Group] as? [String:AnyObject]{
                                 let safekey = groupDict[Group.Keys.SafeKey] as! String
                                 if let tempGroup = self.findGroup(safekey){
-                                    member.fromGroup = tempGroup
+                                    performOnMain(){
+                                        member.fromGroup = tempGroup
+                                    }
                                 }else{
                                     let group = Group.init(dictionary: groupDict, context: self.sharedContext)
                                     member.fromGroup = group

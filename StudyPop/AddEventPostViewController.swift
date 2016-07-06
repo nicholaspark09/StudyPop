@@ -71,10 +71,13 @@ class AddEventPostViewController: UIViewController {
                           StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
                           StudyPopClient.ParameterKeys.Token : user!.token!,
                           StudyPopClient.ParameterKeys.SafeKey : event!.safekey!,
-                          GroupPost.Keys.Body:text,
-                          StudyPopClient.ParameterKeys.BodyType : "\(1)"
             ]
-            StudyPopClient.sharedInstance.httpGet("", parameters: params){(results,error) in
+            let date = NSDate()
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+            let created = formatter.stringFromDate(date)
+            let jsonBody = [EventPost.Keys.Body : text, EventPost.Keys.TheType : "\(1)", EventPost.Keys.Created : created]
+            StudyPopClient.sharedInstance.POST("", parameters: params, jsonBody: jsonBody){(results,error) in
                 
                 func sendError(error: String){
                     self.loadingLabel.text = error

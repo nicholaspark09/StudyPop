@@ -408,7 +408,7 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         if group.thumbblob == nil && group.image != nil && group.image != "" && group.checked == false{
             StudyPopClient.sharedInstance.findThumb(self.user!.token!, safekey: group.image!){(results,error) in
-                self.groups[indexPath.row].checked = true
+                cell.group!.checked = true
                 if let error = error{
                     print("Couldn't find a picture: \(error)")
                 }else if results != nil{

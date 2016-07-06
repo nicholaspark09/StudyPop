@@ -31,6 +31,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         static let ViewPicSegue = "ViewPic Segue"
         static let AttendanceSegue = "Attendance Segue"
         static let CheckMeInSegue = "CheckMeIn Segue"
+        static let LocationViewSegue = "LocationView Segue"
     }
     
     
@@ -50,7 +51,6 @@ class EventViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var cityLabel: UILabel!
     @IBOutlet var loadingView: UIActivityIndicatorView!
     @IBOutlet var infoTextView: UITextView!
-    @IBOutlet var mapView: MKMapView!
     @IBOutlet var eventImageView: UIImageView!
     @IBOutlet var endDateLabel: UILabel!
     
@@ -248,6 +248,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    /*
     func showLocation(){
         if self.event!.location != nil{
             let lat = self.event!.location!.lat!.doubleValue
@@ -268,6 +269,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
             self.mapView.regionThatFits(region)
         }
     }
+ */
     
     func checkEventMember(safekey: String) -> EventMember?{
         let request = NSFetchRequest(entityName: StudyPopClient.JSONReponseKeys.EventMember)
@@ -396,25 +398,7 @@ class EventViewController: UIViewController, MKMapViewDelegate {
     }
 
     
-    // MARK: MapViewDelegates
-    // MARK: - MKMapViewDelegate Add Pin to MapView
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(Constants.PinReuseIdentifier) as? MKPinAnnotationView
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Constants.PinReuseIdentifier)
-            pinView!.canShowCallout = false
-            pinView!.pinTintColor = UIColor.redColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-            pinView?.draggable = true
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
-    }
+
     
     /**
      Only use this if there is no connection
@@ -522,6 +506,10 @@ class EventViewController: UIViewController, MKMapViewDelegate {
                 cvc.user = user!
                 cvc.member = eventMember!
                 cvc.event = event!
+            }
+        }else if segue.identifier == Constants.LocationViewSegue{
+            if let lvc = segue.destinationViewController as? LocationViewController{
+                lvc.event = event!
             }
         }
     }

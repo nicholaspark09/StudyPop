@@ -71,7 +71,26 @@ class MyEventsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(Constants.CellReuseIdentifier, forIndexPath: indexPath) as! EventTableViewCell
         if members[indexPath.row].fromEvent != nil{
             let event = members[indexPath.row].fromEvent
-            cell.event = event
+            cell.titleLabel.text = event!.name!
+            if event!.start != nil{
+                let formatter = NSDateFormatter()
+                formatter.dateFormat = "EEEE"
+                cell.dayLabel.text = "\(formatter.stringFromDate(event!.start!))"
+                formatter.dateFormat = "MMM dd"
+                cell.dateLabel.text = "\(formatter.stringFromDate(event!.start!))"
+                if event!.startString != nil{
+                    formatter.dateFormat = "H:mm a"
+                    cell.hourLabel.text = "\(formatter.stringFromDate(event!.start!))"
+                }
+            }
+            if event!.info != nil{
+                cell.textView.text = event!.info!
+            }
+            if event!.currentpeople != nil{
+                cell.attendingLabel.text = "\(event!.currentpeople!.intValue)"
+            }
+            
+            //cell.event = event
         }
         return cell
     }
@@ -95,6 +114,9 @@ class MyEventsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             dropEvent(members[indexPath.row].safekey!)
+            performOnMain(){
+                self.sharedContext.deleteObject(self.members[indexPath.row])
+            }
             members.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
@@ -237,21 +259,24 @@ class MyEventsTableViewController: UITableViewController {
                         for i in membersDictionary{
                             let dict = i as Dictionary<String,AnyObject>
                             let safekey = dict[EventMember.Keys.SafeKey] as! String
-                            if let eventMember = self.findEventMember(safekey){
-                                self.sharedContext.deleteObject(eventMember)
+                            var member:EventMember?
+                            member = self.findEventMember(safekey)
+                            if member == nil{
+                                member = EventMember.init(dictionary:dict, context: self.sharedContext)
                             }
-                            let member = EventMember.init(dictionary:dict, context: self.sharedContext)
                             if let eventDict = dict[EventMember.Keys.Event] as? [String:AnyObject]{
                                 let safekey = dict[EventMember.Keys.SafeKey] as! String
                                 if let tempEvent = self.findEvent(safekey){
-                                    member.fromEvent = tempEvent
+                                    print("Found an old event")
+                                    member!.fromEvent = tempEvent
                                 }else{
+                                    print("Found a new event")
                                     let fromEvent = Event.init(dictionary: eventDict, context: self.sharedContext)
-                                    member.fromEvent = fromEvent
+                                    member!.fromEvent = fromEvent
                                 }
                                 
                             }
-                                self.members.append(member)
+                            self.members.append(member!)
                             
                         }
                         performOnMain(){

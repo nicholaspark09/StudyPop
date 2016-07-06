@@ -65,12 +65,12 @@ class EventPost: NSManagedObject {
         createdString = dictionary[Keys.Created] as? String
         
         if let startString = dictionary[Keys.Created] as? String{
-            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString.trunc(16)){
+            if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(startString){
                 created = startDate
             }
         }
         if let endString = dictionary[Keys.Modified] as? String{
-            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString.trunc(16)){
+            if let endDate = StudyPopClient.sharedDateFormatter.dateFromString(endString){
                 modified = endDate
             }
         }

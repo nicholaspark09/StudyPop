@@ -14,8 +14,10 @@ class GroupPostTableViewCell: UITableViewCell {
         didSet{
             nameLabel.text = post!.name!
             infoTextView.text = post!.pretty!
-            if post!.createdString != nil{
-                dateLabel.text = post!.created!.description
+            if post!.created != nil{
+                let formatter = NSDateFormatter()
+                formatter.dateFormat = "MMM d, H:mm a"
+                dateLabel.text = formatter.stringFromDate(post!.created!)
             }
         }
     }

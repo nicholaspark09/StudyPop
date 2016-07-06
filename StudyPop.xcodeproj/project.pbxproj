@@ -29,6 +29,7 @@
 		AF1819CB1D2408E500795ED6 /* AlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1819CA1D2408E500795ED6 /* AlertTableViewCell.swift */; };
 		AF1819CF1D240B5F00795ED6 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1819CD1D240B5F00795ED6 /* Alert.swift */; };
 		AF1819D11D240C6B00795ED6 /* AlertIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1819D01D240C6B00795ED6 /* AlertIndexViewController.swift */; };
+		AF1C26E21D2D276100F65D3E /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1C26E11D2D276100F65D3E /* LocationViewController.swift */; };
 		AF1D0DE91D214A24003DAA11 /* EventsIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1D0DE81D214A24003DAA11 /* EventsIndexViewController.swift */; };
 		AF283DA51D05118D006D4AC1 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF283DA31D05118D006D4AC1 /* Photo.swift */; };
 		AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */; };
@@ -141,6 +142,7 @@
 		AF1819CA1D2408E500795ED6 /* AlertTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTableViewCell.swift; sourceTree = "<group>"; };
 		AF1819CD1D240B5F00795ED6 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		AF1819D01D240C6B00795ED6 /* AlertIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertIndexViewController.swift; sourceTree = "<group>"; };
+		AF1C26E11D2D276100F65D3E /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		AF1D0DE81D214A24003DAA11 /* EventsIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsIndexViewController.swift; sourceTree = "<group>"; };
 		AF283DA31D05118D006D4AC1 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		AF2E2B7B1CF7BEBA00820183 /* HomeTabViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTabViewController.swift; sourceTree = "<group>"; };
@@ -420,6 +422,7 @@
 				AFB5A88A1D289E1B000ED889 /* CheckInViewController.swift */,
 				AFB5A88C1D28A3BA000ED889 /* AttendanceViewController.swift */,
 				AFB5A88E1D28AB64000ED889 /* CheckMeInViewController.swift */,
+				AF1C26E11D2D276100F65D3E /* LocationViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				AF0077871CF52CB70056904F /* StudyPopClient.swift in Sources */,
 				AF0E8F0A1D12CE0500085B02 /* EventMemberTableViewCell.swift in Sources */,
 				AF1D0DE91D214A24003DAA11 /* EventsIndexViewController.swift in Sources */,
+				AF1C26E21D2D276100F65D3E /* LocationViewController.swift in Sources */,
 				AF9E70EC1CFB2BC700E8B8F6 /* SubjectTableViewCell.swift in Sources */,
 				AF2E2B821CF7DF9A00820183 /* City.swift in Sources */,
 				AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */,

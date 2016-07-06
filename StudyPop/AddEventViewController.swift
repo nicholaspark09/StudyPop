@@ -316,6 +316,7 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
                           Event.Keys.End : endDate
             ]
             let jsonBody = [Event.Keys.Name : title, Event.Keys.Info: info, Event.Keys.MaxPeople : maxPeople, Event.Keys.IsPublic : isPublic, Event.Keys.Price : price, Location.Keys.Lat : lat, Location.Keys.Lng : lng, Event.Keys.Start : startDate, Event.Keys.End : endDate, Event.Keys.Deadline : deadlineDate]
+    
             StudyPopClient.sharedInstance.POST("", parameters: params, jsonBody: jsonBody){ (results,error) in
                 func sendError(error: String){
                     self.simpleError(error)

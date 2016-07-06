@@ -71,11 +71,14 @@ class AddGroupPostViewController: UIViewController{
                           StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
                           StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
                           StudyPopClient.ParameterKeys.Token : user!.token!,
-                          StudyPopClient.ParameterKeys.SafeKey : group!.safekey!,
-                          GroupPost.Keys.Body:text,
-                          StudyPopClient.ParameterKeys.BodyType : "\(1)"
+                          StudyPopClient.ParameterKeys.SafeKey : group!.safekey!
             ]
-            StudyPopClient.sharedInstance.httpGet("", parameters: params){(results,error) in
+            let date = NSDate()
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+            let created = formatter.stringFromDate(date)
+            let jsonBody = [GroupPost.Keys.Body : text, GroupPost.Keys.TheType : "\(1)", GroupPost.Keys.Created : created]
+            StudyPopClient.sharedInstance.POST("", parameters: params, jsonBody: jsonBody){ (results,error) in
                 
                 func sendError(error: String){
                     self.loadingLabel.text = error

@@ -15,8 +15,10 @@ class EventPostTableViewCell: UITableViewCell {
         didSet{
             nameLabel.text = post!.name!
             textView.text = post!.pretty!
-            if post!.createdString != nil{
-                dateLabel.text = post!.createdString
+            if post!.created != nil{
+                let formatter = NSDateFormatter()
+                formatter.dateFormat = "MMM d, H:mm a"
+                dateLabel.text = formatter.stringFromDate(post!.created!)
             }else{
                 dateLabel.text = "No date"
             }

@@ -108,17 +108,19 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
                 }else if self.event!.image != nil && self.event!.image != ""{
                     var found = false
                     // First check the local db, you never know!
-                    if let oldEvent = self.findEventInDB(){
-                        if oldEvent.hasPhoto != nil && oldEvent.hasPhoto!.blob != nil{
+                    var oldEvent = self.findEventInDB()
+                    if oldEvent != nil{
+                        if oldEvent!.hasPhoto != nil && oldEvent!.hasPhoto!.blob != nil{
                             //Load old image first so the user isn't bored
-                            let image = UIImage(data: oldEvent.hasPhoto!.blob!)
+                            let image = UIImage(data: oldEvent!.hasPhoto!.blob!)
                             self.eventImageView.image = image
                             self.eventImageView.contentMode = UIViewContentMode.ScaleAspectFit
                             //Check to see if it's the same image
-                            if oldEvent.hasPhoto!.safekey == self.event!.image!{
+                            if oldEvent!.hasPhoto!.safekey == self.event!.image!{
                                 found = true
                             }
                         }
+                        oldEvent = nil
                     }
                     if !found{
                         print("loading it up!")
@@ -145,6 +147,9 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
                                 let photoDict = [Photo.Keys.Blob : imageData, Photo.Keys.Controller : "events", Photo.Keys.TheType : "\(1)", Photo.Keys.SafeKey : self.event!.image!, Photo.Keys.ParentKey : self.event!.safekey!]
                                 let photo = Photo.init(dictionary: photoDict, context: self.sharedContext)
                                 self.event!.hasPhoto = photo
+                                if let oldEvent = self.findEventInDB(){
+                                    self.sharedContext.deleteObject(oldEvent)
+                                }
                                 CoreDataStackManager.sharedInstance().saveContext()
                             }
                         }
@@ -335,9 +340,6 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
         self.imagePicker.delegate = self
         self.presentViewController(self.imagePicker.imagePickerController, animated: true, completion: nil)
     }
-    
-    
-    
     
     
     // Got the image back
