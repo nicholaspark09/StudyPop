@@ -185,14 +185,6 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
     
     
     func saveClicked(sender: UIBarButtonItem){
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        if startDate == "" && event!.start != nil{
-            startDate = dateFormatter.stringFromDate(event!.start!)
-        }
-        if endDate == "" && event!.end != nil{
-            endDate = dateFormatter.stringFromDate(event!.end!)
-        }
         let title = titleTextField.text!
         let info = infoTextView.text!
         let maxPeople = maxPeopleTextField.text!

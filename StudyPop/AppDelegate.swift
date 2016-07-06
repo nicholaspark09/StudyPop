@@ -32,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        Stripe.setDefaultPublishableKey("pk_test_IeR8DmaKtT6Gi5W7vvySoCiO")
+        
         //Check for a logged in user first
         let sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext
         let request = NSFetchRequest(entityName: Constants.UserEntity)

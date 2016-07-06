@@ -81,6 +81,7 @@
 		AFB5A88B1D289E1B000ED889 /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB5A88A1D289E1B000ED889 /* CheckInViewController.swift */; };
 		AFB5A88D1D28A3BA000ED889 /* AttendanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB5A88C1D28A3BA000ED889 /* AttendanceViewController.swift */; };
 		AFB5A88F1D28AB64000ED889 /* CheckMeInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB5A88E1D28AB64000ED889 /* CheckMeInViewController.swift */; };
+		AFC040191D2D46D000041A3C /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = AFC040181D2D46D000041A3C /* Podfile */; };
 		AFC09EA71D160BD00003BD29 /* GroupPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC09EA61D160BD00003BD29 /* GroupPostTableViewCell.swift */; };
 		AFCAE1E21D1BF49000955601 /* Thumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAE1E01D1BF49000955601 /* Thumb.swift */; };
 		AFCAE1E41D1BF78F00955601 /* GroupPicIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */; };
@@ -194,6 +195,7 @@
 		AFB5A88A1D289E1B000ED889 /* CheckInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
 		AFB5A88C1D28A3BA000ED889 /* AttendanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceViewController.swift; sourceTree = "<group>"; };
 		AFB5A88E1D28AB64000ED889 /* CheckMeInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckMeInViewController.swift; sourceTree = "<group>"; };
+		AFC040181D2D46D000041A3C /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		AFC09EA61D160BD00003BD29 /* GroupPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPostTableViewCell.swift; sourceTree = "<group>"; };
 		AFCAE1E01D1BF49000955601 /* Thumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumb.swift; sourceTree = "<group>"; };
 		AFCAE1E31D1BF78F00955601 /* GroupPicIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPicIndexViewController.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 		AFCB266A1CE8E1C300754A6D = {
 			isa = PBXGroup;
 			children = (
+				AFC040181D2D46D000041A3C /* Podfile */,
 				AFCB26751CE8E1C400754A6D /* StudyPop */,
 				AFCB268D1CE8E1C400754A6D /* StudyPopTests */,
 				AFCB26981CE8E1C400754A6D /* StudyPopUITests */,
@@ -555,6 +558,7 @@
 			files = (
 				AFCB26841CE8E1C400754A6D /* LaunchScreen.storyboard in Resources */,
 				AFCB26811CE8E1C400754A6D /* Assets.xcassets in Resources */,
+				AFC040191D2D46D000041A3C /* Podfile in Resources */,
 				AFCB267C1CE8E1C400754A6D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
