@@ -18,7 +18,7 @@ import MapKit
     func backClicked()
 }
 
-class EventViewController: UIViewController, MKMapViewDelegate {
+class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresentationControllerDelegate {
 
     
     struct Constants{
@@ -32,6 +32,9 @@ class EventViewController: UIViewController, MKMapViewDelegate {
         static let AttendanceSegue = "Attendance Segue"
         static let CheckMeInSegue = "CheckMeIn Segue"
         static let LocationViewSegue = "LocationView Segue"
+        static let PayCreditSegue = "PayCredit Segue"
+        static let Controller = "events"
+        static let Action = ""
     }
     
     
@@ -317,7 +320,10 @@ class EventViewController: UIViewController, MKMapViewDelegate {
                 
             }))
             
-            refreshAlert.addAction(UIAlertAction(title: "Pay with Credit Card", style: .Cancel, handler:nil))
+            refreshAlert.addAction(UIAlertAction(title: "Pay with Credit Card", style: .Cancel, handler:{(action:UIAlertAction!) in
+                self.performSegueWithIdentifier(Constants.PayCreditSegue, sender: nil)
+                
+            }))
             
             presentViewController(refreshAlert, animated: true, completion: nil)
         }else{
@@ -532,8 +538,20 @@ class EventViewController: UIViewController, MKMapViewDelegate {
             if let lvc = segue.destinationViewController as? LocationViewController{
                 lvc.event = event!
             }
+        }else if segue.identifier == Constants.PayCreditSegue{
+            if let pvc = segue.destinationViewController as? PayWithCreditViewController{
+                pvc.modalPresentationStyle = UIModalPresentationStyle.Popover
+                pvc.popoverPresentationController!.delegate = self
+                pvc.name = event!.name!
+                pvc.user = user!
+                pvc.Controller = Constants.Controller
+                pvc.total = event!.price!.floatValue
+            }
         }
     }
     
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
+    }
 
 }
