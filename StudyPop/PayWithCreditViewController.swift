@@ -70,9 +70,11 @@ class PayWithCreditViewController: UIViewController {
                         self.errorLabel.text = "Error: \(stripeError!.localizedDescription)"
                     }
                 }else{
+                    self.chargeCard(token!.tokenId, stripeId:token!.stripeID)
                     performOnMain(){
                         self.errorLabel.text = "Submitting payment..."
                     }
+                    
                 }
             }
         }else{
@@ -80,6 +82,43 @@ class PayWithCreditViewController: UIViewController {
             
         }
         
+    }
+    
+    func chargeCard(token: String, stripeId: String){
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.PaymentsController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.AddMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.Token : user!.token!,
+        ]
+        let jsonBody = [StudyPopClient.ParameterKeys.StripeToken : token, StudyPopClient.ParameterKeys.Name : name, StudyPopClient.ParameterKeys.Controller : Controller, StudyPopClient.ParameterKeys.Action : Action, Event.Keys.Price : "\(total!)", StudyPopClient.ParameterKeys.StripeId : stripeId]
+        performOnMain(){
+            self.loadinvView.startAnimating()
+            self.errorLabel.text = "Charging card"
+        }
+        StudyPopClient.sharedInstance.POST("", parameters: params, jsonBody: jsonBody){ (results,error) in
+            func sendError(error: String){
+                performOnMain(){
+                    self.loadinvView.stopAnimating()
+                    self.errorLabel.text = error
+                }
+            }
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("Error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                let error = results[StudyPopClient.JSONReponseKeys.Error] as! String
+                print("Error: \(error)")
+                return
+            }
+            
+            performOnMain(){
+                self.loadinvView.stopAnimating()
+                self.errorLabel.text = "Successfully made payment"
+            }
+        }
     }
 
 

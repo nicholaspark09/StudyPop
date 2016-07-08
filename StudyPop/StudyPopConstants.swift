@@ -53,6 +53,9 @@ extension StudyPopClient{
         static let TheController = "thecontroller"
         static let AlertKey = "alertkey"
         static let OauthUid = "oauthuid"
+        static let StripeToken = "stripetoken"
+        static let Action = "action"
+        static let StripeId = "stripeid"
     }
     
     struct ParameterValues{
@@ -61,6 +64,7 @@ extension StudyPopClient{
         static let GroupRequestsController = "grouprequests"
         static let GroupMembersController = "groupmembers"
         static let AttendancesController = "attendances"
+        static let PaymentsController = "payments"
         static let AlertsController = "alerts"
         static let EventMembersController = "eventmembers"
         static let EventPostsController = "eventposts"

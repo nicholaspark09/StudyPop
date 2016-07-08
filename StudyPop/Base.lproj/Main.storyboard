@@ -2212,9 +2212,11 @@
                         <outlet property="monthTextField" destination="lzn-6B-jv4" id="v1Y-gB-yQq"/>
                         <outlet property="submitButton" destination="RcT-HS-PKY" id="gs1-sW-ila"/>
                         <outlet property="textView" destination="7dp-DX-a7H" id="nEh-2N-UkC"/>
+                        <segue destination="hhq-gN-uNm" kind="unwind" identifier="PayCompleted Segue" unwindAction="unwindToEventView:" id="QcC-E9-T2b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qVB-kO-mbv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="hhq-gN-uNm" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="7050" y="1512"/>
         </scene>

@@ -545,6 +545,7 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
                 pvc.name = event!.name!
                 pvc.user = user!
                 pvc.Controller = Constants.Controller
+                pvc.Action = event!.safekey!
                 pvc.total = event!.price!.floatValue
             }
         }
