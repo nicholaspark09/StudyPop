@@ -35,6 +35,7 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
         static let PayCreditSegue = "PayCredit Segue"
         static let Controller = "events"
         static let Action = ""
+        static let EventPaymentsSegue = "EventPayments Segue"
     }
     
     
@@ -64,11 +65,9 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if safekey != ""{
-            getLiveEvent()
-        }
-        print("The Safekey for this is \(safekey)")
-        
+
+        getLiveEvent()
+
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(title: "Back", style: .Plain, target: self, action: #selector(EventViewProtocol.backClicked))
     }
     
@@ -106,6 +105,9 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
             }
             
             if let eventDict = results[StudyPopClient.JSONReponseKeys.Event] as? [String:AnyObject]{
+                performOnMain(){
+                    self.loadingView.stopAnimating()
+                }
                 self.event = Event.init(dictionary: eventDict, context: self.sharedContext)
                 self.event!.safekey = self.safekey
 
@@ -114,6 +116,7 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
                 // Nonmembers return ""
                 //Members always return a dict
                 if let memberDict = results[StudyPopClient.JSONReponseKeys.EventMember] as? [String:AnyObject]{
+                    print("An event member was found")
                     if let safekey = memberDict[EventMember.Keys.SafeKey] as? String{
                         if let tempMember = self.checkEventMember(safekey){
                             self.eventMember = tempMember
@@ -122,7 +125,29 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
                             self.eventMember!.fromEvent = self.event!
                         }
                     }
+                }else{
+                    print("Eventmember was not found")
+                    if let requestDict = results[StudyPopClient.JSONReponseKeys.EventRequest] as? [String:AnyObject]{
+                        print("Event request was found")
+                        //An event was already made, change the right bar button to say pay
+                        let eventRequest = EventRequest.init(dictionary: requestDict, context: self.sharedContext)
+                        if eventRequest.accepted?.intValue == 2{
+                            //The user has already accepted you into the group
+                            //Go ahead and set the right button to pay
+                            performOnMain(){
+                                self.performSegueWithIdentifier(Constants.PayCreditSegue, sender: nil)
+                            }
+                        }else if eventRequest.accepted?.intValue == 1{
+                            self.simpleError("This event didn't have anymore room. Sorry")
+                        }else{
+                            self.simpleError("Still waiting for approval")
+                        }
+                    }
                 }
+                
+                
+                
+                
                 self.updateUI()
             }
         }
@@ -299,7 +324,41 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
     
     // MARK: - Drop User from Event
     func dropClicked(sender: UIBarButtonItem){
-        
+        sender.enabled = false
+        sender.title = "Dropping...."
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventMembersController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.DeleteMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.SafeKey : eventMember!.safekey!,
+                      StudyPopClient.ParameterKeys.Token : user!.token!
+        ]
+        StudyPopClient.sharedInstance.httpGet("", parameters: params){(results,error) in
+            
+            func sendError(error: String){
+                self.simpleError(error)
+                performOnMain(){
+                    sender.enabled = true
+                    sender.title = ""
+                }
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                sendError("Nothing came back from the server")
+                return
+            }
+            guard stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("API Error: \(results[StudyPopClient.JSONReponseKeys.Error]!)")
+                return
+            }
+            performOnMain(){
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
     }
     
     
@@ -309,12 +368,15 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
         if event!.price != nil{
             if event!.price!.floatValue > 0{
                 isPrice = true
-                
             }
         }
-        if isPrice{
+        if event!.ispublic == 1 && isPrice{
             //There's a price
             let refreshAlert = UIAlertController(title: "Join event", message: "The fee is $\(event!.price!.floatValue)", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: "Already Paid", style: .Default, handler:{(action: UIAlertAction) in
+                self.joinEvent()
+            }))
             
             refreshAlert.addAction(UIAlertAction(title: "Use Voucher", style: .Default, handler: { (action: UIAlertAction!) in
                 
@@ -322,55 +384,95 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
             
             refreshAlert.addAction(UIAlertAction(title: "Pay with Credit Card", style: .Cancel, handler:{(action:UIAlertAction!) in
                 self.performSegueWithIdentifier(Constants.PayCreditSegue, sender: nil)
-                
             }))
             
             presentViewController(refreshAlert, animated: true, completion: nil)
         }else{
-
-            sender.enabled = false
-            self.loadingView.startAnimating()
-            let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventRequestsController,
-                          StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.AddMethod,
-                          StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
-                          StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
-                          StudyPopClient.ParameterKeys.SafeKey : event!.safekey!,
-                          StudyPopClient.ParameterKeys.Token : user!.token!
-            ]
-            StudyPopClient.sharedInstance.httpPost("", parameters: params, jsonBody: ""){(results,error) in
-                
-                
-                func sendError(error: String){
-                    self.simpleError(error)
-                    
-                    performOnMain(){
-                        sender.enabled = true
-                    }
+            if event!.ispublic == 1{
+                joinEvent()
+            }else{
+                makeEventRequest()
+            }
+        }
+    }
+    
+    // MARK: - Formally Join Event
+    func joinEvent(){
+        self.loadingView.startAnimating()
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventMembersController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.AddMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.SafeKey : event!.safekey!,
+                      StudyPopClient.ParameterKeys.Token : user!.token!
+        ]
+        StudyPopClient.sharedInstance.httpPost("", parameters: params, jsonBody: ""){(results,error) in
+            
+            func sendError(error: String){
+                self.simpleError(error)
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                sendError("Nothing came back from the server")
+                return
+            }
+            guard stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("API Error: \(results[StudyPopClient.JSONReponseKeys.Error]!)")
+                return
+            }
+            
+                if let eventMemberDict = results![StudyPopClient.JSONReponseKeys.EventMember] as? [String:AnyObject]{
+                    self.eventMember = EventMember.init(dictionary: eventMemberDict, context: self.sharedContext)
+                    print("You found an event member in the server")
+                }else{
+                    print("Nothing was found in this search")
+            }
+                performOnMain(){
+                    self.loadingView.stopAnimating()
+                    self.getLiveEvent()
                 }
-                
-                guard error == nil else{
-                    sendError(error!.localizedDescription)
-                    return
+        }
+    }
+    
+    // MARK: - EventRequest for Event
+    func makeEventRequest(){
+        self.loadingView.startAnimating()
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventRequestsController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.AddMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.SafeKey : event!.safekey!,
+                      StudyPopClient.ParameterKeys.Token : user!.token!
+        ]
+        StudyPopClient.sharedInstance.httpPost("", parameters: params, jsonBody: ""){(results,error) in
+            
+            func sendError(error: String){
+                self.simpleError(error)
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                sendError("Nothing came back from the server")
+                return
+            }
+            guard stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("API Error: \(results[StudyPopClient.JSONReponseKeys.Error]!)")
+                return
+            }
+            
+            if let safekey = results[StudyPopClient.JSONReponseKeys.SafeKey] as? String{
+                print("You made a request with key: \(safekey)")
+                performOnMain(){
+                    self.loadingView.stopAnimating()
                 }
-                
-                guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
-                    sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error]!)")
-                    return
-                }
-                
-                if let safekey = results[StudyPopClient.JSONReponseKeys.SafeKey] as? String{
-                    print("You made a request with key: \(safekey)")
-                    performOnMain(){
-                        self.loadingView.stopAnimating()
-                        if self.event!.ispublic?.intValue == 1{
-                            //Refresh the page as you're probably a member now
-                            self.getLiveEvent()
-                        }else{
-                                sender.title = "Requested"
-                        }
-                        
-                    }
-                }
+                self.simpleError("Your request is in. You just have to wait for approval")
             }
         }
     }
@@ -455,7 +557,13 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
     }
     
     @IBAction func unwindToEventView(sender: UIStoryboardSegue){
-       
+       //You've unwinded here
+        if let svc = sender.sourceViewController as? PayWithCreditViewController{
+            if let payment = svc.payment{
+                //You've made a payment, now create the member
+                self.joinEvent()
+            }
+        }
     }
     
     // Allows users to view members of this event
@@ -484,6 +592,17 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
                 performSegueWithIdentifier(Constants.AttendanceSegue, sender: nil)
             }else{
                 performSegueWithIdentifier(Constants.CheckMeInSegue, sender: nil)
+            }
+        }
+    }
+    
+    
+    @IBAction func eventPaymentsClicked(sender: UIButton) {
+        if eventMember != nil{
+            if eventMember!.role! == 1{
+                performSegueWithIdentifier(Constants.EventPaymentsSegue, sender: nil)
+            }else{
+                
             }
         }
     }
@@ -547,6 +666,11 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
                 pvc.Controller = Constants.Controller
                 pvc.Action = event!.safekey!
                 pvc.total = event!.price!.floatValue
+            }
+        }else if segue.identifier == Constants.EventPaymentsSegue{
+            if let pvc = segue.destinationViewController as? EventPaymentsViewController{
+                pvc.user = user!
+                pvc.event = event!
             }
         }
     }

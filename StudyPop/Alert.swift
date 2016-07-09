@@ -60,6 +60,7 @@ class Alert: NSManagedObject {
         safekey = dictionary[Keys.SafeKey] as? String
         createdString = dictionary[Keys.Created] as? String
         image = dictionary[Keys.Image] as? String
+        action = dictionary[Keys.Action] as? String
         blob = dictionary[Keys.Blob] as? NSData
         if createdString != nil{
             if let startDate = StudyPopClient.sharedDateFormatter.dateFromString(createdString!.trunc(16)){

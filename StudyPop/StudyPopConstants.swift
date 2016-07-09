@@ -134,6 +134,8 @@ extension StudyPopClient{
         static let Count = "Count"
         static let Attendances = "Attendances"
         static let Attendance = "Attendance"
+        static let Payment = "Payment"
+        static let Payments = "Payments"
     }
     
     struct JSONResponseValues{

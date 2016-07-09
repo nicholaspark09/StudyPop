@@ -274,7 +274,7 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
         let title = eventTitleTextField.text!
         let info = infoTextView.text!
         let maxPeople = maxTextField.text!
-        let isPublic = "\(pickerView.selectedRowInComponent(0))"
+        let isPublic = "\(pickerView.selectedRowInComponent(0)+1)"
         let price = priceTextField.text!
         if title.characters.count < 1{
             self.simpleError("Please put in a title")

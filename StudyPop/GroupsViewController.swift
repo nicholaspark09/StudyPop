@@ -414,8 +414,8 @@ class GroupsViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 }else if results != nil{
                     performOnMain(){
                         print("got back in image")
-                        self.groups[indexPath.row].thumbblob = results!
-                        cell.group = self.groups[indexPath.row]
+                        group.thumbblob = results!
+                        cell.group = group
                         CoreDataStackManager.sharedInstance().saveContext()
                     }
                 }

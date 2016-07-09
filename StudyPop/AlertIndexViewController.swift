@@ -24,6 +24,8 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
         static let EventRequestSegue = "EventRequest Segue"
         static let RefreshingTitle = "Loading..."
         static let RefreshTitle = "Refresh"
+        static let EventsController = "events"
+        static let EventViewSegue = "EventView Segue"
     }
     
     let threshold = 50.0
@@ -113,7 +115,20 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
                 performSegueWithIdentifier(Constants.EventRequestSegue, sender: alert)
             }else if alert.controller == Constants.GroupRequestsController{
                 performSegueWithIdentifier(Constants.GroupRequestSegue, sender: alert)
+            }else if alert.controller == Constants.EventsController{
+                performSegueWithIdentifier(Constants.EventViewSegue, sender: alert)
             }
+        }
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            
+            dropAlert(alerts[indexPath.row].user!)
+            alerts.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
     
@@ -122,7 +137,39 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
         getCount()
     }
     
-    
+    // MARK: Drop Alerts from Server
+    func dropAlert(safekey:String){
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.AlertsController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.DeleteMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.Token : user!.token!,
+                      StudyPopClient.ParameterKeys.SafeKey : safekey
+        ]
+        StudyPopClient.sharedInstance.httpGet("", parameters:params){(results,error) in
+            func sendError(error: String){
+                self.simpleError(error)
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                sendError("Got nothing back")
+                return
+            }
+            
+            guard stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("API Error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                return
+            }
+            
+            print("Successsfully deleted it")
+        }
+
+    }
     
 
     // MARK: -IndexAlerts from Server
@@ -231,6 +278,12 @@ class AlertIndexViewController: UIViewController, UITableViewDelegate, UITableVi
             if let rvc = segue.destinationViewController as? EventRequestViewController{
                 rvc.user = user!
                 rvc.alert = alert
+            }
+        }else if segue.identifier == Constants.EventViewSegue{
+            let alert = sender as! Alert
+            if let rvc = segue.destinationViewController.contentViewController as? EventViewController{
+                rvc.user = user!
+                rvc.safekey = alert.action!
             }
         }
     }

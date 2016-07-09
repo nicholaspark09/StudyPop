@@ -162,7 +162,6 @@ extension StudyPopClient{
             }
             //print("The body was \(body)")
             let newString = body.stringByRemovingPercentEncoding
-            print("The new string is \(newString!)")
             if let data = NSData(base64EncodedString: newString!, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters){
                 completionHandlerForPicture(results: data, error: nil)
             }else{

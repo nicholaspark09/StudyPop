@@ -148,6 +148,22 @@
         <relationship name="hasEvent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Event" inverseName="location" inverseEntity="Event" syncable="YES"/>
         <relationship name="hasGroup" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="location" inverseEntity="Group" syncable="YES"/>
     </entity>
+    <entity name="Payment" representedClassName=".Payment" syncable="YES">
+        <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="controller" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="currency" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="paymenttype" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stripeid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalpaid" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Photo" representedClassName=".Photo" syncable="YES">
         <attribute name="blob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
         <attribute name="controller" optional="YES" attributeType="String" syncable="YES"/>
@@ -228,5 +244,6 @@
         <element name="Subject" positionX="-63" positionY="90" width="128" height="150"/>
         <element name="Thumb" positionX="-45" positionY="135" width="128" height="180"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="Payment" positionX="-45" positionY="135" width="128" height="255"/>
     </elements>
 </model>

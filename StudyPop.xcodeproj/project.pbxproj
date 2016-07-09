@@ -96,6 +96,9 @@
 		AFCB269A1CE8E1C400754A6D /* StudyPopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB26991CE8E1C400754A6D /* StudyPopUITests.swift */; };
 		AFD3A6001D28B7D300D0F0B3 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD3A5FE1D28B7D300D0F0B3 /* Attendance.swift */; };
 		AFD3A6021D28BAB900D0F0B3 /* AttendanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD3A6011D28BAB900D0F0B3 /* AttendanceTableViewCell.swift */; };
+		AFE46E981D3097E800311857 /* Payment.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE46E961D3097E800311857 /* Payment.swift */; };
+		AFE46E9A1D30D38000311857 /* EventPaymentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE46E991D30D38000311857 /* EventPaymentsViewController.swift */; };
+		AFE46E9C1D30D91800311857 /* EventPaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE46E9B1D30D91800311857 /* EventPaymentTableViewCell.swift */; };
 		AFFA64D11D274591006B3A60 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFFA64CF1D274591006B3A60 /* FBSDKCoreKit.framework */; };
 		AFFA64D21D274591006B3A60 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFFA64D01D274591006B3A60 /* FBSDKLoginKit.framework */; };
 		AFFA64D41D274598006B3A60 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFFA64D31D274598006B3A60 /* FBSDKShareKit.framework */; };
@@ -221,6 +224,9 @@
 		AFCB269B1CE8E1C400754A6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AFD3A5FE1D28B7D300D0F0B3 /* Attendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
 		AFD3A6011D28BAB900D0F0B3 /* AttendanceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceTableViewCell.swift; sourceTree = "<group>"; };
+		AFE46E961D3097E800311857 /* Payment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payment.swift; sourceTree = "<group>"; };
+		AFE46E991D30D38000311857 /* EventPaymentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPaymentsViewController.swift; sourceTree = "<group>"; };
+		AFE46E9B1D30D91800311857 /* EventPaymentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPaymentTableViewCell.swift; sourceTree = "<group>"; };
 		AFFA64CF1D274591006B3A60 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		AFFA64D01D274591006B3A60 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		AFFA64D31D274598006B3A60 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -311,6 +317,7 @@
 				AFFA64D51D274748006B3A60 /* StudyPop-Bridging-Header.h */,
 				AFFA64D81D27475E006B3A60 /* ObjectiveCFile.h */,
 				AFD3A5FE1D28B7D300D0F0B3 /* Attendance.swift */,
+				AFE46E961D3097E800311857 /* Payment.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -345,6 +352,7 @@
 				AF9C23441D23EEAF008FB701 /* EventThumbCollectionViewCell.swift */,
 				AF1819CA1D2408E500795ED6 /* AlertTableViewCell.swift */,
 				AFD3A6011D28BAB900D0F0B3 /* AttendanceTableViewCell.swift */,
+				AFE46E9B1D30D91800311857 /* EventPaymentTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -453,6 +461,7 @@
 				AFB5A88E1D28AB64000ED889 /* CheckMeInViewController.swift */,
 				AF1C26E11D2D276100F65D3E /* LocationViewController.swift */,
 				AF1B52BC1D2D523E0041038E /* PayWithCreditViewController.swift */,
+				AFE46E991D30D38000311857 /* EventPaymentsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -676,6 +685,7 @@
 				AF59A5561D0B68C000CC0C1F /* EventViewController.swift in Sources */,
 				AFA87A2F1D22B1660004B228 /* EventPost.swift in Sources */,
 				AF0077961CF5393E0056904F /* RegisterViewController.swift in Sources */,
+				AFE46E981D3097E800311857 /* Payment.swift in Sources */,
 				AF8043AC1CFE5CC400A2B7A4 /* WDImageCropOverlayView.swift in Sources */,
 				AF5AA9D61D0561A80020D5BD /* ProfileViewController.swift in Sources */,
 				AFA140401D065432004C3DB0 /* GroupMemberTableViewCell.swift in Sources */,
@@ -703,6 +713,7 @@
 				AF112A5E1CFBDAFA00FE1DB9 /* GroupViewController.swift in Sources */,
 				AFCAE1E21D1BF49000955601 /* Thumb.swift in Sources */,
 				AF4FE47A1D15B48400C60F64 /* GroupPost.swift in Sources */,
+				AFE46E9A1D30D38000311857 /* EventPaymentsViewController.swift in Sources */,
 				AF8043AB1CFE5CC400A2B7A4 /* WDCropBorderView.swift in Sources */,
 				AF5AA9DC1D056B730020D5BD /* Profile.swift in Sources */,
 				AF79B56E1D07BD0B00A046D4 /* Event.swift in Sources */,
@@ -724,6 +735,7 @@
 				AFCB267F1CE8E1C400754A6D /* StudyPop.xcdatamodeld in Sources */,
 				AF8043AE1CFE5CC400A2B7A4 /* WDImageCropViewController.swift in Sources */,
 				AF5AA9DE1D0580730020D5BD /* EditProfileViewController.swift in Sources */,
+				AFE46E9C1D30D91800311857 /* EventPaymentTableViewCell.swift in Sources */,
 				AF070A911D072F8B002515AD /* GroupEventsTableViewController.swift in Sources */,
 				AF5AA9D81D0567440020D5BD /* PeopleViewController.swift in Sources */,
 				AF7C39261CFD438E0004BB83 /* LocationPickViewController.swift in Sources */,

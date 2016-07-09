@@ -71,6 +71,15 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
         self.navigationItem.setRightBarButtonItem(saveButton, animated: true)
         title = event!.name!
         location = event!.location!
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+        if event!.start != nil{
+            startDate = dateFormatter.stringFromDate(event!.start!)
+            endDate = dateFormatter.stringFromDate(event!.end!)
+        }
+        if event!.deadline != nil{
+            deadlineDate = dateFormatter.stringFromDate(event!.deadline!)
+        }
         updateUI()
     }
     
@@ -103,7 +112,11 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
                     self.locationButton.setTitle("Lat: \(self.event!.location!.lat!)", forState: .Normal)
                 }
                 if self.event!.ispublic != nil{
-                    self.isPublicPickerView.selectRow(Int(self.event!.ispublic!.intValue), inComponent: 0, animated: true)
+                    var value = 0
+                    if self.event!.ispublic != 0{
+                        value = self.event!.ispublic!.intValue-1
+                    }
+                    self.isPublicPickerView.selectRow(Int(value), inComponent: 0, animated: true)
                 }
                 if self.event!.deadline != nil{
                     self.deadlineButton.setTitle(self.event!.deadline!.description, forState: .Normal)
@@ -188,7 +201,7 @@ class EventEditViewController: UIViewController, WDImagePickerDelegate, UIImageP
         let title = titleTextField.text!
         let info = infoTextView.text!
         let maxPeople = maxPeopleTextField.text!
-        let isPublic = "\(isPublicPickerView.selectedRowInComponent(0))"
+        let isPublic = "\(isPublicPickerView.selectedRowInComponent(0)+1)"
         let price = priceTextField.text!
         if title.characters.count < 1{
             self.simpleError("Please put in a title")

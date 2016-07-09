@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import CoreData
+
 
 class PayWithCreditViewController: UIViewController {
 
     struct Constants{
-        
+        static let EventPayCompletedSegue = "EventPayCompleted Segue"
     }
     
     
@@ -19,7 +21,11 @@ class PayWithCreditViewController: UIViewController {
     var name = ""
     var Controller = ""
     var Action = ""
+    var payment:Payment?
     var total:Float?
+    lazy var sharedContext: NSManagedObjectContext = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
     
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var creditTextField: UITextField!
@@ -91,7 +97,11 @@ class PayWithCreditViewController: UIViewController {
                       StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
                       StudyPopClient.ParameterKeys.Token : user!.token!,
         ]
-        let jsonBody = [StudyPopClient.ParameterKeys.StripeToken : token, StudyPopClient.ParameterKeys.Name : name, StudyPopClient.ParameterKeys.Controller : Controller, StudyPopClient.ParameterKeys.Action : Action, Event.Keys.Price : "\(total!)", StudyPopClient.ParameterKeys.StripeId : stripeId]
+        let date = NSDate()
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+        let created = formatter.stringFromDate(date)
+        let jsonBody = [StudyPopClient.ParameterKeys.StripeToken : token, StudyPopClient.ParameterKeys.Name : name, StudyPopClient.ParameterKeys.Controller : Controller, StudyPopClient.ParameterKeys.Action : Action, Event.Keys.Price : "\(total!)", StudyPopClient.ParameterKeys.StripeId : stripeId, Payment.Keys.Created : created]
         performOnMain(){
             self.loadinvView.startAnimating()
             self.errorLabel.text = "Charging card"
@@ -107,17 +117,32 @@ class PayWithCreditViewController: UIViewController {
                 sendError(error!.localizedDescription)
                 return
             }
-            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String where stat == StudyPopClient.JSONResponseValues.Success else{
-                sendError("Error: \(results[StudyPopClient.JSONReponseKeys.Error])")
-                let error = results[StudyPopClient.JSONReponseKeys.Error] as! String
-                print("Error: \(error)")
+            
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                sendError("Got nothing back from the server")
                 return
             }
+            guard stat == StudyPopClient.JSONResponseValues.Success else{
+                let error = results[StudyPopClient.JSONReponseKeys.Error] as! String
+                sendError("Error: \(error)")
+                return
+            }
+            
             
             performOnMain(){
                 self.loadinvView.stopAnimating()
                 self.errorLabel.text = "Successfully made payment"
             }
+            
+            if let dict = results[StudyPopClient.JSONReponseKeys.Payment] as? [String:AnyObject]{
+                self.payment = Payment.init(dictionary: dict, context: self.sharedContext)
+                performOnMain(){
+                    CoreDataStackManager.sharedInstance().saveContext()
+                    self.performSegueWithIdentifier(Constants.EventPayCompletedSegue, sender: nil)
+                }
+            }
+            
+            
         }
     }
 
