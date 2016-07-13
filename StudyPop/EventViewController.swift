@@ -36,6 +36,7 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
         static let Controller = "events"
         static let Action = ""
         static let EventPaymentsSegue = "EventPayments Segue"
+        static let PaymentViewSegue = "PaymentView Segue"
     }
     
     
@@ -602,7 +603,7 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
             if eventMember!.role! == 1{
                 performSegueWithIdentifier(Constants.EventPaymentsSegue, sender: nil)
             }else{
-                
+                performSegueWithIdentifier(Constants.PaymentViewSegue, sender: nil)
             }
         }
     }
@@ -669,6 +670,11 @@ class EventViewController: UIViewController, MKMapViewDelegate, UIPopoverPresent
             }
         }else if segue.identifier == Constants.EventPaymentsSegue{
             if let pvc = segue.destinationViewController as? EventPaymentsViewController{
+                pvc.user = user!
+                pvc.event = event!
+            }
+        }else if segue.identifier == Constants.PaymentViewSegue{
+            if let pvc = segue.destinationViewController as? PaymentViewController{
                 pvc.user = user!
                 pvc.event = event!
             }

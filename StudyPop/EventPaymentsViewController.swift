@@ -9,11 +9,12 @@
 import UIKit
 import CoreData
 
-class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIPopoverPresentationControllerDelegate {
 
     struct Constants{
         static let CellReuseIdentifier = "EventPayment Cell"
         static let Controller = "events"
+        static let CashPaySegue = "AddCashPay Segue"
     }
     
     @IBOutlet var nameLabel: UILabel!
@@ -144,14 +145,22 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
     }
 
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
     }
-    */
+    
+    // MARK: - Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == Constants.CashPaySegue{
+            if let cvc = segue.destinationViewController as? CashPayViewController{
+                cvc.modalPresentationStyle = UIModalPresentationStyle.Popover
+                cvc.popoverPresentationController!.delegate = self
+                cvc.event = event!
+                cvc.user = user!
+            }
+        }
+    }
+
 
 }
