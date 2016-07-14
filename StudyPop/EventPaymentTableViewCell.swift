@@ -14,8 +14,9 @@ class EventPaymentTableViewCell: UITableViewCell {
     @IBOutlet var paymentImageView: UIImageView!
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
+    @IBOutlet var priceLabel: UILabel!
     
-    
+    @IBOutlet var infoTextView: UITextView!
     
     
     override func awakeFromNib() {

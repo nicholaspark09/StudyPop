@@ -13,11 +13,13 @@ class CashPayViewController: UIViewController {
 
     struct Constants{
         static let CashPaymentMethod = "cashpayment"
+        static let UnwindToPaymentsSegue = "UnwindToPayments Segue"
     }
     
     
     var user:User?
     var event:Event?
+    var payment:Payment?
     lazy var sharedContext: NSManagedObjectContext = {
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }()
@@ -90,10 +92,10 @@ class CashPayViewController: UIViewController {
             
             if stat == StudyPopClient.JSONResponseValues.Success{
                 if let paymentDict = results[StudyPopClient.JSONReponseKeys.Payment] as? [String:AnyObject]{
-                    let payment = Payment.init(dictionary:paymentDict, context: self.sharedContext)
+                    self.payment = Payment.init(dictionary:paymentDict, context: self.sharedContext)
                     //Send this back!
                     performOnMain(){
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        self.performSegueWithIdentifier(Constants.UnwindToPaymentsSegue, sender: nil)
                     }
                 }
             }else{
