@@ -21,6 +21,7 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
         static let RefundTitle = "Refund"
         static let EmailTitle = "Email Receipt"
         static let CancelTitle = "Cancel"
+        static let AddCreditPaySegue = "AddCreditPay Segue"
     }
     
     
@@ -33,7 +34,7 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
     @IBOutlet var pricePerPersonLabel: UILabel!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var loadingView: UIActivityIndicatorView!
-    
+    var totalInAccount = 0.0
     
     
     var event:Event?
@@ -81,8 +82,9 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
         refreshAlert.addAction(UIAlertAction(title: Constants.RefundTitle, style: .Default, handler: { (action: UIAlertAction!) in
             //Start Deleting...
             self.loadingView.startAnimating()
-            let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventsController,
-                StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.DeleteMethod,
+
+            let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.PaymentsController,
+                StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.RefundMethod,
                 StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
                 StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
                 StudyPopClient.ParameterKeys.SafeKey: payment.safekey!,
@@ -103,9 +105,17 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
                     return
                 }
                 
+                self.simpleError("Refund has been made!")
+                performOnMain(){
+                    self.totalInAccount = self.totalInAccount - payment.totalpaid!.doubleValue
+                    self.payments.removeAtIndex(indexPath.row)
+                    self.updateUI()
+                }
+                
             }
+ 
         }))
-        
+
         
         refreshAlert.addAction(UIAlertAction(title: Constants.EmailTitle, style: .Default, handler:nil))
         
@@ -140,7 +150,7 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            
+            //totalInAccount = totalInAccount - payments[indexPath.row].totalpaid!
             dropPayment(payments[indexPath.row].safekey!)
             payments.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
@@ -190,7 +200,9 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
                         for i in paymentsDictionary{
                             let dict = i as Dictionary<String,AnyObject>
                             let payment = Payment.init(dictionary:dict, context: self.sharedContext)
+                            self.totalInAccount = self.totalInAccount+payment.totalpaid!.doubleValue
                             self.payments.append(payment)
+                            
                         }
                         if paymentsDictionary.count < 500{
                             self.canLoadMore = false
@@ -210,6 +222,7 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
         if let cpc = segue.sourceViewController as? CashPayViewController{
             let payment = cpc.payment!
             self.payments.insert(payment, atIndex: 0)
+            totalInAccount = totalInAccount+payment.totalpaid!.doubleValue
             updateUI()
         }
     }
@@ -224,6 +237,7 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
         performOnMain(){
             self.loadingView.stopAnimating()
             self.tableView.reloadData()
+            self.totalLabel.text = "\(self.totalInAccount)"
         }
     }
     
@@ -274,6 +288,13 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
                 cvc.popoverPresentationController!.delegate = self
                 cvc.event = event!
                 cvc.user = user!
+            }
+        }else if segue.identifier == Constants.AddCreditPaySegue{
+            if let acp = segue.destinationViewController as? AddCreditPayViewController{
+                acp.modalPresentationStyle = UIModalPresentationStyle.Popover
+                acp.popoverPresentationController!.delegate = self
+                acp.event = event!
+                acp.user = user!
             }
         }
     }

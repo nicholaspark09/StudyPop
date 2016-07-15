@@ -95,6 +95,8 @@ extension StudyPopClient{
         static let FacebookLoginMethod = "iphonefacebook"
         static let MyIndexMethod = "myindex"
         static let UnseenCount = "unseencount"
+        static let RefundMethod = "refund"
+        static let CreditPayment = "creditpayment"
     }
     
     struct JSONReponseKeys{

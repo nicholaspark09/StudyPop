@@ -20,6 +20,7 @@
 		AF0924DB1D1AB3A7003D8656 /* GroupRequestIndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0924DA1D1AB3A7003D8656 /* GroupRequestIndexViewController.swift */; };
 		AF0924DD1D1AB59A003D8656 /* GroupRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0924DC1D1AB59A003D8656 /* GroupRequestTableViewCell.swift */; };
 		AF0B9C1D1D09C166005FD452 /* PickDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0B9C1C1D09C166005FD452 /* PickDateViewController.swift */; };
+		AF0E02051D3939EA0069ED20 /* AddCreditPayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0E02041D3939EA0069ED20 /* AddCreditPayViewController.swift */; };
 		AF0E8F081D12C3F500085B02 /* EventMembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0E8F071D12C3F500085B02 /* EventMembersTableViewController.swift */; };
 		AF0E8F0A1D12CE0500085B02 /* EventMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0E8F091D12CE0500085B02 /* EventMemberTableViewCell.swift */; };
 		AF112A5A1CFBC3C700FE1DB9 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF112A581CFBC3C700FE1DB9 /* Group.swift */; };
@@ -144,6 +145,7 @@
 		AF0924DA1D1AB3A7003D8656 /* GroupRequestIndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRequestIndexViewController.swift; sourceTree = "<group>"; };
 		AF0924DC1D1AB59A003D8656 /* GroupRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRequestTableViewCell.swift; sourceTree = "<group>"; };
 		AF0B9C1C1D09C166005FD452 /* PickDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickDateViewController.swift; sourceTree = "<group>"; };
+		AF0E02041D3939EA0069ED20 /* AddCreditPayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCreditPayViewController.swift; sourceTree = "<group>"; };
 		AF0E8F071D12C3F500085B02 /* EventMembersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventMembersTableViewController.swift; sourceTree = "<group>"; };
 		AF0E8F091D12CE0500085B02 /* EventMemberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventMemberTableViewCell.swift; sourceTree = "<group>"; };
 		AF112A581CFBC3C700FE1DB9 /* Group.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
@@ -468,6 +470,7 @@
 				AFE46E991D30D38000311857 /* EventPaymentsViewController.swift */,
 				AF8FB90E1D32AB720057B4C1 /* PaymentViewController.swift */,
 				AF806D211D36656600ACFECB /* CashPayViewController.swift */,
+				AF0E02041D3939EA0069ED20 /* AddCreditPayViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -689,6 +692,7 @@
 				AF1789891CFCF5130026B9E5 /* AddGroupViewController.swift in Sources */,
 				AF806D221D36656700ACFECB /* CashPayViewController.swift in Sources */,
 				AF9E70E61CFB1F6100E8B8F6 /* StudyPickerViewController.swift in Sources */,
+				AF0E02051D3939EA0069ED20 /* AddCreditPayViewController.swift in Sources */,
 				AFCB26791CE8E1C400754A6D /* LoginViewController.swift in Sources */,
 				AF59A5561D0B68C000CC0C1F /* EventViewController.swift in Sources */,
 				AFA87A2F1D22B1660004B228 /* EventPost.swift in Sources */,
