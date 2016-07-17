@@ -66,6 +66,7 @@ extension StudyPopClient{
         static let AttendancesController = "attendances"
         static let PaymentsController = "payments"
         static let AlertsController = "alerts"
+        static let AccountsController = "accounts"
         static let EventMembersController = "eventmembers"
         static let EventPostsController = "eventposts"
         static let GroupPostsController = "groupposts"
@@ -138,10 +139,13 @@ extension StudyPopClient{
         static let Attendance = "Attendance"
         static let Payment = "Payment"
         static let Payments = "Payments"
+        static let Accounts = "Accounts"
+        static let Account = "Account"
     }
     
     struct JSONResponseValues{
         static let Success = "Success"
         static let Failure = "Failure"
+        static let Uninitialized = "Uninitialized"
     }
 }

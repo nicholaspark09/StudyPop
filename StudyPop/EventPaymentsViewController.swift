@@ -224,6 +224,11 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
             self.payments.insert(payment, atIndex: 0)
             totalInAccount = totalInAccount+payment.totalpaid!.doubleValue
             updateUI()
+        }else if let apc = segue.sourceViewController as? AddCreditPayViewController{
+            let payment = apc.payment!
+            self.payments.insert(payment, atIndex: 0)
+            totalInAccount = totalInAccount+payment.totalpaid!.doubleValue
+            updateUI()
         }
     }
     
@@ -237,7 +242,8 @@ class EventPaymentsViewController: UIViewController, UITableViewDataSource, UITa
         performOnMain(){
             self.loadingView.stopAnimating()
             self.tableView.reloadData()
-            self.totalLabel.text = "\(self.totalInAccount)"
+            let total = Double(round(100*self.totalInAccount)/100)
+            self.totalLabel.text = "\(total)"
         }
     }
     

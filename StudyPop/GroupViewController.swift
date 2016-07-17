@@ -28,10 +28,12 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         static let GroupPostsSegue = "GroupPosts Segue"
         static let GroupRequestsSegue = "GroupRequests Segue"
         static let GroupPicsSegue = "GroupPics Segue"
+        static let AddAccountSegue = "AddAccount Segue"
+        static let AccountViewSegue = "AccountView Segue"
     }
     
     
-    
+    @IBOutlet var accountButton: UIButton!
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var realInfoView: UILabel!
     @IBOutlet var loadingView: UIActivityIndicatorView!
@@ -171,6 +173,7 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
                             deleteButton.addTarget(self, action: #selector(GroupViewProtocol.deleteClicked), forControlEvents: UIControlEvents.TouchUpInside)
                             let rightDeleteButton = UIBarButtonItem(customView: deleteButton)
                             self.navigationItem.setRightBarButtonItems([editButton,rightDeleteButton], animated: true)
+                            self.accountButton.hidden = false
                         }
                     }
                 }
@@ -178,6 +181,65 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
             self.updateUI()
         }
     }
+    
+    //Click on Account, check for the account first
+    @IBAction func accountClicked(sender: AnyObject) {
+        
+        let account = self.findAccount(group!.safekey!)
+        if account != nil{
+            self.performSegueWithIdentifier(Constants.AccountViewSegue, sender: account)
+        }else{
+            loadingView.startAnimating()
+            let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.AccountsController,
+                          StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.ViewMethod,
+                          StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                          StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                          StudyPopClient.ParameterKeys.SafeKey: group!.safekey!,
+                          StudyPopClient.ParameterKeys.Token : user!.token!
+            ]
+            StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
+                
+                performOnMain(){
+                    self.loadingView.stopAnimating()
+                }
+                
+                func sendError(error: String){
+                    self.simpleError(error)
+                }
+                
+                guard error == nil else{
+                    print("An error from GET: \(error!)")
+                    sendError(error!.localizedDescription)
+                    return
+                }
+                
+                guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                    sendError("No response from server")
+                    return
+                }
+                
+                if stat == StudyPopClient.JSONResponseValues.Uninitialized{
+                    print("You ended up here")
+                    //Send them to the account add controller
+                    performOnMain(){
+                        self.performSegueWithIdentifier(Constants.AddAccountSegue, sender: nil)
+                    }
+                }else if stat == StudyPopClient.JSONResponseValues.Success{
+                    if let dict = results[StudyPopClient.JSONReponseKeys.Account] as? [String:AnyObject]{
+                        let account = Account.init(dictionary: dict, context: self.sharedContext)
+                        account.groupkey = self.group!.safekey!
+                        performOnMain(){
+                            CoreDataStackManager.sharedInstance().saveContext()
+                            self.performSegueWithIdentifier(Constants.AccountViewSegue, sender: account)
+                        }
+                    }
+                }else{
+                    sendError("Error: \(results[StudyPopClient.JSONReponseKeys.Error])")
+                }
+            }
+        }
+    }
+    
     
     func getUser(){
         let request = NSFetchRequest(entityName: "User")
@@ -258,6 +320,11 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         if let svc = sender.sourceViewController as? GroupEditViewController{
             self.group = svc.group!
             self.updateUI()
+        }else if let avc = sender.sourceViewController as? AddAccountViewController{
+            let account = avc.account
+            if account != nil{
+                self.performSegueWithIdentifier(Constants.AccountViewSegue, sender: account)
+            }
         }
     }
 
@@ -429,6 +496,23 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
         }
         return nil
     }
+    
+    func findAccount(safekey: String) -> Account?{
+        let request = NSFetchRequest(entityName: "Account")
+        request.predicate = NSPredicate(format: "groupkey == %@", safekey)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0{
+                if let temp = results[0] as? Account{
+                    return temp
+                }
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The error was \(fetchError)")
+        }
+        return nil
+    }
 
 
     // MARK: - Navigation
@@ -463,6 +547,18 @@ class GroupViewController: UIViewController, MKMapViewDelegate {
             if let gpc = segue.destinationViewController as? GroupPicIndexViewController{
                 gpc.user = user!
                 gpc.group = group!
+            }
+        }else if segue.identifier == Constants.AddAccountSegue{
+            if let avc = segue.destinationViewController as? AddAccountViewController{
+                avc.user = user!
+                avc.group = group!
+            }
+        }else if segue.identifier == Constants.AccountViewSegue{
+            let account = sender as! Account
+            if let avc = segue.destinationViewController as? AccountViewController{
+                avc.user = user!
+                avc.account = account
+                avc.group = group!
             }
         }
     }

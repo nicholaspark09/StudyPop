@@ -9,6 +9,10 @@
 import UIKit
 import CoreData
 
+@objc protocol PayWithCreditProtocol{
+    func hideKeyboard()
+    //func tokenChanged(notification:NSNotification)
+}
 
 class PayWithCreditViewController: UIViewController {
 
@@ -40,6 +44,8 @@ class PayWithCreditViewController: UIViewController {
         super.viewDidLoad()
 
         textView.text = "Event: \(name), Price: $\(total!)"
+        let tap = UITapGestureRecognizer(target: self, action: #selector(PayWithCreditProtocol.hideKeyboard))
+        view.addGestureRecognizer(tap)
     }
 
     
@@ -88,6 +94,11 @@ class PayWithCreditViewController: UIViewController {
             
         }
         
+    }
+    
+    //Hide the keyboard
+    func hideKeyboard(){
+        view.endEditing(true)
     }
     
     func chargeCard(token: String, stripeId: String){

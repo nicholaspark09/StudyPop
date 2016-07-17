@@ -89,17 +89,52 @@ class EventMembersTableViewController: UITableViewController {
         performSegueWithIdentifier(Constants.ProfileViewSegue, sender: member)
     }
 
-    /*
-    // Override to support editing the table view.
+    
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            // Delete the row from the data source
+            dropMember(members[indexPath.row].safekey!)
+            members.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
+    func dropMember(safekey: String){
+        //Delete this payment from the server
+        let params = [StudyPopClient.ParameterKeys.Controller: StudyPopClient.ParameterValues.EventMembersController,
+                      StudyPopClient.ParameterKeys.Method: StudyPopClient.ParameterValues.DeleteMethod,
+                      StudyPopClient.ParameterKeys.ApiKey: StudyPopClient.Constants.ApiKey,
+                      StudyPopClient.ParameterKeys.ApiSecret: StudyPopClient.Constants.ApiSecret,
+                      StudyPopClient.ParameterKeys.SafeKey: safekey,
+                      StudyPopClient.ParameterKeys.Token : self.user!.token!
+        ]
+        StudyPopClient.sharedInstance.httpGet("", parameters: params){ (results,error) in
+            
+
+            func sendError(error: String){
+                self.simpleError(error)
+            }
+            
+            guard error == nil else{
+                sendError(error!.localizedDescription)
+                return
+            }
+            
+            guard let stat = results[StudyPopClient.JSONReponseKeys.Result] as? String else{
+                sendError("Nothing came back from the server")
+                return
+            }
+            
+            guard stat == StudyPopClient.JSONResponseValues.Success else{
+                sendError("StudyPop Api Returned error: \(results[StudyPopClient.JSONReponseKeys.Error]!)")
+                return
+            }
+            
+            
+        }
+    }
+
 
     /*
     // Override to support rearranging the table view.

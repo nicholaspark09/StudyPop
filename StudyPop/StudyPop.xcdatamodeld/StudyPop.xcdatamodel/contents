@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Automatic">
+    <entity name="Account" representedClassName=".Account" syncable="YES">
+        <attribute name="balance" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="clientid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="groupkey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="info" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modified" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="publishablekey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="safekey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="secretkey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stripeid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Alert" representedClassName=".Alert" syncable="YES">
         <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="blob" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" storedInTruthFile="YES" syncable="YES"/>
@@ -239,11 +255,12 @@
         <element name="GroupPost" positionX="-54" positionY="135" width="128" height="240"/>
         <element name="GroupRequest" positionX="-54" positionY="135" width="128" height="135"/>
         <element name="Location" positionX="-54" positionY="126" width="128" height="240"/>
+        <element name="Payment" positionX="-45" positionY="135" width="128" height="255"/>
         <element name="Photo" positionX="-54" positionY="135" width="128" height="225"/>
         <element name="Profile" positionX="-54" positionY="36" width="128" height="255"/>
         <element name="Subject" positionX="-63" positionY="90" width="128" height="150"/>
         <element name="Thumb" positionX="-45" positionY="135" width="128" height="180"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="195"/>
-        <element name="Payment" positionX="-45" positionY="135" width="128" height="255"/>
+        <element name="Account" positionX="-45" positionY="135" width="128" height="255"/>
     </elements>
 </model>

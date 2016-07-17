@@ -11,6 +11,11 @@ import CoreData
 
 class AddCreditPayViewController: UIViewController {
 
+    struct Constants{
+        static let EventPayCompletedSegue = "EventPayCompleted Segue"
+    }
+    
+    
     var user:User?
     var event:Event?
     var Controller = "events"
@@ -133,8 +138,7 @@ class AddCreditPayViewController: UIViewController {
                 self.payment = Payment.init(dictionary: dict, context: self.sharedContext)
                 performOnMain(){
                     CoreDataStackManager.sharedInstance().saveContext()
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                    //self.performSegueWithIdentifier(Constants.EventPayCompletedSegue, sender: nil)
+                    self.performSegueWithIdentifier(Constants.EventPayCompletedSegue, sender: nil)
                 }
             }
             

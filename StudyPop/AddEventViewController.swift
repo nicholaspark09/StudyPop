@@ -276,12 +276,21 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
         let maxPeople = maxTextField.text!
         let isPublic = "\(pickerView.selectedRowInComponent(0)+1)"
         let price = priceTextField.text!
+        var can = false
+        if price != "" && price != "0"{
+            let account = findAccount(group!.safekey!)
+            if account == nil{
+                self.simpleError("To set a price and accept credit cards for events you must create an account under your group. Go back to your group and click on the cash button")
+            }else{
+                can = true
+            }
+        }
         if title.characters.count < 1{
             self.simpleError("Please put in a title")
             eventTitleTextField.becomeFirstResponder()
         }else if startDate == ""{
             self.simpleError("Please put in a start date")
-        }else{
+        }else if can{
              sender.enabled = false
              var lat = ""
              var lng = ""
@@ -393,6 +402,24 @@ class AddEventViewController: UIViewController, UIPopoverPresentationControllerD
             }
  */
         }
+    }
+    
+    //Find the account
+    func findAccount(safekey: String) -> Account?{
+        let request = NSFetchRequest(entityName: "Account")
+        request.predicate = NSPredicate(format: "groupkey == %@", safekey)
+        do{
+            let results = try sharedContext.executeFetchRequest(request)
+            if results.count > 0{
+                if let temp = results[0] as? Account{
+                    return temp
+                }
+            }
+        } catch {
+            let fetchError = error as NSError
+            print("The error was \(fetchError)")
+        }
+        return nil
     }
 
     // Obviously...Finding the Subject

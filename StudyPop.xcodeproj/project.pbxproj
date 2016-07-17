@@ -82,6 +82,9 @@
 		AFA87A311D22B7150004B228 /* EventPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA87A301D22B7150004B228 /* EventPostsViewController.swift */; };
 		AFA87A331D22BAEF0004B228 /* EventPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA87A321D22BAEF0004B228 /* EventPostTableViewCell.swift */; };
 		AFA87A351D22C03F0004B228 /* AddEventPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA87A341D22C03F0004B228 /* AddEventPostViewController.swift */; };
+		AFA9DBCA1D3A14210051EB75 /* AddAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA9DBC91D3A14210051EB75 /* AddAccountViewController.swift */; };
+		AFA9DBCE1D3A15560051EB75 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA9DBCC1D3A15560051EB75 /* Account.swift */; };
+		AFA9DBD01D3A20D80051EB75 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFA9DBCF1D3A20D80051EB75 /* AccountViewController.swift */; };
 		AFB5A88B1D289E1B000ED889 /* CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB5A88A1D289E1B000ED889 /* CheckInViewController.swift */; };
 		AFB5A88D1D28A3BA000ED889 /* AttendanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB5A88C1D28A3BA000ED889 /* AttendanceViewController.swift */; };
 		AFB5A88F1D28AB64000ED889 /* CheckMeInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB5A88E1D28AB64000ED889 /* CheckMeInViewController.swift */; };
@@ -207,6 +210,9 @@
 		AFA87A301D22B7150004B228 /* EventPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPostsViewController.swift; sourceTree = "<group>"; };
 		AFA87A321D22BAEF0004B228 /* EventPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventPostTableViewCell.swift; sourceTree = "<group>"; };
 		AFA87A341D22C03F0004B228 /* AddEventPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddEventPostViewController.swift; sourceTree = "<group>"; };
+		AFA9DBC91D3A14210051EB75 /* AddAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountViewController.swift; sourceTree = "<group>"; };
+		AFA9DBCC1D3A15560051EB75 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		AFA9DBCF1D3A20D80051EB75 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		AFB5A88A1D289E1B000ED889 /* CheckInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInViewController.swift; sourceTree = "<group>"; };
 		AFB5A88C1D28A3BA000ED889 /* AttendanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceViewController.swift; sourceTree = "<group>"; };
 		AFB5A88E1D28AB64000ED889 /* CheckMeInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckMeInViewController.swift; sourceTree = "<group>"; };
@@ -324,6 +330,7 @@
 				AFFA64D81D27475E006B3A60 /* ObjectiveCFile.h */,
 				AFD3A5FE1D28B7D300D0F0B3 /* Attendance.swift */,
 				AFE46E961D3097E800311857 /* Payment.swift */,
+				AFA9DBCC1D3A15560051EB75 /* Account.swift */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -471,6 +478,8 @@
 				AF8FB90E1D32AB720057B4C1 /* PaymentViewController.swift */,
 				AF806D211D36656600ACFECB /* CashPayViewController.swift */,
 				AF0E02041D3939EA0069ED20 /* AddCreditPayViewController.swift */,
+				AFA9DBC91D3A14210051EB75 /* AddAccountViewController.swift */,
+				AFA9DBCF1D3A20D80051EB75 /* AccountViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -711,6 +720,7 @@
 				AFB5A88D1D28A3BA000ED889 /* AttendanceViewController.swift in Sources */,
 				AF0077891CF52E7A0056904F /* StudyPopServerHelper.swift in Sources */,
 				AFD3A6021D28BAB900D0F0B3 /* AttendanceTableViewCell.swift in Sources */,
+				AFA9DBD01D3A20D80051EB75 /* AccountViewController.swift in Sources */,
 				AF0924DB1D1AB3A7003D8656 /* GroupRequestIndexViewController.swift in Sources */,
 				AF8043AF1CFE5CC400A2B7A4 /* WDImagePicker.swift in Sources */,
 				AF1819D11D240C6B00795ED6 /* AlertIndexViewController.swift in Sources */,
@@ -734,6 +744,7 @@
 				AF2E2B7C1CF7BEBA00820183 /* HomeTabViewController.swift in Sources */,
 				AF9C23431D23EB1D008FB701 /* EventPhotosViewController.swift in Sources */,
 				AF4F66061D1D80E10068C558 /* PhotoViewController.swift in Sources */,
+				AFA9DBCE1D3A15560051EB75 /* Account.swift in Sources */,
 				AF3740A41CF75D1600216F64 /* GroupsViewController.swift in Sources */,
 				AF00778B1CF530690056904F /* CoreDataStackManager.swift in Sources */,
 				AF0E8F081D12C3F500085B02 /* EventMembersTableViewController.swift in Sources */,
@@ -771,6 +782,7 @@
 				AFCAE1E41D1BF78F00955601 /* GroupPicIndexViewController.swift in Sources */,
 				AF8047461D2551D400CF2A7F /* EventRequestViewController.swift in Sources */,
 				AF3E5EA31D0268A900EE699F /* GroupEditViewController.swift in Sources */,
+				AFA9DBCA1D3A14210051EB75 /* AddAccountViewController.swift in Sources */,
 				AF3E5EA11D025C5300EE699F /* GroupMember.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
